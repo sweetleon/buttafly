@@ -9,6 +9,7 @@ describe "Buttafly::Legend" do
     specify "columns & types" do 
 
       must_have_column(:cartographer_id, :integer)
+      must_have_column(:data, :json)
     end
 
     describe "associations" do
@@ -21,6 +22,8 @@ describe "Buttafly::Legend" do
       specify "has many" do
 
         must_have_many(:mappings)
+        must_have_many(:targetable)
+        must_have_many(:originable)
       end 
     end
   end

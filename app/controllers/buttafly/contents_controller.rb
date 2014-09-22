@@ -2,7 +2,9 @@ require_dependency "buttafly/application_controller"
 
 module Buttafly
   class ContentsController < ApplicationController
+    
     def new
+    	@originable = Buttafly.originable.new
     end
 
     def show

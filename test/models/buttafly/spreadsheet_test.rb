@@ -2,6 +2,8 @@ require 'test_helper'
 
 describe "Buttafly::Spreadsheet" do 
 
+  include AASM
+
   subject { Buttafly::Spreadsheet }
 
   describe "db" do 
