@@ -3,6 +3,7 @@ module Buttafly
 
     require "csv"
     require "json"
+    require "roo"
 
     belongs_to :user
 
@@ -15,14 +16,27 @@ module Buttafly
     include AASM
 
     aasm do 
+
       state :not_imported, initial: true
       state :imported, before_enter: :convert_data_to_json!
+      state :published
+      state :unpublished
 
-      state :processed
-      state :removed
-      state :ignored
-      state :modified  
+      event :import do 
+        transitions from: [:not_imported, :imported], 
+                    to: :imported, 
+                    on_transition: -> f { f.set_transition_timestamp :imported }
+      end
 
+      event :publish do 
+        transitions from: [:imported, :unpublished],
+                    to: :published, 
+                    on_transition: -> f { f.set_transition_timestamp :published}
+      end
+
+      event :unpublish do 
+        transitions from: :published
+      end
     end
 
     def set_transition_timestamp(given_status, time=Time.now)
@@ -31,7 +45,8 @@ module Buttafly
     end
 
     def convert_data_to_json!
-      csv_data = CSV.new(get_data!, headers: true, col_sep: self.mapping.col_sep, header_converters: :symbol)
+      csv_data = CSV.new(self.flat_file.path)
+      binding.pry
       json_data = csv_data.map { |csv_row| csv_row.to_hash.symbolize_keys }
       self.update(purchase_data: json_data)
     end

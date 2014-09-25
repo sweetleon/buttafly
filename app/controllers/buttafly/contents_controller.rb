@@ -3,8 +3,10 @@ require_dependency "buttafly/application_controller"
 module Buttafly
   class ContentsController < ApplicationController
     
+    before_action :set_originable, only: [:show, :edit, :update, :destroy]
+
     def new
-    	@originable = Buttafly.originable.new
+      @originable = Buttafly.originable.new
     end
 
     def show
@@ -14,6 +16,13 @@ module Buttafly
     end
 
     def create
+      @originable = Buttafly.originable.new(originable_params)
+
+      if @originable.save
+        redirect_to contents_path, notice: "#{@originable.name} has been uploaded."
+      else
+        render "new"
+      end
     end
 
     def update
@@ -23,6 +32,17 @@ module Buttafly
     end
 
     def index
+      @contents = Buttafly.originable.all
+    end
+
+    private
+
+    def set_originable
+      @originable = Buttafly.originable.find(params[:id])
+    end
+
+    def originable_params
+      params.require(:originable).permit(:name, :flat_file)
     end
   end
 end

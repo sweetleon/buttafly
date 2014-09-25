@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(version: 20140919055223) do
 
   add_index "buttafly_spreadsheets", ["aasm_state"], name: "index_buttafly_spreadsheets_on_aasm_state", using: :btree
   add_index "buttafly_spreadsheets", ["imported_at"], name: "index_buttafly_spreadsheets_on_imported_at", using: :btree
-  add_index "buttafly_spreadsheets", ["name"], name: "index_buttafly_spreadsheets_on_name", unique: true, using: :btree
+  add_index "buttafly_spreadsheets", ["name"], name: "index_buttafly_spreadsheets_on_name", using: :btree
   add_index "buttafly_spreadsheets", ["processed_at"], name: "index_buttafly_spreadsheets_on_processed_at", using: :btree
   add_index "buttafly_spreadsheets", ["user_id"], name: "index_buttafly_spreadsheets_on_user_id", using: :btree
 
@@ -65,7 +65,6 @@ ActiveRecord::Schema.define(version: 20140919055223) do
   end
 
   create_table "dummy_parents", force: true do |t|
-    t.string   "father_name"
     t.string   "mother_name"
     t.datetime "created_at"
     t.datetime "updated_at"

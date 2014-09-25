@@ -1,11 +1,12 @@
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do
-  factory :dummy_child do
+  factory :mapping, :class => 'Buttafly::Mapping' do
 
-    child_name "Ella Mac"
-    dummy_parent
+    legend
+    targetable
+    originable
 
-    factory :targetable
+
   end
 end

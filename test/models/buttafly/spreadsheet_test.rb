@@ -1,8 +1,6 @@
 require 'test_helper'
-
-describe "Buttafly::Spreadsheet" do 
-
-  include AASM
+  
+  describe "Buttafly::Spreadsheet" do 
 
   subject { Buttafly::Spreadsheet }
 
@@ -33,15 +31,65 @@ describe "Buttafly::Spreadsheet" do
   describe "associations" do 
 
     specify "belongs to" do 
-    
+  
       must_belong_to(:user)
     end
 
     specify "has many" do 
-    
+  
       must_have_many(:legends)
       must_have_many(:mappings)
       must_have_many(:targetable)
+    end
+  end
+
+  describe "states" do 
+
+    specify "initial must be :not_imported" do 
+
+      not_imported_file = subject.new
+      not_imported_file.not_imported?.must_equal true
+    end
+
+    describe "permissions for" do 
+
+      it ":not_imported" do
+  
+        file = build_stubbed(:not_imported_file)
+        file.may_import?.must_equal true
+        file.may_publish?.must_equal false
+        file.may_unpublish?.must_equal false
+      end
+
+      it ":imported" do 
+  
+        file = build_stubbed(:imported_file)
+        file.may_import?.must_equal true
+        file.may_publish?.must_equal true
+        file.may_unpublish?.must_equal false
+      end
+
+      it ":published" do 
+
+        file = build_stubbed(:published_file)
+        file.may_import?.must_equal false
+        file.may_publish?.must_equal false
+        file.may_unpublish?.must_equal true
+      end
+    end
+
+    describe "events" do
+
+      describe "#import!" do 
+
+        let(:file) { create(:not_imported_file) }
+      
+        it "must convert file rows to json" do 
+  
+          file.import!
+
+        end
+      end
     end
   end
 end

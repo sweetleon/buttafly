@@ -5,8 +5,20 @@ module Buttafly
     
     before_action :set_spreadsheet, only: [:show, :edit, :update, :destroy]
     
+
     def create
-      binding.pry
+      @spreadsheet = Buttafly::Spreadsheet.new(spreadsheet_params)
+
+      if @spreasheet.save
+        redirect_to spreadsheets_path, notice: "The spreadsheet #{@spreadsheet.name} has been uploaded."
+      else
+        render "new"
+      end
+  
+    end
+    
+    def create
+     
       @spreadsheet = Buttafly::Spreadsheet.new(spreadsheet_params)
       if @spreadsheet.save
         flash[:notice] = "right on"

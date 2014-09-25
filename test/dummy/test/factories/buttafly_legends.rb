@@ -1,11 +1,9 @@
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do
-  factory :dummy_child do
+  factory :legend, :class => 'Buttafly::Legend' do
 
-    child_name "Ella Mac"
-    dummy_parent
+    data {{}}
 
-    factory :targetable
   end
 end

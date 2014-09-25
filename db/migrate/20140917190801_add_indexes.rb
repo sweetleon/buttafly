@@ -6,7 +6,7 @@ class AddIndexes < ActiveRecord::Migration
     add_index :buttafly_mappings, [:targetable_id, :targetable_type]
 
     add_index :buttafly_spreadsheets, :user_id
-    add_index :buttafly_spreadsheets, :name, unique: true
+    add_index :buttafly_spreadsheets, :name
     add_index :buttafly_spreadsheets, :imported_at
     add_index :buttafly_spreadsheets, :processed_at
     add_index :buttafly_spreadsheets, :aasm_state
