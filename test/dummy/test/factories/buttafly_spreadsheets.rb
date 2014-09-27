@@ -10,8 +10,21 @@ FactoryGirl.define do
     name
     flat_file do 
       Rack::Test::UploadedFile.new(File.join(
-        Rails.root, 'test', 'samples', 'review.odt.csv')) 
+        Rails.root, 'test', 'samples', 'family.odt.csv')) 
     end
+    data [
+      {"mother"=>"Momma Sue", 
+        "child"=>"Childe Harold", 
+        "grandparent"=>"Crotchety Carl"
+      }]
+    # data {{
+    #   "review"=>
+    #     "Raw but equally zelous marsanne. Kicks you with lemon, oaky sweat, forward peach. Drink now through graduation.",
+    #   "winery"=>"Gallo",
+    #   "wine"=>"pinot noir",
+    #   "vintage"=>"2010",
+    #   "stars"=>"4"
+    # }}
 
     factory :not_imported_file do
       aasm_state "not_imported"
@@ -33,22 +46,3 @@ FactoryGirl.define do
     end
   end
 end
-
-    # factory :processed_file do
-    #   aasm_state "processed"
-    # end
-
-    # factory :removed_file do
-    #   aasm_state "removed"
-    # end
-
-    # factory :ignored_file do
-    #   aasm_state "ignored"
-    # end
-
-    # factory :modified_file do
-    #   aasm_state "modified"
-    # file_name "#{@name}"
-    # end
-
-# end

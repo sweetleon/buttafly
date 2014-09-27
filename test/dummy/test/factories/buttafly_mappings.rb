@@ -6,7 +6,5 @@ FactoryGirl.define do
     legend
     targetable
     originable
-
-
   end
 end

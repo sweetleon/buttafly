@@ -66,6 +66,7 @@ ActiveRecord::Schema.define(version: 20140919055223) do
 
   create_table "dummy_parents", force: true do |t|
     t.string   "mother_name"
+    t.integer  "grandparent_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

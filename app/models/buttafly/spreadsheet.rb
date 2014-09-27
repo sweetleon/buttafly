@@ -45,10 +45,12 @@ module Buttafly
     end
 
     def convert_data_to_json!
-      csv_data = CSV.new(self.flat_file.path)
-      binding.pry
-      json_data = csv_data.map { |csv_row| csv_row.to_hash.symbolize_keys }
-      self.update(purchase_data: json_data)
+      csv = CSV.open(self.flat_file.path, headers:true).readlines
+      json_array = Array.new
+      csv.entries.map do |entry|
+        json_array << entry.to_hash
+      end
+      self.update(data: json_array)
     end
   end
 end

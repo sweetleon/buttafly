@@ -84,10 +84,18 @@ require 'test_helper'
 
         let(:file) { create(:not_imported_file) }
       
-        it "must convert file rows to json" do 
-  
-          file.import!
+        it "#convert_data_to_json!" do
+          file.convert_data_to_json!
+          file.data.first["child"].must_equal "Childe Harold"
+          file.data.first["mother"].must_equal "Momma Sue"
+          file.data.first["grandparent"].must_equal "Crotchety Carl"        
+        end
 
+        it "must populate data column with json" do 
+          file.import!
+          file.data.first.wont_equal nil
+          file.data.size.must_equal 1 
+          file.aasm_state.must_equal "imported"
         end
       end
     end

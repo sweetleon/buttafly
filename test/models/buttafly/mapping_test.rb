@@ -32,4 +32,24 @@ describe "Buttafly::Mapping" do
       must_belong_to(:targetable)
     end    
   end
-end
+
+  describe "validations" do 
+
+    it "must have a legend" do 
+
+      mapping = create(:mapping)
+      mapping.update(legend_id: nil)
+      mapping.valid?.must_equal false
+
+    end
+  end
+
+  describe "get origin keys" do 
+
+    it "must return keys from default model" do
+      file = create(:imported_file)
+      keys = Buttafly::Mapping.get_origin_keys(Buttafly::Spreadsheet, file.id )
+      keys["data"].must_equal ["mother", "child", "grandparent"]
+    end
+  end
+end 
