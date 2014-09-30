@@ -8,14 +8,19 @@ FactoryGirl.define do
       meta: { 
         col_sep: ",", 
         encoding: "utf-8",
-        row_sep: "/n"
+        row_sep: "/n",
+        headers: ["mother", "child", "grandparent"]
       },
 
-      dummy_parent: {
-        mother_name: "Sarah Jane Schoeneman",
-        dummy_parent_id: "1"
-      }
-    }   
+      dummy_child: {
+        name: "child",
+        dummy_parent: {
+          name: "mother", 
+          dummy_grandparent: { 
+            name: "grandparent"}
+          }
+        }
+      }   
     } 
   end
 end

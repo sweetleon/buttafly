@@ -1,15 +1,14 @@
 require 'test_helper'
 
-describe "DummyChild" do 
+describe "DummyGrandparent" do 
 
-  subject { DummyChild }
+   subject { DummyGrandparent }
 
   describe "db" do 
 
     specify "columns & types" do 
 
       must_have_column(:name)
-      must_have_column(:dummy_parent_id, :integer)
       must_have_column(:dummy_address_id, :integer)
     end
   end
@@ -18,16 +17,18 @@ describe "DummyChild" do
 
     specify "belongs to" do 
 
-      must_belong_to(:dummy_parent)
+      must_belong_to(:dummy_address)
     end
   end
 
   describe "validations" do 
 
-    it "requires associated parent" do 
+    it "requires associated address" do 
       
-      dummy_child = build(:dummy_child, dummy_parent_id: nil)
-      dummy_child.valid?.must_equal false
+      dummy_grandparent = build(:dummy_grandparent, dummy_address_id: nil)
+      dummy_grandparent.valid?.must_equal false
     end
   end
+
+
 end

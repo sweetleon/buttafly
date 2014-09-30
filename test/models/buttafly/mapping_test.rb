@@ -43,13 +43,4 @@ describe "Buttafly::Mapping" do
 
     end
   end
-
-  describe "get origin keys" do 
-
-    it "must return keys from default model" do
-      file = create(:imported_file)
-      keys = Buttafly::Mapping.get_origin_keys(Buttafly::Spreadsheet, file.id )
-      keys["data"].must_equal ["mother", "child", "grandparent"]
-    end
-  end
 end 

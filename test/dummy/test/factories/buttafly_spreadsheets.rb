@@ -13,18 +13,10 @@ FactoryGirl.define do
         Rails.root, 'test', 'samples', 'family.odt.csv')) 
     end
     data [
-      {"mother"=>"Momma Sue", 
-        "child"=>"Childe Harold", 
-        "grandparent"=>"Crotchety Carl"
+      {"mother"=>"Sarah Jane Schoeneman", 
+        "child"=>"Ella Mac Pacurar", 
+        "grandparent"=>"Vicki Pacurar"
       }]
-    # data {{
-    #   "review"=>
-    #     "Raw but equally zelous marsanne. Kicks you with lemon, oaky sweat, forward peach. Drink now through graduation.",
-    #   "winery"=>"Gallo",
-    #   "wine"=>"pinot noir",
-    #   "vintage"=>"2010",
-    #   "stars"=>"4"
-    # }}
 
     factory :not_imported_file do
       aasm_state "not_imported"
