@@ -1,6 +1,6 @@
 class DummyGrandparent < ActiveRecord::Base
 
-  belongs_to :dummy_address
+  belongs_to :dummy_tribe
 
-  validates :dummy_address, presence: true
+  validates :dummy_tribe, presence: true
 end

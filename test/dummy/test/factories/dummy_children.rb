@@ -5,7 +5,7 @@ FactoryGirl.define do
 
     name "Ella Mac"
     dummy_parent
-    dummy_address
+    dummy_tribe
 
     factory :targetable
   end

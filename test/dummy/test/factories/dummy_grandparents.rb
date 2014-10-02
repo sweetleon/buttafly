@@ -3,6 +3,6 @@
 FactoryGirl.define do
   factory :dummy_grandparent do
     name "Vicki Pacurar"
-    dummy_address
+    dummy_tribe
   end
 end

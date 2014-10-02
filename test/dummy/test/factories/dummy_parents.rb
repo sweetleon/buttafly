@@ -5,6 +5,6 @@ FactoryGirl.define do
 
     name "Sarah Jane Schoeneman"
     dummy_grandparent
-    dummy_address
+    dummy_tribe
   end
 end

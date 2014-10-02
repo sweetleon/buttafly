@@ -10,7 +10,7 @@ describe "DummyParent" do
     
       must_have_column(:name)
       must_have_column(:dummy_grandparent_id, :integer)
-      must_have_column(:dummy_address_id, :integer)
+      must_have_column(:dummy_tribe_id, :integer)
     end
   end
 
@@ -19,6 +19,7 @@ describe "DummyParent" do
     specify "belongs to" do 
 
       must_belong_to(:dummy_grandparent)
+      must_belong_to(:dummy_tribe)
     end
 
     specify "has many" do 

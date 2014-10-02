@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140930000129) do
+ActiveRecord::Schema.define(version: 20140930213614) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,23 +57,17 @@ ActiveRecord::Schema.define(version: 20140930000129) do
   add_index "buttafly_spreadsheets", ["processed_at"], name: "index_buttafly_spreadsheets_on_processed_at", using: :btree
   add_index "buttafly_spreadsheets", ["user_id"], name: "index_buttafly_spreadsheets_on_user_id", using: :btree
 
-  create_table "dummy_addresses", force: true do |t|
-    t.string   "city"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "dummy_children", force: true do |t|
     t.string   "name"
     t.integer  "dummy_parent_id"
-    t.integer  "dummy_address_id"
+    t.integer  "dummy_tribe_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "dummy_grandparents", force: true do |t|
     t.string   "name"
-    t.integer  "dummy_address_id"
+    t.integer  "dummy_tribe_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -81,7 +75,13 @@ ActiveRecord::Schema.define(version: 20140930000129) do
   create_table "dummy_parents", force: true do |t|
     t.string   "name"
     t.integer  "dummy_grandparent_id"
-    t.integer  "dummy_address_id"
+    t.integer  "dummy_tribe_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "dummy_tribes", force: true do |t|
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

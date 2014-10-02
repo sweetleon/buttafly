@@ -3,7 +3,7 @@ class CreateDummyChildren < ActiveRecord::Migration
     create_table :dummy_children do |t|
       t.string :name
       t.integer :dummy_parent_id
-      t.integer :dummy_address_id
+      t.integer :dummy_tribe_id
 
       t.timestamps
     end

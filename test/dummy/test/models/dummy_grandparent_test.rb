@@ -9,7 +9,7 @@ describe "DummyGrandparent" do
     specify "columns & types" do 
 
       must_have_column(:name)
-      must_have_column(:dummy_address_id, :integer)
+      must_have_column(:dummy_tribe_id, :integer)
     end
   end
 
@@ -17,7 +17,7 @@ describe "DummyGrandparent" do
 
     specify "belongs to" do 
 
-      must_belong_to(:dummy_address)
+      must_belong_to(:dummy_tribe)
     end
   end
 
@@ -25,7 +25,7 @@ describe "DummyGrandparent" do
 
     it "requires associated address" do 
       
-      dummy_grandparent = build(:dummy_grandparent, dummy_address_id: nil)
+      dummy_grandparent = build(:dummy_grandparent, dummy_tribe_id: nil)
       dummy_grandparent.valid?.must_equal false
     end
   end

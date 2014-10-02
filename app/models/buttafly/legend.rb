@@ -28,15 +28,38 @@ module Buttafly
     end
 
     def self.get_parent_models(model)
-       model.to_s.classify.constantize.validators.map(&:attributes).flatten
+      model.to_s.classify.constantize.validators.map(&:attributes).flatten
     end
+
+    # dependencies = []
+    #    parents.flatten.each do |parent|
+    #     dependencies << { parent => { attrs: self.get_target_keys(parent) } }
+    #     dependencies << { "parents" => }
+    #   end
+    #   dependencies
 
     def self.get_ancestor_models(model)
       ancestors = []
       parents = self.get_parent_models(model)
       parents.each do |parent|
-        parent = { parent => { attrs: self.get_target_keys(parent)}}
-        ancestors << parent
+        ancestors << { 
+          parent => { 
+            attrs: self.get_target_keys(parent),
+            parents: [ self.get_parent_models(parent) ] 
+          }
+        }
+        grandparents = self.get_parent_models(parent)
+        grandparents.each do |grandparent|
+          ancestors.first[parent][:parents] << {
+            grandparent => { 
+              attrs: self.get_target_keys(grandparent),
+              parents: self.get_parent_models(grandparent)
+            }
+          }
+            
+          # ancestors.first[parent][:parents] << grandparent
+          # binding.pry
+        end
       end
       ancestors
     end

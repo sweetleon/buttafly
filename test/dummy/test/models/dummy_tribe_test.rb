@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class DummyAddressTest < ActiveSupport::TestCase
+class DummyTribeTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
