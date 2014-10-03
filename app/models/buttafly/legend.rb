@@ -23,6 +23,28 @@ module Buttafly
       hash_of_keys
     end
 
+    def self.get_ancestors(model)
+      ancestors = self.get_dependencies(model)
+      level_one = []
+      ancestors[:parents].each_with_index do |p,i|
+        level_one << {p => self.get_dependencies(p) }
+        ancestors[:parents] = level_one 
+        level_two = []
+        ancestors[:parents][i][p][:parents].each_with_index do |g, n|
+          level_two << { g => self.get_dependencies(g) }
+          ancestors[:parents][i][p][:parents] = level_two
+          level_three = []
+          ancestors[:parents][i][p][:parents][n][g][:parents].each do |ggp|
+            level_three << { ggp => self.get_dependencies(ggp) }
+            ancestors[:parents][i][p][:parents][n][g][:parents] = level_three
+          end
+        end
+      end
+      ancestors
+    end
+
+  private
+
     def self.get_target_keys(model)
       model.to_s.classify.constantize.column_names - @ignored_columns
     end
@@ -31,41 +53,14 @@ module Buttafly
       model.to_s.classify.constantize.validators.map(&:attributes).flatten
     end
 
-    # dependencies = []
-    #    parents.flatten.each do |parent|
-    #     dependencies << { parent => { attrs: self.get_target_keys(parent) } }
-    #     dependencies << { "parents" => }
-    #   end
-    #   dependencies
+    def self.get_dependencies(model)
+      {
+        :attrs => self.get_target_keys(model),
+        :parents => self.get_parent_models(model)
+      }
 
-    def self.get_ancestor_models(model)
-      ancestors = []
-      parents = self.get_parent_models(model)
-      parents.each do |parent|
-        ancestors << { 
-          parent => { 
-            attrs: self.get_target_keys(parent),
-            parents:  self.get_parent_models(parent) 
-          }
-        }
-        grandparents = self.get_parent_models(parent)
-        grandparents.each do |grandparent|
-          ancestors.first[parent][:parents] << {
-            grandparent => { 
-              attrs: self.get_target_keys(grandparent),
-              parents: self.get_parent_models(grandparent)
-            }
-          }
-            
-          # ancestors.first[parent][:parents] << grandparent
-          # binding.pry
-        end
-      end
-      ancestors
     end
   
-    private
-
     @ignored_columns = ["created_at", "id", "updated_at"]
     @ignored_models = [:mapping, :spreadsheet, :legend]
   end

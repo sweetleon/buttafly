@@ -54,42 +54,37 @@ describe "Buttafly::Legend" do
       parent_models.must_equal [:dummy_parent, :dummy_tribe]
     end
 
-    it "must order a model's ancestors for creation" do 
-      ancestors = subject.get_ancestor_models(DummyChild)
-      ancestors.class.must_equal Array
-      ancestors.count.must_equal 2
-      ancestors.map(&:keys).flatten.must_equal [:dummy_parent, :dummy_tribe]
-      parents = ancestors.first
-      parents[:dummy_parent][:attrs].must_equal ["name", "dummy_grandparent_id", "dummy_tribe_id"]
-      parents[:dummy_parent].must_equal "blah"
-      # parents[:dummy_parent][:parents].map(&:keys).must_equal "blah"
-      # grandparents = ancestors.first[:parents]
-      # grandparents.must_equal "blah"
-      # ancestors.first[:parents].must_equal [:dummy_grandparent, :dummy_tribe]
-      # grandparents.first# ancestors.first[:dummy_parent][:parents].must_equal [:dummy_grandparent, :dummy_tribe]
-      # ancestors[:dummy_parent][:attrs].must_include "name"
-      # parent_models.first[:dummy_parent][:parents].must_equal "blah"
-      # expected_ancestors = [
+    describe "self.get_ancestors" do 
+
+      let(:ancestors) { subject.get_ancestors(DummyChild) } 
+      let(:parent) { ancestors[:parents].first[:dummy_parent] }
+      let(:grandparent) { parent[:parents].first[:dummy_grandparent] }
+
+      it "should return :attrs and :parents keys" do 
+
+        ancestors.keys.must_equal [:attrs, :parents]
+      end
         
-      #   :dummy_parent => {
-      #     :attrs => ["name", "dummy_grandparent_id", "dummy_tribe_id"],
-      #     :dummy_tribe => {
-      #       :attrs => ["city"]
-      #     },
-      #     :dummy_grandparent => {
-      #       :attrs => ["name"],
-      #       :dummy_tribe => {
-      #         :attrs => ["city"]
-      #       }
-      #     }
-      #   },
-      #   :dummy_tribe => { 
-      #     :attrs => ["city"]
-      #   }
-      # ]
-      # ancestors.must_equal 
-      # ancestors[:parents].must_equal ["name", "dummy_grandparent_id"]
-      # ancestors[:parents][:dummy_tribe].must_equal "blah"
+      it "should hold the parent model's attrs" do 
+
+        expected_attrs = ["name", "dummy_parent_id", "dummy_tribe_id"]
+        ancestors[:attrs].must_equal expected_attrs 
+      end
+
+      it "should have nested parents" do 
+        keys = ancestors[:parents].map(&:keys).flatten
+        keys.must_equal [:dummy_parent, :dummy_tribe]
+      end
+
+      it "should have nested grandparents" do
+        expected_attrs = ["name", "dummy_grandparent_id", "dummy_tribe_id"]
+        parent[:attrs].must_equal expected_attrs
+      end 
+      
+      it "should have nested grandparents" do
+        expected = [{:dummy_tribe=>{:attrs=>["name"], :parents=>[]}}]
+        grandparent[:parents].must_equal expected 
+      end
     end
   end
 end
