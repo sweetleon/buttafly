@@ -45,7 +45,7 @@ module Buttafly
         ancestors << { 
           parent => { 
             attrs: self.get_target_keys(parent),
-            parents: [ self.get_parent_models(parent) ] 
+            parents:  self.get_parent_models(parent) 
           }
         }
         grandparents = self.get_parent_models(parent)
