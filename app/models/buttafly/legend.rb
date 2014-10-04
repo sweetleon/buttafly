@@ -23,7 +23,7 @@ module Buttafly
       hash_of_keys
     end
 
-    def self.get_ancestors(model)
+    def self.ancestors_hash(model)
       ancestors = self.get_dependencies(model)
       level_one = []
       ancestors[:parents].each_with_index do |p,i|

@@ -1,0 +1,70 @@
+%dl.accordion{"data-accordion" => ""}
+  %dd.accordion-navigation
+    %a{href: "#show-file-#{file.id}"} 
+      .row
+        .small-1.columns= file.id
+        .small-4.columns= file.name
+        .small-4.columns
+          .label= file.aasm_state.humanize.downcase
+    .content{ "id" => "show-file-#{file.id}" }
+      %dl.tabs{"data-tab" => ""}
+        %dd.active
+          %a.active{href: "#status-#{file.id}"} info
+        %dd
+          %a{href: "#mapping-#{file.id}"} mapping
+        %dd
+          %a{href: "#panel2-3"} errors
+        %dd
+          %a{href: "#panel2-4"} actions
+      .tabs-content
+        .content{ "id" => "status-#{file.id}"}
+          .small-12.columns
+            .small-3.columns.text-right
+              %br File uploaded at:
+              %br File imported at:
+              %br File processed at:
+              %br Source row count:
+              %br ImportedFile data size:
+              %br Transaction count:
+            .small-3.columns
+              %br= time_ago_in_words(file.created_at) + " ago."
+              %br= file.imported_at ? time_ago_in_words(file.imported_at) : "waiting to import"
+              %br= file.processed_at ? time_ago_in_words(file.processed_at) : "waiting to process"
+              %br= file.source_row_count
+              %br= file.data ? file.data.size : "no file data" 
+              %br
+                - if file.data && file.targetable.size == file.data.size
+                  .label.success.round= file.targetable ? file.trans_count : "no transactions" 
+                - else
+                  .label.alert.round= file.targetable ? file.targetable.size : "no transactions" 
+                
+            .small-6.columns
+              
+        .content{ "id" => "mapping-#{file.id}"}
+          %br
+          .small-6.columns
+            = button_to "Create mapping", mappings_path(mapping: { origin_id: file}), class: "button" 
+          .small-6.columns
+            %label
+              Select Mapping
+            %select
+              - @legends.each do |mapping|
+                %option= mapping.name
+
+        #panel2-3.content
+          %p Third panel content goes here...
+        #panel2-4.content
+          .small-6.columns
+            - file.aasm.events.each do |key|
+              - next if [:remove, :modify].include? key
+              - if file.aasm.events.include? key
+                - if key == :process_file
+                  = link_to("process", { controller: "contents", action: "#{key}", id: file.id}, class: "button tiny #{key}") 
+                - else   
+                  = link_to(key, { controller: "spreadsheets", action: "#{key}", id: file.id}, class: "button tiny #{key}") 
+              - else
+                = link_to(key, "#", class: "button tiny disabled")
+            .panel.radius.callout
+              %br= status_description(file.aasm_state)
+%hr
+.pagination= paginate @contents

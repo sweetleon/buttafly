@@ -6,5 +6,7 @@ module Buttafly
   require 'aasm'
   require 'carrierwave'
   require 'factory_girl_rails'
+  require 'foundation-rails'
   require 'pry'
+  require 'kaminari'
 end

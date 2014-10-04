@@ -25,12 +25,15 @@ Gem::Specification.new do |s|
   s.add_dependency "carrierwave"
   s.add_dependency "foundation-rails"
   s.add_dependency "roo"
+  s.add_dependency "sass"
+  s.add_dependency "kaminari"
 
   # testing
   s.add_development_dependency "pry"
   s.add_development_dependency "factory_girl"
   s.add_development_dependency "factory_girl_rails"
   s.add_development_dependency "guard-minitest"
-  s.add_dependency "database_cleaner"
+  s.add_development_dependency "database_cleaner"
+  s.add_development_dependency "guard-livereload"
 
 end

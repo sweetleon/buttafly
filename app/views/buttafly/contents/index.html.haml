@@ -1,2 +1,9 @@
-- @contents.each do |file|
-  %p= file.name
+.small-12.columns
+  .row
+    .small-12.columns
+      %fieldset
+        = form_tag
+
+  .row
+    - @contents.each do |file|
+      = render 'content', file: file      

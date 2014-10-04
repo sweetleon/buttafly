@@ -3,7 +3,7 @@ require_dependency "buttafly/application_controller"
 module Buttafly
   class SpreadsheetsController < ApplicationController
     
-    before_action :set_spreadsheet, only: [:show, :edit, :update, :destroy]
+    before_action :set_spreadsheet, except: [:create]
     
 
     def create
@@ -17,17 +17,10 @@ module Buttafly
   
     end
     
-    def create
-     
-      @spreadsheet = Buttafly::Spreadsheet.new(spreadsheet_params)
-      if @spreadsheet.save
-        flash[:notice] = "right on"
-        redirect_to :back
-      else
-        flash[:notice] = "sad"
-        redirect_to :back
-      end
+    def import
+    end
 
+    def process_file
     end
 
     private
