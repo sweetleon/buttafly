@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
   s.add_dependency "foundation-rails"
   s.add_dependency "roo"
 
+  # testing
   s.add_development_dependency "pry"
   s.add_development_dependency "factory_girl"
   s.add_development_dependency "factory_girl_rails"

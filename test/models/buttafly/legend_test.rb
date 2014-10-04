@@ -72,16 +72,19 @@ describe "Buttafly::Legend" do
       end
 
       it "should have nested parents" do 
+
         keys = ancestors[:parents].map(&:keys).flatten
         keys.must_equal [:dummy_parent, :dummy_tribe]
       end
 
       it "should have nested grandparents" do
+        
         expected_attrs = ["name", "dummy_grandparent_id", "dummy_tribe_id"]
         parent[:attrs].must_equal expected_attrs
       end 
       
       it "should have nested grandparents" do
+        
         expected = [{:dummy_tribe=>{:attrs=>["name"], :parents=>[]}}]
         grandparent[:parents].must_equal expected 
       end
