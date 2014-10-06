@@ -11,5 +11,6 @@
 // about supported directives.
 //
 //= require_tree .
+//= require modernizr
 //= require foundation
 $(document).foundation();

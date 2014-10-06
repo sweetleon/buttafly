@@ -32,12 +32,12 @@ module Buttafly
     end
 
     def index
-      binding.pry
       if params[:state]
         files = Buttafly.originable.where(aasm_state: params[:state])
       else
         files = Buttafly.originable.all
       end
+      @originable = Buttafly.originable.new
       @contents = files.order(:created_at).page(params[:page]).per(5)
       @legends = Mapping.all
     end

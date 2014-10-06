@@ -56,7 +56,7 @@ describe "Buttafly::Legend" do
 
     describe "self.get_ancestors" do 
 
-      let(:ancestors) { subject.ancestors_hash(DummyChild) } 
+      let(:ancestors) { Buttafly::Legend.ancestors_hash(DummyChild) } 
       let(:parent) { ancestors[:parents].first[:dummy_parent] }
       let(:grandparent) { parent[:parents].first[:dummy_grandparent] }
 

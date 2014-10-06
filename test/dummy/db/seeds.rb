@@ -1,4 +1,6 @@
-tribe_list = [
+include Buttafly
+
+tribes = [
 
   "Romanian",
   "German",
@@ -25,7 +27,7 @@ grandparents = [
   "Usha Shekhar"
 ]
 
-tribe_list.each do |tribe_name|
+tribes.each do |tribe_name|
   DummyTribe.create(name: tribe_name)
 end
 
@@ -49,5 +51,29 @@ children.each do |child_name|
   child = DummyChild.create(
     dummy_tribe_id: DummyTribe.pluck(:id).sample,
     dummy_parent_id: DummyParent.pluck(:id).sample,
-    name: child_name)
+    name: child_name
+  )
+end
+
+spreadsheets = [
+  "reviews.csv",
+  "pinot_noir_reviews.csv",
+  "gewurztraminer_reviews.csv",
+  "cabernets.csv",
+  "merlots.csv",
+  "zinfandels.csv"  
+]
+
+User.create(
+  name: "Fred"
+)
+
+spreadsheets.each do |spreadsheet_name|
+  flat_file = Rack::Test::UploadedFile.new(File.join(
+        Rails.root, 'test', 'samples', 'family.odt.csv'))
+  Buttafly::Spreadsheet.create(
+    user_id: User.pluck(:id).sample,
+    name: spreadsheet_name,
+    flat_file: flat_file
+  )
 end

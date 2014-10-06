@@ -43,7 +43,7 @@
         .content{ "id" => "mapping-#{file.id}"}
           %br
           .small-6.columns
-            = button_to "Create mapping", mappings_path(mapping: { origin_id: file}), class: "button" 
+            / = button_to "Create mapping", mappings_path(mapping: { origin_id: file}), class: "button" 
           .small-6.columns
             %label
               Select Mapping
@@ -66,5 +66,3 @@
                 = link_to(key, "#", class: "button tiny disabled")
             .panel.radius.callout
               %br= status_description(file.aasm_state)
-%hr
-.pagination= paginate @contents

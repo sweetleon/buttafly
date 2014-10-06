@@ -27,6 +27,7 @@ Gem::Specification.new do |s|
   s.add_dependency "roo"
   s.add_dependency "sass"
   s.add_dependency "kaminari"
+  
 
   # testing
   s.add_development_dependency "pry"

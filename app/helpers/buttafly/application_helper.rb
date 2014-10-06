@@ -19,12 +19,6 @@ module Buttafly
         "This file has been imported into the database and its contents converted to json."
       when "processed" 
         "This file's purchase data has successfully generated transactions."
-      when "modified"
-        "This file's source file on the server has been modified."
-      when "ignored"
-        "This file's has been ignored, and its transactions deleted."
-      when "removed"
-        "This file's source file is not on the server."
       end
     end
   end
