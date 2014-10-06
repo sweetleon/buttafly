@@ -1,35 +1,30 @@
 .small-12.columns
-
-  %dl.accordion{"data-accordion" => ""}
-    %dd.accordion-navigation
-      %a{:href => "#panel1"} Accordion 1
-      #panel1.content.active
-        %dl.tabs{"data-tab" => ""}
-          %dd.active
-            %a{:href => "#panel2-1"} Tab 1
-          %dd
-            %a{:href => "#panel2-2"} Tab 2
-          %dd
-            %a{:href => "#panel2-3"} Tab 3
-          %dd
-            %a{:href => "#panel2-4"} Tab 4
-        .tabs-content
-          #panel2-1.content.active
-            %p First panel content goes here...
-          #panel2-2.content
-            %p Second panel content goes here...
-          #panel2-3.content
-            %p Third panel content goes here...
-          #panel2-4.content
-            %p Fourth panel content goes here...
-    %dd.accordion-navigation
-      %a{:href => "#panel2"} Accordion 2
-      #panel2.content
-        Panel 2. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    %dd.accordion-navigation
-      %a{:href => "#panel3"} Accordion 3
-      #panel3.content
-        Panel 3. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-  / new
-
-  / = render 'form'
+  %ul.small-block-grid-1.medium-block-grid-3
+    %li
+      %dl.accordion{"data-accordion" => "myAccordionGroup"}
+        %dd.accordion-navigation
+          %a{:href => "#panel1c"} Accordion 1
+          #panel1c.content
+            Panel 1. Lorem ipsum dolor
+        %dd.accordion-navigation
+          %a{:href => "#panel2c"} Accordion 2
+          #panel2c.content
+            Panel 2. Lorem ipsum dolor
+        %dd.accordion-navigation
+          %a{:href => "#panel3c"} Accordion 3
+          #panel3c.content
+            Panel 3. Lorem ipsum dolor
+    %li
+      %dl.accordion{"data-accordion" => "myAccordionGroup"}
+        %dd.accordion-navigation
+          %a{:href => "#panel4c"} Accordion 4
+          #panel4c.content
+            Panel 4. Lorem ipsum dolor
+        %dd.accordion-navigation
+          %a{:href => "#panel5c"} Accordion 5
+          #panel5c.content
+            Panel 5. Lorem ipsum dolor
+        %dd.accordion-navigation
+          %a{:href => "#panel6c"} Accordion 6
+          #panel6c.content
+            Panel 6. Lorem ipsum dolor
