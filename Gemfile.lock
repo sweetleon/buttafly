@@ -6,6 +6,7 @@ PATH
       carrierwave
       foundation-rails
       haml-rails (~> 0.5.3)
+      jquery-rails
       kaminari
       pg
       rails (~> 4.1.6)
@@ -65,7 +66,7 @@ GEM
       railties (>= 3.0.0)
     ffi (1.9.3)
     formatador (0.2.5)
-    foundation-rails (5.4.4.0)
+    foundation-rails (5.4.5.0)
       railties (>= 3.1.0)
       sass (>= 3.2.0)
     guard (2.6.1)
@@ -92,6 +93,9 @@ GEM
     hitimes (1.2.2)
     http_parser.rb (0.6.0)
     i18n (0.6.11)
+    jquery-rails (3.1.0)
+      railties (>= 3.0, < 5.0)
+      thor (>= 0.14, < 2.0)
     json (1.8.1)
     kaminari (0.16.1)
       actionpack (>= 3.0.0)
@@ -106,7 +110,10 @@ GEM
     method_source (0.8.2)
     mime-types (2.3)
     mini_portile (0.6.0)
-    minitest (5.4.1)
+    minitest (5.4.2)
+    minitest-spec-rails (5.0.4)
+      minitest (~> 5.0)
+      rails (~> 4.1.0.rc2)
     multi_json (1.10.1)
     nokogiri (1.6.3.1)
       mini_portile (= 0.6.0)
@@ -175,4 +182,5 @@ DEPENDENCIES
   foundation-rails
   guard-livereload
   guard-minitest
+  minitest-spec-rails
   pry

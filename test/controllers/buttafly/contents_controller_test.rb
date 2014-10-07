@@ -1,47 +1,54 @@
 require 'test_helper'
 
-module Buttafly
-  class ContentsControllerTest < ActionController::TestCase
+describe "Buttafly::ContentsController" do 
 
-    setup do 
-      @routes = Buttafly::Engine.routes
-      @spreadsheet = create(:not_imported_file)
-    end
+  before do 
+    @routes = Buttafly::Engine.routes
+    @spreadsheet = create(:not_imported_file)
+  end
 
-    test "get #new must succeed" do
-      get :new
-      assert_response :success
-      assert_not_nil assigns(:originable)
-    end
+  it "get #new must succeed" do
+    get :new
+    assert_response :success
+    assert_not_nil assigns(:originable)
+  end
 
-    test "get #show must assign @originable" do
-      get :show, id: @spreadsheet.id
-      assert_response :success
-      assert_not_nil assigns(:originable)
-    end
-    
-    test "get #edit" do
-      get :edit, id: @spreadsheet.id
-      assert_response :success
-      assert_not_nil assigns(:originable)
-    end
+  it "get #show must assign @originable" do
+    get :show, id: @spreadsheet.id
+    assert_response :success
+    assert_not_nil assigns(:originable)
+  end
+  
+  it "get #edit" do
+    get :edit, id: @spreadsheet.id
+    assert_response :success
+    assert_not_nil assigns(:originable)
+  end
 
-    test "post #create" do
+  it "post #create" do
+    post :create, originable: { 
+      name: "slick name",
+      flat_file: "slickname.csv"
+    }
+    assert_response 302
+  end
+
+  it "post #create saves a spreadsheet" do
+    assert_difference "Buttafly::Spreadsheet.count" do
       post :create, originable: { 
-        name: "slick name",
-        flat_file: "slickname.csv"
+        name: "sweeet name",
+        flat_file: "summer.csv"
       }
-      assert_response 302
     end
-
-    test "post #create saves a spreadsheet" do
-      assert_difference "Buttafly::Spreadsheet.count" do
-        post :create, originable: { 
-          name: "sweeet name",
-          flat_file: "summer.csv"
-        }
-      end
-    end
+  end
+  
+  it "should get index" do
+    get :index
+    assert_response :success
+    # assert_not_nil assigns :legend
+    # assert_not_nil assigns :legends
+    assert_not_nil assigns :contents
+    # assert_not_nil assigns :originable
   end
 end
 
@@ -58,10 +65,6 @@ end
 #       assert_response :success
 #     end
 
-#     test "should get index" do
-#       get :index
-#       assert_response :success
-#     end
 
 #   end
 # end

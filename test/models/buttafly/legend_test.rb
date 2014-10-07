@@ -10,6 +10,7 @@ describe "Buttafly::Legend" do
 
       must_have_column(:cartographer_id, :integer)
       must_have_column(:data, :json)
+      must_have_column(:name)
     end
 
     describe "associations" do

@@ -11,7 +11,7 @@
         %dd.active
           %a.active{href: "#status-#{file.id}"} info
         %dd
-          %a{href: "#mapping-#{file.id}"} mapping
+          %a{href: "#legend-#{file.id}"} legend
         %dd
           %a{href: "#panel2-3"} errors
         %dd
@@ -34,22 +34,22 @@
               %br= file.data ? file.data.size : "no file data" 
               %br
                 - if file.data && file.targetable.size == file.data.size
-                  .label.success.round= file.targetable ? file.trans_count : "no transactions" 
+                  .label.success.round= file.targetable ? file.targetable.count : "no transactions" 
                 - else
                   .label.alert.round= file.targetable ? file.targetable.size : "no transactions" 
                 
             .small-6.columns
               
-        .content{ "id" => "mapping-#{file.id}"}
+        .content{ "id" => "legend-#{file.id}"}
           %br
           .small-6.columns
-            / = button_to "Create mapping", mappings_path(mapping: { origin_id: file}), class: "button" 
+            / = button_to "Create legend", legends_path(legend: { origin_id: file}), class: "button" 
           .small-6.columns
             %label
-              Select Mapping
+              Select Legend
             %select
-              - @legends.each do |mapping|
-                %option= mapping.name
+              - @legends.each do |legend|
+                %option= legend.name
 
         #panel2-3.content
           %p Third panel content goes here...

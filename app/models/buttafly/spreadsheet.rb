@@ -1,19 +1,18 @@
 module Buttafly
+
   class Spreadsheet < ActiveRecord::Base
 
     require "csv"
     require "json"
     require "roo"
 
-    belongs_to :user
-
-    has_many :mappings, as: :originable
-    has_many :legends, through: :mappings
-    has_many :targetable, through: :mappings, source: :targetable, source_type: "DummyChild"
+    include AASM
+    include Originable
 
     mount_uploader :flat_file, Buttafly::FlatFileUploader
 
-    include AASM
+
+    has_many :targetable, through: :mappings, source: :targetable, source_type: "DummyChild"
 
     aasm do 
 

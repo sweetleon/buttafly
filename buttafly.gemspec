@@ -23,13 +23,15 @@ Gem::Specification.new do |s|
   s.add_dependency "pg"
   s.add_dependency "aasm"
   s.add_dependency "carrierwave"
+  s.add_dependency "jquery-rails"
   s.add_dependency "foundation-rails"
   s.add_dependency "roo"
   s.add_dependency "sass"
   s.add_dependency "kaminari"
   
 
-  # testing
+  # development & testing
+  s.add_development_dependency "minitest-spec-rails"
   s.add_development_dependency "pry"
   s.add_development_dependency "factory_girl"
   s.add_development_dependency "factory_girl_rails"
