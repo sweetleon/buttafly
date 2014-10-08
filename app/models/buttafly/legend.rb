@@ -43,7 +43,6 @@ module Buttafly
       ancestors
     end
 
-  private
 
     def self.get_target_keys(model)
       model.to_s.classify.constantize.column_names - @ignored_columns
@@ -53,6 +52,22 @@ module Buttafly
       model.to_s.classify.constantize.validators.map(&:attributes).flatten
     end
 
+    def self.targetable_models
+      models = ActiveRecord::Base.descendants.select do |c| 
+        c.included_modules.include?(Targetable)
+      end
+      models.map(&:name)
+      models
+    end
+
+    def self.originable_models      
+      models = ActiveRecord::Base.descendants.select do |c| 
+        c.included_modules.include?(Originable)
+      end
+      models.map(&:name)
+      models
+    end
+
     def self.get_dependencies(model)
       {
         :attrs => self.get_target_keys(model),
@@ -60,6 +75,7 @@ module Buttafly
       }
 
     end
+   private
   
     @ignored_columns = ["created_at", "id", "updated_at"]
     @ignored_models = [:mapping, :spreadsheet, :legend]

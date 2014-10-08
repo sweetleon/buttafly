@@ -39,7 +39,6 @@ require 'test_helper'
   
       must_have_many(:legends)
       must_have_many(:mappings)
-      must_have_many(:targetable)
     end
   end
 

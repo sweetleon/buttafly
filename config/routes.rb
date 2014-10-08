@@ -1,11 +1,10 @@
 Buttafly::Engine.routes.draw do
-  resources :contents
 
+  resources :legends
   resources :mappings
-  resources :spreadsheets do 
+  resources :contents do
     member do 
       get 'import'
-      get 'process_file'
     end
   end
 

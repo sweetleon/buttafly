@@ -29,6 +29,21 @@ describe "Buttafly::Legend" do
     end
   end
 
+  describe "get eligible models" do 
+
+    it "#originable_models" do
+
+      models = subject.originable_models
+      models.first.name.must_equal "Buttafly::Spreadsheet"
+    end
+
+    it "#targetable_models" do 
+      expected = ["DummyChild", "DummyParent", "DummyGrandparent"]
+      models = subject.targetable_models
+      models.map(&:name).must_equal expected 
+    end
+  end
+
   describe "#get_origin_keys" do 
 
     it "must return keys from default model" do

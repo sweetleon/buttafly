@@ -1,6 +1,6 @@
 class DummyChild < ActiveRecord::Base
   
-  include Buttafly::Targetable
+  include Targetable
 
   belongs_to :dummy_parent
   belongs_to :dummy_tribe

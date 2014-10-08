@@ -61,7 +61,7 @@
                 - if key == :process_file
                   = link_to("process", { controller: "contents", action: "#{key}", id: file.id}, class: "button tiny #{key}") 
                 - else   
-                  = link_to(key, { controller: "spreadsheets", action: "#{key}", id: file.id}, class: "button tiny #{key}") 
+                  = link_to(key, { controller: "contents", action: "#{key}", id: file.id}, class: "button tiny #{key}") 
               - else
                 = link_to(key, "#", class: "button tiny disabled")
             .panel.radius.callout

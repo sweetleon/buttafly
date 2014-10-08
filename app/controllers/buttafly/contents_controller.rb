@@ -3,7 +3,7 @@ require_dependency "buttafly/application_controller"
 module Buttafly
   class ContentsController < ApplicationController
     
-    before_action :set_originable, only: [:show, :edit, :update, :destroy]
+    before_action :set_originable, except: [:new, :create, :index]
 
     def new
       @originable = Buttafly::Spreadsheet.new
@@ -25,7 +25,17 @@ module Buttafly
       end
     end
 
-    def update
+    def import
+      # binding.pry
+      if @imported_file.import!
+        redirect_to :back, notice: "#{@imported_file.file_name} successfully imported" 
+      else
+        redirect_to :back, alert: "Could not import #{@imported_file.file_name}." 
+      end
+    end
+
+
+    def patch
     end
 
     def destroy
