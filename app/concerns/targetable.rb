@@ -3,7 +3,6 @@ module Targetable
 
   included do 
     has_one :mapping, as: :targetable
-
   end
 
   module ClassMethods
