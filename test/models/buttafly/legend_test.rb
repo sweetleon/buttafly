@@ -76,33 +76,43 @@ describe "Buttafly::Legend" do
       let(:parent) { ancestors[:parents].first[:dummy_parent] }
       let(:grandparent) { parent[:parents].first[:dummy_grandparent] }
 
-      it "should return :attrs and :parents keys" do 
+      it "must return :attrs and :parents keys" do 
 
         ancestors.keys.must_equal [:attrs, :parents]
       end
         
-      it "should hold the parent model's attrs" do 
+      it "must hold the parent model's attrs" do 
 
         expected_attrs = ["name", "dummy_parent_id", "dummy_tribe_id"]
         ancestors[:attrs].must_equal expected_attrs 
       end
 
-      it "should have nested parents" do 
+      it "must have nested parents" do 
 
         keys = ancestors[:parents].map(&:keys).flatten
         keys.must_equal [:dummy_parent, :dummy_tribe]
       end
 
-      it "should have nested grandparents" do
+      it "must have nested grandparents" do
         
         expected_attrs = ["name", "dummy_grandparent_id", "dummy_tribe_id"]
         parent[:attrs].must_equal expected_attrs
       end 
       
-      it "should have nested grandparents" do
+      it "must have nested grandparents" do
         expected = [{:dummy_tribe=>{:attrs=>["name"], :parents=>[]}}]
         grandparent[:parents].must_equal expected 
       end
+    end
+  end
+
+  describe "map a legend to originable and targetable" do 
+
+    let(:legend) { create(:legend) }
+    let(:originable) { create(:spreadsheet) }
+    
+    it "self.map_origin_to_target" do 
+      legend.map_origin_to_target(originable, DummyChild)
     end
   end
 end

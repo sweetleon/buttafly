@@ -43,7 +43,6 @@ module Buttafly
       ancestors
     end
 
-
     def self.get_target_keys(model)
       model.to_s.classify.constantize.column_names - @ignored_columns
     end
@@ -74,6 +73,11 @@ module Buttafly
         :parents => self.get_parent_models(model)
       }
 
+    end
+
+    def map_origin_to_target(originable, target_model)
+
+      binding.pry
     end
    private
   

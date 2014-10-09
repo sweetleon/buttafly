@@ -3,11 +3,10 @@ require_dependency "buttafly/application_controller"
 module Buttafly
   class LegendsController < ApplicationController
 
-    before_action :set_originable#, except: [:new, :create, :index]
+    before_action :set_originable, on: :new
 
     def new
-      binding.pry
-      # @originable = Buttafly::Legend.
+      @mapping = @originable.mappings.new
     
     end
 
@@ -23,12 +22,7 @@ module Buttafly
    private
 
     def set_originable
-      set_originable_type
-      @originable = @originable_type.find(params[:id])
-    end
-
-    def set_originable_type
-      @originable_type = Buttafly::Spreadsheet
+      @originable = Buttafly.originable.find(params[:originable_id])
     end
 
     def originable_params

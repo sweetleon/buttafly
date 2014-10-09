@@ -11,7 +11,7 @@ describe "Buttafly::Mapping" do
       must_have_column(:legend_id, :integer)
       must_have_column(:originable_id, :integer)
       must_have_column(:originable_type)
-      must_have_column(:targetable_id, :integer)
+      must_have_column(:targetable_class, :string)
       must_have_column(:targetable_type)
     end
 

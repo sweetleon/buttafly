@@ -10,24 +10,25 @@ describe "Buttafly::LegendsController" do
   let(:originable) { create(:spreadsheet) }
 
   it "should get new" do
-    get :new, originable: { id: originable.id, type: originable.class}
+
+    get :new, originable_id: originable.id
     assert_response :success
     assert_not_nil assigns(:originable)
-
+    assert_not_nil assigns(:legend)
   end
 
-  it "should get show" do
-    get :show, id: legend.id
-    assert_response :success
-  end
+  # it "should get show" do
+  #   get :show, id: legend.id
+  #   assert_response :success
+  # end
 
-  it "should get edit" do
-    get :edit, id: legend.id
-    assert_response :success
-  end
+  # it "should get edit" do
+  #   get :edit, id: legend.id
+  #   assert_response :success
+  # end
 
-  it "should get index" do
-    get :index
-    assert_response :success
-  end
+  # it "should get index" do
+  #   get :index
+  #   assert_response :success
+  # end
 end

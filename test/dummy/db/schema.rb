@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141007183550) do
+ActiveRecord::Schema.define(version: 20140930213614) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,24 +19,22 @@ ActiveRecord::Schema.define(version: 20141007183550) do
   create_table "buttafly_legends", force: true do |t|
     t.integer  "cartographer_id"
     t.json     "data"
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "name"
   end
 
   create_table "buttafly_mappings", force: true do |t|
     t.integer  "legend_id"
     t.integer  "originable_id"
     t.string   "originable_type"
-    t.integer  "targetable_id"
-    t.string   "targetable_type"
+    t.string   "targetable_class"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "buttafly_mappings", ["legend_id"], name: "index_buttafly_mappings_on_legend_id", using: :btree
   add_index "buttafly_mappings", ["originable_id", "originable_type"], name: "index_buttafly_mappings_on_originable_id_and_originable_type", using: :btree
-  add_index "buttafly_mappings", ["targetable_id", "targetable_type"], name: "index_buttafly_mappings_on_targetable_id_and_targetable_type", using: :btree
 
   create_table "buttafly_spreadsheets", force: true do |t|
     t.json     "data"
