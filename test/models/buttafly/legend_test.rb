@@ -34,13 +34,13 @@ describe "Buttafly::Legend" do
     it "#originable_models" do
 
       models = subject.originable_models
-      models.first.name.must_equal "Buttafly::Spreadsheet"
+      models.first.must_equal "Buttafly::Spreadsheet"
     end
 
     it "#targetable_models" do 
       expected = ["DummyChild", "DummyParent", "DummyGrandparent"]
       models = subject.targetable_models
-      models.map(&:name).must_equal expected 
+      models.must_equal expected 
     end
   end
 

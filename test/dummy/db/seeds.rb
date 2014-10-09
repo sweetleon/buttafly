@@ -69,8 +69,7 @@ User.create(
 )
 
 spreadsheets.each do |spreadsheet_name|
-  flat_file = Rack::Test::UploadedFile.new(File.join(
-        Rails.root, 'test', 'samples', 'family.odt.csv'))
+  flat_file = File.open(File.join(Rails.root, 'test', 'samples', 'family.odt.csv'))
   Buttafly::Spreadsheet.create(
     user_id: User.pluck(:id).sample,
     name: spreadsheet_name,

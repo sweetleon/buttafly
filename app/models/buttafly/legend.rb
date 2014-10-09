@@ -56,16 +56,16 @@ module Buttafly
       models = ActiveRecord::Base.descendants.select do |c| 
         c.included_modules.include?(Targetable)
       end
-      models.map(&:name)
-      models
+      model_names = models.map(&:name)
+      model_names
     end
 
     def self.originable_models      
       models = ActiveRecord::Base.descendants.select do |c| 
         c.included_modules.include?(Originable)
       end
-      models.map(&:name)
-      models
+      model_names = models.map(&:name)
+      model_names
     end
 
     def self.get_dependencies(model)

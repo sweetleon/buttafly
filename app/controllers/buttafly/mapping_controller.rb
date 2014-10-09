@@ -2,6 +2,7 @@ require_dependency "buttafly/application_controller"
 
 module Buttafly
   class MappingController < ApplicationController
+
     def new
     end
 

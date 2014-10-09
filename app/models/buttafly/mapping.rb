@@ -8,5 +8,7 @@ module Buttafly
 
     # validations
     validates :legend, presence: true
+    validates :targetable, presence: true
+    validates :originable, presence: true
   end
 end

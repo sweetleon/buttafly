@@ -5,6 +5,7 @@ Buttafly::Engine.routes.draw do
   resources :contents do
     member do 
       get 'import'
+      get 'publish'
     end
   end
 

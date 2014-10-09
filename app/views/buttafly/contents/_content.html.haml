@@ -23,15 +23,15 @@
               %br File uploaded at:
               %br File imported at:
               %br File processed at:
-              %br Source row count:
-              %br ImportedFile data size:
-              %br Transaction count:
+              %br Json objects:
+              - file.mappings.each do |mapping|
+                %br created objects
             .small-3.columns
               %br= time_ago_in_words(file.created_at) + " ago."
               %br= file.imported_at ? time_ago_in_words(file.imported_at) : "waiting to import"
               %br= file.processed_at ? time_ago_in_words(file.processed_at) : "waiting to process"
-              %br= file.source_row_count
-              %br= file.data ? file.data.size : "no file data" 
+              %br= file.data ? file.data.size : "Not imported" 
+              
               %br
                 - if file.data && file.targetable.size == file.data.size
                   .label.success.round= file.targetable ? file.targetable.count : "no transactions" 
@@ -43,7 +43,7 @@
         .content{ "id" => "legend-#{file.id}"}
           %br
           .small-6.columns
-            / = button_to "Create legend", legends_path(legend: { origin_id: file}), class: "button" 
+            = link_to "Create legend", new_legend_path(originable: {id: file.id, type: file.class }), class: "button"
           .small-6.columns
             %label
               Select Legend

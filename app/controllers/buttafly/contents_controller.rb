@@ -2,7 +2,7 @@ require_dependency "buttafly/application_controller"
 
 module Buttafly
   class ContentsController < ApplicationController
-    
+    before_action :set_originable_type
     before_action :set_originable, except: [:new, :create, :index]
 
     def new
@@ -26,11 +26,10 @@ module Buttafly
     end
 
     def import
-      # binding.pry
-      if @imported_file.import!
-        redirect_to :back, notice: "#{@imported_file.file_name} successfully imported" 
+      if @originable.import!
+        redirect_to :back, notice: "#{@originable.name} successfully imported" 
       else
-        redirect_to :back, alert: "Could not import #{@imported_file.file_name}." 
+        redirect_to :back, alert: "Could not import #{@originable.name}." 
       end
     end
 
@@ -43,20 +42,25 @@ module Buttafly
 
     def index
       if params[:state]
-        files = Buttafly::Spreadsheet.where(aasm_state: params[:state])
+        files = @originable_type.where(aasm_state: params[:state])
       else
-        files = Buttafly::Spreadsheet.all
+        files = @originable_type.all
       end
-      @originable = Buttafly::Spreadsheet.new
+      @originable = @originable_type.new
       @contents = files.order(:created_at).page(params[:page]).per(5)
       @legends = Buttafly::Legend.all
-      @mapping
+      @mapping = Mapping.new
     end
 
     private
 
     def set_originable
-      @originable = Buttafly::Spreadsheet.find(params[:id])
+      set_originable_type
+      @originable = @originable_type.find(params[:id])
+    end
+
+    def set_originable_type
+      @originable_type = Buttafly::Spreadsheet
     end
 
     def originable_params
