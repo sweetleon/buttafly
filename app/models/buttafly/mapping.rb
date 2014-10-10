@@ -3,12 +3,10 @@ module Buttafly
 
     #associations
     belongs_to :legend
-    belongs_to :originable, polymorphic: true
-    belongs_to :targetable, polymorphic: true
+    belongs_to :originable, polymorphic: true, class_name: "Buttafly::Spreadsheet"
 
     # validations
     validates :legend, presence: true
-    validates :targetable, presence: true
     validates :originable, presence: true
   end
 end

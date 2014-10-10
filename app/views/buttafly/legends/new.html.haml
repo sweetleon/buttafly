@@ -1,2 +1,8 @@
-%h1 Legends#new
-%p Find me in app/views/buttafly/legends/new.html.haml
+= form_for @mapping, html: { multipart: true} do |f|
+  = f.select :targetable_model, @targetable_models
+%br
+  / = @mapping.originable.name
+%br
+  / = @mapping.originable.
+%br
+  / # = @mapping.targetable_model}

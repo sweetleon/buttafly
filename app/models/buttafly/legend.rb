@@ -5,7 +5,7 @@ module Buttafly
     
     has_many :mappings
     has_many :targetable, through: :mappings
-    has_many :originable, through: :mappings
+    has_many :originable, through: :mappings, source_type: "Originable"
     
     def self.get_origin_keys(model, id)
       json_columns = []
@@ -52,6 +52,7 @@ module Buttafly
     end
 
     def self.targetable_models
+      Rails.application.eager_load!
       models = ActiveRecord::Base.descendants.select do |c| 
         c.included_modules.include?(Targetable)
       end
@@ -75,10 +76,13 @@ module Buttafly
 
     end
 
-    def map_origin_to_target(originable, target_model)
-
-      binding.pry
-    end
+    # def map_origin_to_target(originable, targetable_model)
+    #   mapping = self.mappings.new( originable_id: originable.id, 
+    #                         originable_type: originable.class,
+    #                         targetable_model: "blah")
+      
+    #   mapping.save
+    # end
    private
   
     @ignored_columns = ["created_at", "id", "updated_at"]

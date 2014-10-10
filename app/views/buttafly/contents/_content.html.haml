@@ -36,14 +36,14 @@
                 - if file.data && file.targetable.size == file.data.size
                   .label.success.round= file.targetable ? file.targetable.count : "no transactions" 
                 - else
-                  .label.alert.round= file.targetable ? file.targetable.size : "no transactions" 
+                  / .label.alert.round= file.targetable ? file.targetable.size : "no transactions" 
                 
             .small-6.columns
               
         .content{ "id" => "legend-#{file.id}"}
           %br
           .small-6.columns
-            = link_to "Create legend", new_legend_path(originable: {id: file.id, type: file.class }), class: "button"
+            = link_to "Create legend", new_legend_path(originable_id: file.id), class: "button"
           .small-6.columns
             %label
               Select Legend

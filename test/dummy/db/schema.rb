@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 20140930213614) do
     t.integer  "legend_id"
     t.integer  "originable_id"
     t.string   "originable_type"
-    t.string   "targetable_class"
+    t.string   "targetable_model"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

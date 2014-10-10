@@ -4,7 +4,7 @@ FactoryGirl.define do
   factory :mapping, :class => 'Buttafly::Mapping' do
 
     legend
-    targetable
+    targetable_model "DummyChild"
     originable
   end
 end

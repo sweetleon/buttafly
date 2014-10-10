@@ -11,15 +11,13 @@ describe "Buttafly::Mapping" do
       must_have_column(:legend_id, :integer)
       must_have_column(:originable_id, :integer)
       must_have_column(:originable_type)
-      must_have_column(:targetable_class, :string)
-      must_have_column(:targetable_type)
+      must_have_column(:targetable_model, :string)
     end
 
     specify "indexes" do 
 
       must_have_index(:legend_id)
       must_have_index([:originable_id, :originable_type])
-      must_have_index([:targetable_id, :targetable_type])
     end
   end
 
@@ -29,7 +27,6 @@ describe "Buttafly::Mapping" do
 
       must_belong_to(:legend)
       must_belong_to(:originable)
-      must_belong_to(:targetable)
     end    
   end
 
@@ -40,7 +37,6 @@ describe "Buttafly::Mapping" do
       mapping = create(:mapping)
       mapping.update(legend_id: nil)
       mapping.valid?.must_equal false
-
     end
   end
 end 

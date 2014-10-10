@@ -6,8 +6,12 @@ module Buttafly
     before_action :set_originable, on: :new
 
     def new
-      @mapping = @originable.mappings.new
-    
+      @legend = Buttafly::Legend.create
+      @mapping = @legend.mappings.new(
+        originable_id: @originable.id,
+        originable_type: Buttafly.originable)
+      binding.pry
+      @targetable_models = Buttafly::Legend.targetable_models
     end
 
     def show
@@ -25,7 +29,7 @@ module Buttafly
       @originable = Buttafly.originable.find(params[:originable_id])
     end
 
-    def originable_params
+    def legend_params
       params.require(:originable).permit(:name, :flat_file)
     end
   end
