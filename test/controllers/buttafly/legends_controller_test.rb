@@ -17,6 +17,11 @@ describe "Buttafly::LegendsController" do
     assert_not_nil assigns(:legend)
   end
 
+  it "must post create" do 
+skip
+    post :create
+  end
+
   # it "should get show" do
   #   get :show, id: legend.id
   #   assert_response :success

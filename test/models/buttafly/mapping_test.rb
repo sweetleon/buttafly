@@ -35,7 +35,7 @@ describe "Buttafly::Mapping" do
     it "must have a legend" do 
 
       mapping = create(:mapping)
-      mapping.update(legend_id: nil)
+      mapping.update(originable_id: nil)
       mapping.valid?.must_equal false
     end
   end

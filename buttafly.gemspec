@@ -29,9 +29,9 @@ Gem::Specification.new do |s|
   s.add_dependency "sass"
   s.add_dependency "kaminari"
   
-
   # development & testing
   s.add_development_dependency "minitest-spec-rails"
+  s.add_development_dependency "minitest-rails-capybara"
   s.add_development_dependency "pry"
   s.add_development_dependency "factory_girl"
   s.add_development_dependency "factory_girl_rails"

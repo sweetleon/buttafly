@@ -9,13 +9,14 @@ describe "Buttafly::ContentsController" do
   let(:spreadsheet) { create(:not_imported_file) }
 
   it "get #new must succeed" do
+
     get :new
     assert_response :success
     assert_not_nil assigns(:originable)
-    assert_not_nil assigns(:originable_type)
   end
 
   it "get #show must assign @originable" do
+
     get :show, id: spreadsheet.id
     assert_response :success
     assert_not_nil assigns(:originable)
@@ -50,7 +51,6 @@ describe "Buttafly::ContentsController" do
   end
   
   it "should get index" do
-    # skip
     get :index
     assert_response :success
     # assert_not_nil assigns :legend

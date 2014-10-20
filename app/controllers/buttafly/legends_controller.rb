@@ -10,7 +10,6 @@ module Buttafly
       @mapping = @legend.mappings.new(
         originable_id: @originable.id,
         originable_type: Buttafly.originable)
-      binding.pry
       @targetable_models = Buttafly::Legend.targetable_models
     end
 

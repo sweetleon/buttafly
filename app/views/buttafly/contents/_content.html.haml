@@ -6,14 +6,14 @@
         .small-4.columns= file.name
         .small-4.columns
           .label= file.aasm_state.humanize.downcase
-    .content{ "id" => "show-file-#{file.id}" }
+    .content.active{ "id" => "show-file-#{file.id}" }
       %dl.tabs{"data-tab" => ""}
-        %dd.active
-          %a.active{href: "#status-#{file.id}"} info
+        %dd
+          %a{href: "#status-#{file.id}"} info
         %dd
           %a{href: "#legend-#{file.id}"} legend
-        %dd
-          %a{href: "#panel2-3"} errors
+        %dd.active
+          %a{href: "#mappings-#{file.id}"} mapping
         %dd
           %a{href: "#panel2-4"} actions
       .tabs-content
@@ -51,8 +51,15 @@
               - @legends.each do |legend|
                 %option= legend.name
 
-        #panel2-3.content
-          %p Third panel content goes here...
+        .content{ "id" => "mappings-#{file.id}"}
+          .small-6.columns
+            %fieldset
+              %legend Create new mapping
+              = form_for(@mapping, url: { controller: "mappings", action: "create", originable_id: file.id}) do |f|
+                = f.label :targetable_model
+                = f.select :targetable_model, @targetable_models
+                = f.submit "Select Target Model", class: "button"
+
         #panel2-4.content
           .small-6.columns
             - file.aasm.events.each do |key|

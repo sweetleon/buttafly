@@ -40,7 +40,7 @@ describe "Buttafly::Legend" do
     it "#targetable_models" do 
       expected = ["DummyChild", "DummyParent", "DummyGrandparent"]
       models = subject.targetable_models
-      models.must_equal expected 
+      models.must_equal (models & expected) 
     end
   end
 

@@ -7,6 +7,8 @@ module Buttafly
     has_many :targetable, through: :mappings
     has_many :originable, through: :mappings, source_type: "Originable"
     
+    accepts_nested_attributes_for :mappings
+    
     def self.get_origin_keys(model, id)
       json_columns = []
       hash_of_keys = {}
@@ -61,6 +63,7 @@ module Buttafly
     end
 
     def self.originable_models      
+      Rails.application.eager_load!
       models = ActiveRecord::Base.descendants.select do |c| 
         c.included_modules.include?(Originable)
       end

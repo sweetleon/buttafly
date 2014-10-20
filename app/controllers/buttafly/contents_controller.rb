@@ -2,8 +2,8 @@ require_dependency "buttafly/application_controller"
 
 module Buttafly
   class ContentsController < ApplicationController
-    before_action :set_originable_type
-    before_action :set_originable, except: [:new, :create, :index]
+
+    before_action :set_originable, only: [:edit, :show, :import]
 
     def new
       @originable = Buttafly::Spreadsheet.new
@@ -42,29 +42,26 @@ module Buttafly
 
     def index
       if params[:state]
-        files = @originable_type.where(aasm_state: params[:state])
+        files = Buttafly.originable.where(aasm_state: params[:state])
       else
-        files = @originable_type.all
+        files = Buttafly.originable.all
       end
-      @originable = @originable_type.new
+      @originable = Buttafly.originable.new
       @contents = files.order(:created_at).page(params[:page]).per(5)
       @legends = Buttafly::Legend.all
       @mapping = Mapping.new
+      @targetable_models = Buttafly::Legend.targetable_models
+
     end
 
     private
 
     def set_originable
-      set_originable_type
-      @originable = @originable_type.find(params[:id])
-    end
-
-    def set_originable_type
-      @originable_type = Buttafly::Spreadsheet
+      @originable = Buttafly.originable.find(params[:id])
     end
 
     def originable_params
-      params.require(:originable).permit(:name, :flat_file)
+      params.require(:originable).permit(:name, :flat_file, :id)
     end
   end
 end
