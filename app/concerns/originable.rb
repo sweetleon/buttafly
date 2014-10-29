@@ -13,9 +13,9 @@ module Originable
     
     has_many :mappings, as: :originable
     has_many :legends, through: :mappings
-    has_many :targetable, through: :mappings, source: :targetable, source_type: "DummyChild"
+    # has_many :targetable, through: :mappings, source: :targetable, source_type: "DummyChild"
 
-    
+    validates :name, uniqueness: true
 
 
     mount_uploader :flat_file, Buttafly::FlatFileUploader

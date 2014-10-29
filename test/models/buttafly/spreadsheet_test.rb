@@ -85,15 +85,15 @@ require 'test_helper'
       
         it "#convert_data_to_json!" do
           file.convert_data_to_json!
-          file.data.first["child"].must_equal "Childe Harold"
-          file.data.first["mother"].must_equal "Momma Sue"
-          file.data.first["grandparent"].must_equal "Crotchety Carl"        
+          file.data.first["child"].must_equal "ella mac"
+          file.data.first["parent"].must_equal "sara"
+          file.data.first["grandparent"].must_equal "kc shekhar"        
         end
 
         it "must populate data column with json" do 
           file.import!
           file.data.first.wont_equal nil
-          file.data.size.must_equal 1 
+          file.data.size.must_equal 2 
           file.aasm_state.must_equal "imported"
         end
       end

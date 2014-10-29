@@ -1,8 +1,23 @@
 .row
   .small-12.columns
-    = form_for @mapping, html: { multipart: true} do |f|
+    .small-6.columns
+      = @mapping.targetable_model
+    = form_for @legend, html: { multipart: true} do |f|
       %fieldset 
-        %legend Create new legend: Step 1
-        = f.label :targetable_model
-        = f.select :targetable_model, @targetable_models
-        = f.submit "Select Target Model", class: "button"
+        = f.label :name
+        = f.text_field :name
+        / # - @legend.mapping.targetable_model do |tm|
+        / = field_set_tag tm do 
+
+          
+        / - @target_keys.keys.each do |parent|
+        /   = field_set_tag parent do 
+        /     - @target_keys[parent].each do |key|
+        /       = label_tag key
+        /       = text_field_tag key
+        / = f.text_field :col_sep
+        / = f.label :default_mapping
+        / = f.check_box :default_mapping
+        / %br
+        / = f.submit class: "button"
+

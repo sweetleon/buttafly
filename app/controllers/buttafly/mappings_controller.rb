@@ -30,6 +30,8 @@ module Buttafly
       @mapping = Buttafly::Mapping.new(mapping_params)    
       if @mapping.update(originable_type: Buttafly.originable.to_s)
         redirect_to :back, notice: "mapping created"
+      else
+        redirect_to :back, notice: "not good"
       end
     end
 

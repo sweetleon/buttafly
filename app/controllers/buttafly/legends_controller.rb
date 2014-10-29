@@ -3,14 +3,11 @@ require_dependency "buttafly/application_controller"
 module Buttafly
   class LegendsController < ApplicationController
 
-    before_action :set_originable, on: :new
+    before_action :set_legend, only: [:show, :edit, :update]
 
     def new
-      @legend = Buttafly::Legend.create
-      @mapping = @legend.mappings.new(
-        originable_id: @originable.id,
-        originable_type: Buttafly.originable)
-      @targetable_models = Buttafly::Legend.targetable_models
+      @mapping = Buttafly::Mapping.find(params[:mapping_id])
+      @legend = @mapping.build_legend
     end
 
     def show
@@ -24,12 +21,13 @@ module Buttafly
 
    private
 
-    def set_originable
-      @originable = Buttafly.originable.find(params[:originable_id])
+    def set_legend
+      @legend = Buttafly::Legend.find(params[:legend_id])
     end
 
     def legend_params
-      params.require(:originable).permit(:name, :flat_file)
+
+      params.require(:legend).permit(:name, :data, :cartographer_id, mapping: [ :id, :targetable_model, :originable_id ])
     end
   end
 end

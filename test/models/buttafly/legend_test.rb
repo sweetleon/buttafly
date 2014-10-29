@@ -111,10 +111,5 @@ describe "Buttafly::Legend" do
     let(:legend) { create(:legend) }
     let(:originable) { create(:spreadsheet) }
     
-    it "self.map_origin_to_target()" do 
-      skip
-      legend.(originable, DummyChild)
-      
-    end
   end
 end

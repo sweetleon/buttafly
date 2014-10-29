@@ -39,4 +39,15 @@ describe "Buttafly::Mapping" do
       mapping.valid?.must_equal false
     end
   end
+
+  let(:mapping) { create(:mapping) }
+
+  describe "#get_origin_headers" do 
+
+    it "must return headers" do 
+
+      headers = mapping.get_origin_headers
+      headers.must_equal %w[child parent grandparent tribe]
+    end
+  end
 end 

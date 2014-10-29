@@ -4,10 +4,11 @@
   .small-12.columns
     .row
       %h1 New
-      = render 'form'
     .row
-      %fieldset
-        = form_tag
+      .blah
+        %fieldset
+          .new-content-form
+            = render 'form'
 
   .row
     - @contents.each do |file|

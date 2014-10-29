@@ -86,7 +86,7 @@ module Buttafly
       
     #   mapping.save
     # end
-   private
+   # private
   
     @ignored_columns = ["created_at", "id", "updated_at"]
     @ignored_models = [:mapping, :spreadsheet, :legend]

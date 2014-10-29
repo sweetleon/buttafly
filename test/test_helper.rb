@@ -7,6 +7,7 @@ Dir[File.expand_path('test/support/*.rb')].each { |file| require file }
 
 require "rails/test_help"
 require "factory_girl_rails"
+require "minitest/rails/capybara"
 
 Rails.backtrace_cleaner.remove_silencers!
 

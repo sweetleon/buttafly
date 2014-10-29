@@ -1,9 +1,8 @@
+%legend blah
 = form_for :originable, url: { controller: "contents"}, :html => {:multipart => true} do |f|
-  %fieldset
-    = f.label :name
-    %br/
-    = f.text_field :name
-  %p
-    = f.label :flat_file
-    = f.file_field :flat_file
-  %p= f.submit "Upload file", class: "button"
+  = f.label :name
+  %br/
+  = f.text_field :name
+  = f.label :flat_file
+  = f.file_field :flat_file
+  = f.submit "Upload file", class: "button"

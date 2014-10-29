@@ -7,33 +7,28 @@ describe "Buttafly::LegendsController" do
   end
 
   let(:legend) { create(:legend) }
-  let(:originable) { create(:spreadsheet) }
+  let(:mapping) { create(:mapping) }
 
-  it "should get new" do
+  describe "GET #new" do 
 
-    get :new, originable_id: originable.id
-    assert_response :success
-    assert_not_nil assigns(:originable)
-    assert_not_nil assigns(:legend)
+    before do 
+      get :new, mapping_id: mapping.id
+    end
+
+    it "must succeed" do 
+      assert_response 200
+    end
+
+    it "must instantiate a legend from existing mapping" do 
+      assert_not_nil assigns(:legend)
+    end
+
   end
 
-  it "must post create" do 
-skip
-    post :create
+  describe "POST #create" do 
+
+    it "must create a new legend" do 
+
+    end
   end
-
-  # it "should get show" do
-  #   get :show, id: legend.id
-  #   assert_response :success
-  # end
-
-  # it "should get edit" do
-  #   get :edit, id: legend.id
-  #   assert_response :success
-  # end
-
-  # it "should get index" do
-  #   get :index
-  #   assert_response :success
-  # end
 end

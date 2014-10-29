@@ -43,6 +43,7 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
+    addressable (2.3.5)
     arel (5.0.1.20140414130214)
     builder (3.2.2)
     capybara (2.4.4)
@@ -106,6 +107,8 @@ GEM
     kaminari (0.16.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
+    launchy (2.3.0)
+      addressable (~> 2.3)
     listen (2.7.9)
       celluloid (>= 0.15.2)
       rb-fsevent (>= 0.9.3)
@@ -204,6 +207,7 @@ DEPENDENCIES
   foundation-rails
   guard-livereload
   guard-minitest
+  launchy
   minitest-rails-capybara
   minitest-spec-rails
   pry

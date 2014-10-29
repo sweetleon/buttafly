@@ -21,7 +21,7 @@ module Buttafly
       if @originable.save
         redirect_to contents_path, notice: "#{@originable.name} has been uploaded."
       else
-        render "new"
+        redirect_to :root, notice: "Could not upload content"
       end
     end
 

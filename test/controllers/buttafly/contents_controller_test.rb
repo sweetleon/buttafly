@@ -8,13 +8,6 @@ describe "Buttafly::ContentsController" do
 
   let(:spreadsheet) { create(:not_imported_file) }
 
-  it "get #new must succeed" do
-
-    get :new
-    assert_response :success
-    assert_not_nil assigns(:originable)
-  end
-
   it "get #show must assign @originable" do
 
     get :show, id: spreadsheet.id

@@ -20,6 +20,7 @@ guard :minitest do
   watch(%r{^test/.+_test\.rb$})
   watch(%r{^test/test_helper\.rb$}) { 'test' }
   watch(%r{^test/support/.+_helper\.rb$}) { 'test' }
+  watch(%r{^test/features/*\.rb$})
   
   watch(%r{^test/dummy/test/factories/(.+)\.rb$}) { 'test/meta/factories_test.rb' }
 

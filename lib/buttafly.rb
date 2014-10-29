@@ -11,4 +11,5 @@ module Buttafly
   require 'pry'
   require 'kaminari'
   require 'foundation-rails'
+  
 end

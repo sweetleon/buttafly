@@ -32,6 +32,7 @@ Gem::Specification.new do |s|
   # development & testing
   s.add_development_dependency "minitest-spec-rails"
   s.add_development_dependency "minitest-rails-capybara"
+  s.add_development_dependency "launchy"
   s.add_development_dependency "pry"
   s.add_development_dependency "factory_girl"
   s.add_development_dependency "factory_girl_rails"
