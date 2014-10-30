@@ -1,3 +1,5 @@
+/ - present @content do |content_presenter|
+
 %dl.accordion{"data-accordion" => ""}
   %dd.accordion-navigation
     %a{href: "#show-file-#{file.id}"} 
@@ -63,6 +65,7 @@
                     %th target model
                     %th legend name
                     %th target object count
+                    %th Actions
                 %tbody
                   - file.mappings.each do |m|
                     %tr
@@ -73,6 +76,7 @@
                           = m.legend.name
                         - else 
                           = link_to "new legend", new_legend_path(mapping_id: m.id)
+                      %td= link_to "destroy", mapping_path(id: m.id), method: "delete"
 
             .small-6.columns
               %fieldset

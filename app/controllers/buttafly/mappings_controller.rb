@@ -24,6 +24,12 @@ module Buttafly
     end
 
     def destroy
+      @mapping = Buttafly::Mapping.find(params[:id])
+      if @mapping.destroy
+        redirect_to :back, notice: "mapping destroyed"
+      else
+        redirect_to :back, notice: "can't destroy mapping"
+      end
     end
 
     def create

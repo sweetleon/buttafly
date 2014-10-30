@@ -8,6 +8,24 @@ module Buttafly
     # validations
     validates :originable, presence: true
 
+    def self.originable_models      
+      Rails.application.eager_load!
+      models = ActiveRecord::Base.descendants.select do |c| 
+        c.included_modules.include?(Originable)
+      end
+      model_names = models.map(&:name)
+      model_names
+    end
+
+    def self.targetable_models
+      Rails.application.eager_load!
+      models = ActiveRecord::Base.descendants.select do |c| 
+        c.included_modules.include?(Targetable)
+      end
+      model_names = models.map(&:name)
+      model_names
+    end
+
     def get_origin_headers
       data = CSV.read(self.originable.flat_file.path)
       data.first

@@ -42,6 +42,21 @@ describe "Buttafly::Mapping" do
 
   let(:mapping) { create(:mapping) }
 
+  describe "get eligible models" do 
+
+    it "#originable_models" do
+
+      models = subject.originable_models
+      models.first.must_equal "Buttafly::Spreadsheet"
+    end
+
+    it "#targetable_models" do 
+      expected = ["DummyChild", "DummyParent", "DummyGrandparent"]
+      models = subject.targetable_models
+      models.must_equal (models & expected) 
+    end
+  end
+
   describe "#get_origin_headers" do 
 
     it "must return headers" do 
