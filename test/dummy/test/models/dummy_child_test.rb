@@ -9,6 +9,7 @@ describe "DummyChild" do
     specify "columns & types" do 
 
       must_have_column(:name)
+      must_have_column(:age, :integer)
       must_have_column(:dummy_parent_id, :integer)
       must_have_column(:dummy_tribe_id, :integer)
     end

@@ -47,6 +47,7 @@ module Buttafly
 
     def self.get_target_keys(model)
       model.to_s.classify.constantize.column_names - @ignored_columns
+      # must also remove any column of _id, either pattern matching or by removing any foreign keys from 
     end
 
     def self.get_parent_models(model)

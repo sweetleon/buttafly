@@ -21,8 +21,9 @@ describe "Buttafly::LegendsController" do
 
     it "must instantiate a legend from existing mapping" do 
       assert_not_nil assigns(:legend)
+      assert_not_nil assigns(:mapping)
+      assert_not_nil assigns(:new_record)
     end
-
   end
 
   describe "POST #create" do 

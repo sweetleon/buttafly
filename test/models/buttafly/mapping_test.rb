@@ -51,9 +51,29 @@ describe "Buttafly::Mapping" do
     end
 
     it "#targetable_models" do 
-      expected = ["DummyChild", "DummyParent", "DummyGrandparent"]
+      expected = [
+        "DummyChild", 
+        "DummyParent", 
+        "DummyGrandparent",
+        "DummyTribe"
+      ]
       models = subject.targetable_models
       models.must_equal (models & expected) 
+    end
+
+    it "#targetable_order" do 
+      mapping.update(targetable_model: "DummyParent")
+      mapping.targetable_order.must_equal [ :dummy_tribe, :dummy_grandparent, :dummy_parent]
+    end
+
+    it "self#targetable_order()" do 
+      expected_order = [:dummy_tribe, :dummy_grandparent, :dummy_parent, :dummy_child]
+      subject.targetable_order.must_equal expected_order
+    end
+
+    it "self#targetable_order" do 
+      expected_order = [:dummy_tribe, :dummy_grandparent]
+      subject.targetable_order(:dummy_grandparent).must_equal expected_order
     end
   end
 
@@ -62,7 +82,7 @@ describe "Buttafly::Mapping" do
     it "must return headers" do 
 
       headers = mapping.get_origin_headers
-      headers.must_equal %w[child parent grandparent tribe]
+      headers.must_equal ["child name", "parent name", "grandparent name", "tribe name", "age"]
     end
   end
 end 

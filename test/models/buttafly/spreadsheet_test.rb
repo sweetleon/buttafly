@@ -85,9 +85,9 @@ require 'test_helper'
       
         it "#convert_data_to_json!" do
           file.convert_data_to_json!
-          file.data.first["child"].must_equal "ella mac"
-          file.data.first["parent"].must_equal "sara"
-          file.data.first["grandparent"].must_equal "kc shekhar"        
+          file.data.first["child name"].must_equal "ella mac"
+          file.data.first["parent name"].must_equal "sara"
+          file.data.first["grandparent name"].must_equal "kc shekhar"        
         end
 
         it "must populate data column with json" do 

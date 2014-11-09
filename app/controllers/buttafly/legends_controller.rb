@@ -8,6 +8,12 @@ module Buttafly
     def new
       @mapping = Buttafly::Mapping.find(params[:mapping_id])
       @legend = @mapping.build_legend
+      @headers = @mapping.get_origin_headers
+      @new_record = @mapping.targetable_model.constantize.new
+    end
+
+    def create
+binding.pry
     end
 
     def show

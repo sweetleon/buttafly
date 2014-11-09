@@ -1,5 +1,6 @@
 module Buttafly
   class Mapping < ActiveRecord::Base
+    require 'tsortable'
 
     # associations
     belongs_to :legend
@@ -24,6 +25,28 @@ module Buttafly
       end
       model_names = models.map(&:name)
       model_names
+    end
+
+    def targetable_order
+      dependency_hash = TsortableHash.new
+      Mapping.targetable_models.each do |m|
+        dependency_hash[m.underscore.to_sym] = m.constantize.validators.map(&:attributes).flatten
+      end
+      sorted_dependencies = dependency_hash.tsort
+      sorted_dependencies[0..sorted_dependencies.index(self.targetable_model.underscore.to_sym)]
+    end
+
+    def self.targetable_order(targetable_model=nil)
+      dependency_hash = TsortableHash.new
+      self.targetable_models.each do |m|
+        dependency_hash[m.underscore.to_sym] = m.constantize.validators.map(&:attributes).flatten
+      end
+      sorted_dependencies = dependency_hash.tsort
+      if targetable_model.nil?
+        sorted_dependencies
+      else
+        sorted_dependencies[0..sorted_dependencies.index(targetable_model)]
+      end
     end
 
     def get_origin_headers

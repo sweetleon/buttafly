@@ -1,23 +1,11 @@
 .row
   .small-12.columns
-    .small-6.columns
-      = @mapping.targetable_model
-    = form_for @legend, html: { multipart: true} do |f|
-      %fieldset 
-        = f.label :name
-        = f.text_field :name
-        / # - @legend.mapping.targetable_model do |tm|
-        / = field_set_tag tm do 
-
-          
-        / - @target_keys.keys.each do |parent|
-        /   = field_set_tag parent do 
-        /     - @target_keys[parent].each do |key|
-        /       = label_tag key
-        /       = text_field_tag key
-        / = f.text_field :col_sep
-        / = f.label :default_mapping
-        / = f.check_box :default_mapping
-        / %br
-        / = f.submit class: "button"
-
+    = form_for @legend do |f|
+      - @mapping.targetable_order.each do |model|
+        %fieldset
+          %legend= model.to_s.classify.constantize
+          = f.fields_for model do |mf|
+            - model.to_s.classify.constantize.targetable_attrs.each do |attribute|
+              = mf.label attribute
+              = mf.select attribute, @headers
+      = f.submit "create legend", class: "button" 
