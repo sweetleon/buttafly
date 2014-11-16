@@ -29,6 +29,7 @@ describe "Buttafly::LegendsController" do
   describe "POST #create" do 
 
     it "must create a new legend" do 
+      get :create, mapping_id: mapping.id
 
     end
   end

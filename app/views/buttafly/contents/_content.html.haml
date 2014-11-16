@@ -56,6 +56,17 @@
 
         .content.active{ "id" => "mappings-#{file.id}"}
           .small-12.columns
+            
+
+            .small-6.columns
+              %fieldset
+                %legend Create new mapping
+                = form_for(@mapping, url: { controller: "mappings", action: "create", originable_id: file.id}) do |f|
+                  = f.hidden_field :originable_id, value: file.id
+
+                  = f.label :targetable_model
+                  = f.select :targetable_model, @targetable_models
+                  = f.submit "Select Target Model", class: "button", method: :post
             .small-6.columns
               %h3 Mappings
               %table
@@ -77,16 +88,6 @@
                         - else 
                           = link_to "new legend", new_legend_path(mapping_id: m.id)
                       %td= link_to "destroy", mapping_path(id: m.id), method: "delete"
-
-            .small-6.columns
-              %fieldset
-                %legend Create new mapping
-                = form_for(@mapping, url: { controller: "mappings", action: "create", originable_id: file.id}) do |f|
-                  = f.hidden_field :originable_id, value: file.id
-
-                  = f.label :targetable_model
-                  = f.select :targetable_model, @targetable_models
-                  = f.submit "Select Target Model", class: "button", method: :post
 
         #panel2-4.content
           .small-6.columns

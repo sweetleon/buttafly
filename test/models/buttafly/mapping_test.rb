@@ -83,6 +83,6 @@ describe "Buttafly::Mapping" do
 
       headers = mapping.get_origin_headers
       headers.must_equal ["child name", "parent name", "grandparent name", "tribe name", "age"]
-    end
+    end 
   end
 end 
