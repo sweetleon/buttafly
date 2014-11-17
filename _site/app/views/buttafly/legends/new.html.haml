@@ -1,0 +1,13 @@
+.row
+  .small-12.columns
+    = form_for @legend do |f|
+      / = f.hidden_field :mapping_id, @mapping.id
+      - @mapping.targetable_order.each do |model|
+        %fieldset
+          %legend= model.to_s.classify.constantize
+          = f.fields_for model do |mf|
+            - model.to_s.classify.constantize.targetable_attrs.each do |attribute|
+              = mf.label attribute
+              = mf.select attribute, @headers
+            = model.to_s.classify.parent_models
+      = f.submit "create legend", class: "button" 
