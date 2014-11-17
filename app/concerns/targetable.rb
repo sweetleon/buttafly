@@ -39,5 +39,9 @@ module Targetable
       ignored_cols = meta_cols + foreign_key_cols
       mappable_columns = self.column_names - ignored_cols
     end
+
+    def parent_models
+      self.validators.map(&:attributes).flatten
+    end
   end
 end
