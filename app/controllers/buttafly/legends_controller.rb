@@ -8,12 +8,18 @@ module Buttafly
     def new
       @mapping = Buttafly::Mapping.find(params[:mapping_id])
       @legend = @mapping.build_legend
+      # binding.pry
       @headers = @mapping.get_origin_headers
       @new_record = @mapping.targetable_model.constantize.new
     end
 
     def create
-binding.pry
+      @legend = Buttafly::Legend.new(data: legend_params)
+      if @legend.save
+        redirect_to :back, notice: "legend created"
+      else
+        redirect_to :back, notice: "not good"
+      end
     end
 
     def show
@@ -33,7 +39,7 @@ binding.pry
 
     def legend_params
 
-      params.require(:legend).permit(:name, :data, :cartographer_id, mapping: [ :id, :targetable_model, :originable_id ])
+      params.require(:legend)
     end
   end
 end

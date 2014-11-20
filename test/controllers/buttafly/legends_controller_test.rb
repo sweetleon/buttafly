@@ -29,8 +29,9 @@ describe "Buttafly::LegendsController" do
   describe "POST #create" do 
 
     it "must create a new legend" do 
-      get :create, mapping_id: mapping.id
+skip          request.env['HTTP_REFERER'] = "/referring/url"
 
+      get :create, legend: {"dummy_tribe"=>{"name"=>"tribe name"}}  
     end
   end
 end

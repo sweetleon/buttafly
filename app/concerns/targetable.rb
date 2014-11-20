@@ -40,7 +40,8 @@ module Targetable
       mappable_columns = self.column_names - ignored_cols
     end
 
-    def parent_models
+    def self.parent_models
+      # self.reflect_on_all_associations(:belongs_to).first.class_name
       self.validators.map(&:attributes).flatten
     end
   end

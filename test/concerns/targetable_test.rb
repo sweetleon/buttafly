@@ -29,5 +29,9 @@ describe "Buttafly::targetable" do
       record.class.targetable_attrs.must_include "name"
       record.class.targetable_attrs.wont_include "dummy_tribe_id"
     end
+
+    it "#self.parent_models" do 
+      record.class.parent_models.must_include :dummy_parent
+    end
   end
 end
