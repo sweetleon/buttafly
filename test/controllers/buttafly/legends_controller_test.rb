@@ -28,10 +28,16 @@ describe "Buttafly::LegendsController" do
 
   describe "POST #create" do 
 
-    it "must create a new legend" do 
-skip          request.env['HTTP_REFERER'] = "/referring/url"
+    it "must be successful" do
+      post :create, legend: {"dummy_tribe"=>{"name"=>"tribe name"}}  
+      assert_response 302
+    end
 
-      get :create, legend: {"dummy_tribe"=>{"name"=>"tribe name"}}  
+    it "must add a new legend" do 
+
+      assert_difference('Buttafly::Legend.count', 1) do
+        post :create, legend: {"dummy_tribe"=>{"name"=>"tribe name"}}  
+      end
     end
   end
 end

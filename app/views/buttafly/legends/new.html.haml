@@ -2,6 +2,8 @@
   .small-12.columns
     = form_for @legend do |f|
       / = f.hidden_field :mapping_id, @mapping.id
+      = f.label :name
+      = f.text_field :name
       - @mapping.targetable_order.each do |model|
         %fieldset
           %legend= model.to_s.classify.constantize

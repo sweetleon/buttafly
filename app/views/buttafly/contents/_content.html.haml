@@ -84,7 +84,7 @@
                       %td= m.targetable_model
                       %td
                         - if m.legend 
-                          = m.legend.name
+                          = m.legend
                         - else 
                           = link_to "new legend", new_legend_path(mapping_id: m.id)
                       %td= link_to "destroy", mapping_path(id: m.id), method: "delete"

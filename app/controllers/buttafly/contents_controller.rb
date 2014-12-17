@@ -42,9 +42,9 @@ module Buttafly
 
     def index
       if params[:state]
-        files = Buttafly.originable.where(aasm_state: params[:state])
+        files = Buttafly.originable.where(aasm_state: params[:state]).order(created_at: :asc)
       else
-        files = Buttafly.originable.all
+        files = Buttafly.originable.all.order(created_at: :desc)
       end
       @originable = Buttafly.originable.new
       @contents = files.order(:created_at).page(params[:page]).per(5)

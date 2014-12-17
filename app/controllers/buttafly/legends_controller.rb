@@ -14,9 +14,10 @@ module Buttafly
     end
 
     def create
+      # binding.pry
       @legend = Buttafly::Legend.new(data: legend_params)
       if @legend.save
-        redirect_to :back, notice: "legend created"
+        redirect_to contents_path, notice: "legend created"
       else
         redirect_to :back, notice: "not good"
       end
