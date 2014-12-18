@@ -11,5 +11,6 @@
             - model.to_s.classify.constantize.targetable_attrs.each do |attribute|
               = mf.label attribute
               = mf.select attribute, @headers
-              = model.to_s.camelize.constantize.parent_models
+            - model.to_s.camelize.constantize.parent_models.each do |pm|
+              %fieldset= pm.to_s.classify.constantize
       = f.submit "create legend", class: "button" 
