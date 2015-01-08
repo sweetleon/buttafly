@@ -12,5 +12,10 @@
               = mf.label attribute
               = mf.select attribute, @headers
             - model.to_s.camelize.constantize.parent_models.each do |pm|
-              %fieldset= pm.to_s.classify.constantize
+              %fieldset
+                %legend= pm.to_s.classify.constantize.targetable_attrs 
+                / - pm.to_s.classify.constantize.targetable_attrs.each do |pattr|
+                / = pm.label pattr
+
+
       = f.submit "create legend", class: "button" 
