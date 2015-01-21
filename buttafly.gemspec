@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
 
-  s.add_dependency "rails", "~> 4.1.6"
+  s.add_dependency "rails", "~> 4.1"
   s.add_dependency "haml-rails", "~> 0.5.3"
   s.add_dependency "pg"
   s.add_dependency "aasm"
@@ -30,7 +30,6 @@ Gem::Specification.new do |s|
   s.add_dependency "kaminari"
   
   # development & testing
-  s.add_development_dependency "minitest-spec-rails"
   s.add_development_dependency "minitest-rails-capybara"
   s.add_development_dependency "launchy"
   s.add_development_dependency "pry"

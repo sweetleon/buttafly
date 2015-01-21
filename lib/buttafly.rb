@@ -5,7 +5,6 @@ module Buttafly
   require 'haml'
   require 'aasm'
   require 'carrierwave'
-  require 'minitest-spec-rails'
   require 'factory_girl_rails'
   require 'jquery-rails'
   require 'pry'
