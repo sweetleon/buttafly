@@ -9,7 +9,7 @@ PATH
       jquery-rails
       kaminari
       pg
-      rails (~> 4.1.6)
+      rails (~> 4.1)
       roo
       sass
 
@@ -134,9 +134,6 @@ GEM
       minitest-capybara (~> 0.7.0)
       minitest-metadata (~> 0.5.0)
       minitest-rails (~> 2.1)
-    minitest-spec-rails (5.0.4)
-      minitest (~> 5.0)
-      rails (~> 4.1.0.rc2)
     multi_json (1.10.1)
     nokogiri (1.6.3.1)
       mini_portile (= 0.6.0)
@@ -209,5 +206,4 @@ DEPENDENCIES
   guard-minitest
   launchy
   minitest-rails-capybara
-  minitest-spec-rails
   pry
