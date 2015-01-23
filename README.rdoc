@@ -7,7 +7,15 @@ Buttafly is a Rails engine designed to help you get production quality data into
 
 == Getting Started
 
-+word+
+Add it to your Gemfile with the following line:
+
+<tt>gem 'buttafly'</tt>
+
+Then from the command line run:
+
++$ bundle+
+
+
 
 == License
 
