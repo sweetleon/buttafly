@@ -1,3 +1,14 @@
 = Buttafly
 
+== Description
+
+---
+Buttafly is a Rails engine designed to help you get production quality data into your Rails application from spreadsheets. For example, if you have a wine review application where each review belongs to a wine, and each wine belongs to a winery, and need to create winery, wine, and review objects with the correct associations, it should do the trick.
+
+== Getting Started
+
++word+
+
+== License
+
 This project rocks and uses MIT-LICENSE.
