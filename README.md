@@ -1,4 +1,4 @@
-git # Buttafly
+# Buttafly
 
 ## Description
 
