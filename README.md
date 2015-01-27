@@ -2,22 +2,22 @@
 
 Buttafly is a ruby gem designed to help you manage bulk imports of real data into your Rails application with the desired associations. For example, let us say that your app tracks information on wineries -- indeed, the author's work on bacchan.al and bloocher.com is what inspired it. Each winery will have many wines, each wine will belong to a winery and have many reviews, and each wine review will belong to both a wine and to a reviewer. Your models might look like this:
 
-# app/models/winery.rb
 ```ruby
+# app/models/winery.rb
 has_many :wines
 
-# app/models/wine.rb
 ```ruby
+# app/models/wine.rb
 has_many :reviews
 belongs_to :winery
 ```
-# app/models/review.rb
 ```ruby
+# app/models/review.rb
 belongs_to :wine
 belongs_to :reviewer, class_name: "User"
 ```
-# app/models/user.rb
 ```ruby
+# app/models/user.rb
 has_many :reviews
 ```
 
