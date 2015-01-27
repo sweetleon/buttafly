@@ -27,7 +27,7 @@ has_many :reviews
 Let us also say that you have entered into an arrangement with a famous wine critic such as [Ken Zinns](http://www.grape-nutz.com/kenz/), in which he has agreed to let you publish a portion of his reviews. Unfortunately, wine critics are often busy men, and thus unlikely to use the user interface you've created, no matter how beautiful, in order to recreate each review -- to first find or create the winery in the system, then find or create the wine under that winery's list of wines, and then copy and paste in his review. But fortunately, Ken is willing to provide you his reviews in a .csv file that looks something like this:
 
 | Winery name   | Wine name     | Vintage | Rating | Review  |
-| ------------- |---------------| -----:|
+| ------------- |---------------|--------:|--------|---------| 
 | Ernest & Julio Gallo | Table Wine |  2009 | Egocentric yet oxymoronically fleshy Chenin Blanc. Shows bug spray, middle-aged raisin, scant pepper. Drink now through never. |
 
 
