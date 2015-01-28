@@ -1,49 +1,57 @@
 # Buttafly
 
-Buttafly is a ruby gem designed to help you manage bulk imports of real data into your Rails application with the desired associations. For example, let us say that your app tracks information on wineries -- indeed, the author's work on bacchan.al and bloocher.com is what inspired it. Each winery will have many wines, each wine will belong to a winery and have many reviews, and each wine review will belong to both a wine and to a reviewer. Your models might look like this:
+Buttafly is a [Rails engine](http://guides.rubyonrails.org/engines.html) that, once bolted onto your rails application, allows you to manage bulk imports of real data from spreadsheets into your Rails application. 
+
+## Por ejemplo
+
+Let us say that your app tracks information on wineries and that: 
+
+1. Each __winery__ *has many* __wines__ that have been produced under its imprimatur over the years.
+2. Each __wine__ will axiomatically *belong to* a __winery__, and also *has many* __reviews__ written about it.
+3. Each wine __review__ *belongs to* both the __wine__ it is written about, and to the __reviewer__ who wrote it. 
+
+Your models might look like this:
 
 ```ruby
-# app/models/winery.rb
+# in app/models/winery.rb
+
 has_many :wines
 ```
 
 ```ruby
-# app/models/wine.rb
+# in app/models/wine.rb
+
 has_many :reviews
 belongs_to :winery
 ```
 
 ```ruby
-# app/models/review.rb
+# in app/models/review.rb
+
 belongs_to :wine
 belongs_to :reviewer, class_name: "User"
 ```
 
 ```ruby
-# app/models/user.rb
+# in app/models/user.rb
+
 has_many :reviews
 ```
 
-Let us also say that you have entered into an arrangement with a famous wine critic such as [Ken Zinns](http://www.grape-nutz.com/kenz/), in which he has agreed to let you publish a portion of his reviews. Unfortunately, wine critics are often busy men, and thus unlikely to use the user interface you've created, no matter how beautiful, in order to recreate each review -- to first find or create the winery in the system, then find or create the wine under that winery's list of wines, and then copy and paste in his review. But fortunately, Ken is willing to provide you his reviews in a .csv file that looks something like this:
+Let us also say that you have entered into an arrangement with a famous wine critic in which she has agreed to let you publish a portion of her reviews. She isn't willing to recreate them on the site by hand, but she is willing to share them with you as a spreadsheet that looks something like this:
 
-| Winery name   | Wine name     | Vintage | Rating | Review  |
-| ------------- |---------------|--------:|--------|---------| 
-| Ernest & Julio Gallo | Table Wine |  2009 | Egocentric yet oxymoronically fleshy Chenin Blanc. Shows bug spray, middle-aged raisin, scant pepper. Drink now through never. |
+| Winery name           | Wine name     | Vintage | Rating  | Review  |
+| --------------        |---------------|--------:|-------- |---------| 
+| Ernie & Julio Gallows | chenin blanc  | 2009    | 82      | Egocentric yet oxymoronically fleshy Chenin Blanc. Shows bug spray, middle-aged raisin, scant pepper. Drink now through never. |
+| Charles Shah          | pinot noir    | 2008    | 83      | Nearly matured and corpulent Pinot Noir. Essenses of mint, sad dog-breath, perceptable fois gras. Drink now through 2015. |
+| Boone's               | semillon      | 2003    | 99      | [Overdressed nevertheless complex and stunning Semillon. Shows kalamata olive, hedonistic nectarine, bashful tomato. Drink now through Friday.] |
 
+Enter Buttafly. Once installed, you can upload this spreadsheet directly into your application. Once uploaded Buttafly knows which models are targetable, as well as the required associations, and allows you to map the headers from the spreadsheet (or just the first row) to preOnce the spreadsheet is uploaded buttafly reads the headers from it, and asks which objects you are trying to create based on the models it recognizes in your app. In the winery example above, you would create a number of mappings:
 
-The alternative is that you can hire someone to put them into your app for you, or you can write a script
+1. A mapping for wineries using the winery name.
+2. A mapping for the wine using the wine name and vintage, and the winery_id which is found by the winery name above.
+3. A mapping for the review using the wine_id above as well as the user_id found by your choice of unique identifier on the user model.  
 
-
-, in order to manually search for each winery, or create it if it doesn't exist, and then create a wine if it doesn't exist, and perhaps even create the winery as well, before cutting and pasting his review. But he might be willing to give you a spreadsheet, the rows of which might look like so:
-
-winery 
-
-
- Let's say you
-
-let's say you have a .csv file with wine reviews, and you if you have a wine application where each review belongs to a wine and a user, and each wine belongs to a winery, it allows you to find or create the user and build a review object with the user's user_id and a wine_id. If 
-
-a [Rails engine](http://guides.rubyonrails.org/engines.html) 
 ## Getting Started
 
 Add buttafly to your Gemfile with the following line:
@@ -57,7 +65,6 @@ Then from the command line:
 ```console
 bundle install
 ```
-
 
 
 ## License
