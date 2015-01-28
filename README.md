@@ -14,23 +14,27 @@ Your model associatons might look like this:
 
 ```ruby
 # in app/models/winery.rb
-
+```
+```ruby
 has_many :wines
-
+```
+```ruby
 # in app/models/wine.rb
 
 has_many :reviews
 belongs_to :winery
 
 validates :winery, presence: true
-
+```
+```ruby
 # in app/models/review.rb
 
 belongs_to :wine
 belongs_to :reviewer, class_name: "User"
 
 validates :reviewer, :wine, presence: true
-
+```
+```ruby
 # in app/models/user.rb
 
 has_many :reviews, foreign_key: :reviewer_id
