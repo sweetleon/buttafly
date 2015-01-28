@@ -14,8 +14,7 @@ Your model associatons might look like this:
 
 ```ruby
 # in app/models/winery.rb
-```
-```ruby
+
 has_many :wines
 ```
 ```ruby
