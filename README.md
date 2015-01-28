@@ -10,35 +10,33 @@ Let us say that your app tracks information on wineries and that:
 2. Each __wine__ will axiomatically *belong to* a __winery__, and also *has many* __reviews__ written about it.
 3. Each wine __review__ *belongs to* both the __wine__ it is written about, and to the __reviewer__ who wrote it. 
 
-Your models might look like this:
+Your model associatons might look like this:
 
 ```ruby
 # in app/models/winery.rb
 
 has_many :wines
-```
 
-```ruby
 # in app/models/wine.rb
 
 has_many :reviews
 belongs_to :winery
-```
 
-```ruby
+validates :winery, presence: true
+
 # in app/models/review.rb
 
 belongs_to :wine
 belongs_to :reviewer, class_name: "User"
-```
 
-```ruby
+validates :reviewer, :wine, presence: true
+
 # in app/models/user.rb
 
-has_many :reviews
+has_many :reviews, foreign_key: :reviewer_id
 ```
 
-Let us also say that you have entered into an arrangement with a famous wine critic in which she has agreed to let you publish a portion of her reviews. She isn't willing to recreate them on the site by hand, but she is willing to share them with you as a spreadsheet that looks something like this:
+Let us also say that you have entered into an arrangement with a famous wine critic in which she has agreed to let you publish some of her reviews. She isn't willing to recreate them in your app by hand, but she is willing to provide you a spreadsheet that looks something like this:
 
 | Winery name           | Wine name     | Vintage | Rating  | Review  |
 | --------------        |---------------|--------:|-------- |---------| 
