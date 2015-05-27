@@ -55,11 +55,11 @@ Let us also say that you have entered into an arrangement with an infamous wine 
 | Charles Shah          | pinot noir    | 2008    | 83      | Nearly matured and corpulent Pinot Noir. Essenses of mint, sad dog-breath, perceptable fois gras. Drink now through 2015. |
 | Duckhorndog           | semillon      | 2003    | 99      | Overdressed nevertheless complex and stunning Semillon. Shows kalamata olive, hedonistic nectarine, bashful tomato. Drink now through Friday. |
 
-You could of course hand the above spreadsheet to an intern, and ask them to navigate your applicaton to create the reviews, wineries, and wineries all by hand. Alternatively you might commission a highly paid Ruby on Rails developer to write a script to do the smae thing. But what if this spreadsheet is only the first of many, from many different wine critics, who will be giving you spreadsheets in different formats? 
+You could of course hand the above spreadsheet to an intern, and ask them to navigate your applicaton to create the reviews, wineries, and wineries all by hand. Alternatively you might commission a highly paid Ruby on Rails developer to write a script to do the same thing. But what if this spreadsheet is only the first of many, from different wine critics, each of which will have slightly different headers and columns? 
 
 This is where Buttafly comes in.
 
-Once installed, you can upload a spreadsheet such as the above into a spreadsheet table, which buttafly can then parse. Buttafly knows about your application's models, associations, and validations, and gives you an interface for mapping your spreadsheet columns to attributes in your application's models. For the spreadsheet example above, you would first create mapping for wineries, then one for wines that belong to those wineries, then users, and then a final mapping for the review which can then be properly associated as belonging to both the user who wrote it and the wine which is its subject. Once the mappings are created, you may then import the spreadsheet and it will create the correct wineries, wines, users and reviews. 
+Once installed, you can upload a spreadsheet such as the above into a spreadsheet table, which buttafly can then parse. Buttafly knows about your application's models, associations, and validations, and gives you an interface for mapping your spreadsheet columns to attributes in your application's models. For the spreadsheet example above, you would first create a mapping for wineries, then one for wines that belong to those wineries, then users, and then a final mapping for the review which can then be properly associated as belonging to both the user who wrote it and the wine which is its subject. Once the mappings are created, you may then import the spreadsheet and it will create the correct wineries, wines, users and reviews. 
 
 
 ## Getting Started
@@ -74,6 +74,7 @@ Then from the command line:
 
 ```console
 bundle install
+rake db:migrate
 ```
 
 
