@@ -59,7 +59,7 @@ You could of course hand the above spreadsheet to an intern, and ask them to nav
 
 This is where Buttafly comes in.
 
-Once installed, you can upload a spreadsheet such as the above into a spreadsheet table, which buttafly can then parse. Buttafly knows about your application's models, associations, and validations, and gives you an interface for mapping your spreadsheet columns to attributes in your application's models. For the spreadsheet example above, you would first create a mapping for wineries, then one for wines that belong to those wineries, then users, and then a final mapping for the review which can then be properly associated as belonging to both the user who wrote it and the wine which is its subject. Once the mappings are created, you may then import the spreadsheet and it will create the correct wineries, wines, users and reviews. 
+Once installed, you can upload a spreadsheet such as the above into a spreadsheet table, which buttafly can then parse. Buttafly knows about your application's models, associations, and validations, and gives you an interface for mapping your spreadsheet columns to attributes in your application's models. For the spreadsheet example above, you would first create a mapping for wineries, then one for wines that belong to those wineries, then users, and then a final mapping for the review which can then be properly associated as belonging to both the user who wrote it and to the wine which is its subject. Once the mappings are created, you can then import the spreadsheet and it will use the mappings to create the correct associated winery, wine, user and review objects. 
 
 
 ## Getting Started
