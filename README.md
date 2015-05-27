@@ -76,8 +76,8 @@ Then from the command line:
 bundle install
 rake db:migrate
 ```
-
+Then navigate to localhost:3000/buttafly.
 
 ## License
 
-[MIT-LICENSE](http://en.wikipedia.org/wiki/MIT_License)
+[MIT-LICENSE](http://en.wikip edia.org/wiki/MIT_License)
