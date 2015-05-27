@@ -76,7 +76,7 @@ Then from the command line:
 bundle install
 rake db:migrate
 ```
-Try it in development first, but navigating to [localhost:3000/buttafly](localhost:3000/buttafly).
+Try it in development first by navigating to [localhost:3000/buttafly](localhost:3000/buttafly).
 
 
 ## License
