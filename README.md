@@ -1,25 +1,20 @@
-                                                            .---.                
-    /|                                                      |   |                
-    ||                                                 _.._ |   |.-.          .- 
-    ||                      .|       .|              .' .._||   | \ \        / / 
-    ||  __                .' |_    .' |_     __      | '    |   |  \ \      / /  
-    ||/'__ '.   _    _  .'     | .'     | .:--.'.  __| |__  |   |   \ \    / /   
-    |:/`  '. ' | '  / |'--.  .-''--.  .-'/ |   \ ||__   __| |   |    \ \  / /    
-    ||     | |.' | .' |   |  |     |  |  `" __ | |   | |    |   |     \ `  /     
-    ||\    / '/  | /  |   |  |     |  |   .'.''| |   | |    |   |      \  /      
-    |/\'..' /|   `'.  |   |  '.'   |  '.'/ /   | |_  | |    '---'      / /       
-    '  `'-'` '   .'|  '/  |   /    |   / \ \._,\ '/  | |           |`-' /        
-              `-'  `--'   `'-'     `'-'   `--'  `"   |_|            '..'         
+     _           _   _         __ _       
+    | |__  _   _| |_| |_ __ _ / _| |_   _ 
+    | '_ \| | | | __| __/ _` | |_| | | | |
+    | |_) | |_| | |_| || (_| |  _| | |_| |
+    |_.__/ \__,_|\__|\__\__,_|_| |_|\__, |
+                                    |___/ 
+
 
 # Buttafly
 
-Buttafly is a [Rails engine](http://guides.rubyonrails.org/engines.html) that, once bolted onto your rails application, allows you to manage bulk imports of real data from spreadsheets into your Rails application. 
+Buttafly is a [Rails engine](http://guides.rubyonrails.org/engines.html). Once bolted onto your rails application, it allows you to manage bulk imports of real data from spreadsheets into your Rails application, complete with the correct associations. 
 
-## Por ejemplo
+## Example
 
 Let us say that your app tracks information on wineries and that: 
 
-1. Each __winery__ *has many* __wines__ that have been produced under its imprimatur over the years.
+1. Each __winery__ *has many* __wines__ that have been produced under its imprimatur in a number of different vintages.
 2. Each __wine__ will axiomatically *belong to* a __winery__, and also *has many* __reviews__ written about it.
 3. Each wine __review__ *belongs to* both the __wine__ it is written about, and to the __reviewer__ who wrote it. 
 
@@ -64,7 +59,8 @@ You could of course hand the spreadsheet to an intern to enter by hand, or write
 
 This is where Buttafly comes in.
 
-Once installed, you can upload spreadsheets into your application. Buttafly knows about your app models, associations, and validations, and gives you a ui and a ui to map spreadsheet headein the exampel above allows you to create a number of mappingmap
+Once installed, you can upload a spreadsheet such as the above into a spreadsheet table which buttafly can then parse. Buttafly knows about your application's models, associations, and validations, and gives you an interface that allows you to first map your spreadsheet columns to the attributes in your application's models. For the spreadsheet example above, you would first create a mapping to , before importinfor mapping different elements 
+
 
 Once uploaded Buttafly knows which models are targetable, as well as the required associations, and allows you to map the headers from the spreadsheet (or just the first row) to preOnce the spreadsheet is uploaded buttafly reads the headers from it, and asks which objects you are trying to create based on the models it recognizes in your app. In the winery example above, you would create a number of mappings:
 
