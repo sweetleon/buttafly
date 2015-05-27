@@ -1,3 +1,17 @@
+                                                                             
+                                                        .---.                
+/|                                                      |   |                
+||                                                 _.._ |   |.-.          .- 
+||                      .|       .|              .' .._||   | \ \        / / 
+||  __                .' |_    .' |_     __      | '    |   |  \ \      / /  
+||/'__ '.   _    _  .'     | .'     | .:--.'.  __| |__  |   |   \ \    / /   
+|:/`  '. ' | '  / |'--.  .-''--.  .-'/ |   \ ||__   __| |   |    \ \  / /    
+||     | |.' | .' |   |  |     |  |  `" __ | |   | |    |   |     \ `  /     
+||\    / '/  | /  |   |  |     |  |   .'.''| |   | |    |   |      \  /      
+|/\'..' /|   `'.  |   |  '.'   |  '.'/ /   | |_  | |    '---'      / /       
+'  `'-'` '   .'|  '/  |   /    |   / \ \._,\ '/  | |           |`-' /        
+          `-'  `--'   `'-'     `'-'   `--'  `"   |_|            '..'         
+
 # Buttafly
 
 Buttafly is a [Rails engine](http://guides.rubyonrails.org/engines.html) that, once bolted onto your rails application, allows you to manage bulk imports of real data from spreadsheets into your Rails application. 
