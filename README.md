@@ -15,8 +15,8 @@ Buttafly is a [Rails engine](http://guides.rubyonrails.org/engines.html). Once b
 Let us say that your app tracks information on wineries and that: 
 
 1. Each __winery__ *has many* __wines__ that have been produced under its imprimatur in a number of different vintages.
-2. Each __wine__ will axiomatically *belong to* a __winery__, and also *has many* __reviews__ written about it.
-3. Each wine __review__ *belongs to* both the __wine__ it is written about, and to the __reviewer__ who wrote it. 
+2. Each __wine__ axiomatically *belongs to* a __winery__, and also *has many* __reviews__ written about it.
+3. Each wine __review__ *belongs to* both the __wine__ of which it is a subject, and to the __reviewer__ who wrote it. 
 
 Your model associatons might look like this:
 
@@ -47,26 +47,20 @@ validates :reviewer, :wine, presence: true
 has_many :reviews, foreign_key: :reviewer_id
 ```
 
-Let us also say that you have entered into an arrangement with an infamous wine critic, in which she has agreed to let you publish some of her reviews. She isn't willing to recreate the reviews in your app by hand, but she has condescended to provide you a spreadsheet which looks something like this:
+Let us also say that you have entered into an arrangement with an infamous wine critic, in which she has agreed to let you publish some of her reviews. She isn't willing to recreate the reviews in your app by hand, but she has condescended to provide you a spreadsheet which might look something like this:
 
 | Winery name           | Wine name     | Vintage | Rating  | Review  |
 | --------------        |---------------|--------:|-------- |---------| 
 | Ernie & Julio Gallows | chenin blanc  | 2009    | 82      | Egocentric yet oxymoronically fleshy Chenin Blanc. Shows bug spray, middle-aged raisin, scant pepper. Drink now through never. |
 | Charles Shah          | pinot noir    | 2008    | 83      | Nearly matured and corpulent Pinot Noir. Essenses of mint, sad dog-breath, perceptable fois gras. Drink now through 2015. |
-|                | semillon      | 2003    | 99      | Overdressed nevertheless complex and stunning Semillon. Shows kalamata olive, hedonistic nectarine, bashful tomato. Drink now through Friday. |
+| Duckhorndog           | semillon      | 2003    | 99      | Overdressed nevertheless complex and stunning Semillon. Shows kalamata olive, hedonistic nectarine, bashful tomato. Drink now through Friday. |
 
-You could of course hand the spreadsheet to an intern to enter by hand, or write a script; but what if this is only the first of many wine critics who will be giving you spreadsheets? What if you have other types of objects you'd like to create? 
+You could of course hand the above spreadsheet to an intern, and ask them to navigate your applicaton to create the reviews, wineries, and wineries all by hand. Alternatively you might commission a highly paid Ruby on Rails developer to write a script to do the smae thing. But what if this spreadsheet is only the first of many, from many different wine critics, who will be giving you spreadsheets in different formats? 
 
 This is where Buttafly comes in.
 
-Once installed, you can upload a spreadsheet such as the above into a spreadsheet table which buttafly can then parse. Buttafly knows about your application's models, associations, and validations, and gives you an interface that allows you to first map your spreadsheet columns to the attributes in your application's models. For the spreadsheet example above, you would first create a mapping to , before importinfor mapping different elements 
+Once installed, you can upload a spreadsheet such as the above into a spreadsheet table, which buttafly can then parse. Buttafly knows about your application's models, associations, and validations, and gives you an interface for mapping your spreadsheet columns to attributes in your application's models. For the spreadsheet example above, you would first create mapping for wineries, then one for wines that belong to those wineries, then users, and then a final mapping for the review which can then be properly associated as belonging to both the user who wrote it and the wine which is its subject. Once the mappings are created, you may then import the spreadsheet and it will create the correct wineries, wines, users and reviews. 
 
-
-Once uploaded Buttafly knows which models are targetable, as well as the required associations, and allows you to map the headers from the spreadsheet (or just the first row) to preOnce the spreadsheet is uploaded buttafly reads the headers from it, and asks which objects you are trying to create based on the models it recognizes in your app. In the winery example above, you would create a number of mappings:
-
-1. A mapping for wineries using the winery name.
-2. A mapping for the wine using the wine name and vintage, and the winery_id which is found by the winery name above.
-3. A mapping for the review using the wine_id above as well as the user_id found by your choice of unique identifier on the user model.  
 
 ## Getting Started
 
