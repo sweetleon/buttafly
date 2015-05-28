@@ -78,7 +78,20 @@ rake db:migrate
 ```
 Try it in development first by navigating to [localhost:3000/buttafly](localhost:3000/buttafly).
 
+## Contributing
 
+After cloning the application, bundling its gems, and migrating the database, you can run your tests with guard from the root of the engine itself:
+
+```console
+cd /buttafly
+bundle exec guard
+```
+To see buttafly running from a dummy app, 
+
+```console
+cd /buttafly/test/dummy
+bundle exec rails s
+```
 ## License
 
 [MIT-LICENSE](http://en.wikip edia.org/wiki/MIT_License)
