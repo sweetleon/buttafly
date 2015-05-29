@@ -7,8 +7,8 @@ module Buttafly
 
     def new
       # binding.pry
-      # @originable = Buttafly.originable.find(id: params[:originable_id])
-      # legends = Mapping.where(targetable_model: params).map(&:legend_id)
+      @originable = Buttafly.originable.find(id: params[:originable_id])
+      legends = Mapping.where(targetable_model: params).map(&:legend_id)
     end
 
     def show
