@@ -8,7 +8,7 @@
 
 # Buttafly
 
-Buttafly is a [Rails engine](http://guides.rubyonrails.org/engines.html) which, once bolted onto your [Ruby on Rails](http://rubyonrails.org/) application, lets you import real data from spreadsheets into your database, complete with the correct associations. 
+Buttafly is a [Rails engine](http://guides.rubyonrails.org/engines.html) which, once bolted onto your [Ruby on Rails](http://rubyonrails.org/) application, lets you import real data from spreadsheets into your [postgres](http://www.postgresql.org/) database, complete with the correct associations to parent records. 
 
 ## Example
 
