@@ -1,34 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-us">
   <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
-
+    <meta charset="UTF-8">
     <title>Buttafly by schadenfred</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
   </head>
-
   <body>
+    <section class="page-header">
+      <h1 class="project-name">Buttafly</h1>
+      <h2 class="project-tagline">Import csv rows to your Rails application, and create correctly associated database objects.</h2>
+      <a href="https://github.com/schadenfred/buttafly" class="btn">View on GitHub</a>
+      <a href="https://github.com/schadenfred/buttafly/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/schadenfred/buttafly/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
 
-    <header>
-      <div class="container">
-        <h1>Buttafly</h1>
-        <h2>Import csv rows to your Rails application, and create correctly associated database objects.</h2>
-
-        <section id="downloads">
-          <a href="https://github.com/schadenfred/buttafly/zipball/master" class="btn">Download as .zip</a>
-          <a href="https://github.com/schadenfred/buttafly/tarball/master" class="btn">Download as .tar.gz</a>
-          <a href="https://github.com/schadenfred/buttafly" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
-        </section>
-      </div>
-    </header>
-
-    <div class="container">
-      <section id="main_content">
-        <pre><code> _           _   _         __ _       
+    <section class="main-content">
+      <pre><code> _           _   _         __ _       
 | |__  _   _| |_| |_ __ _ / _| |_   _ 
 | '_ \| | | | __| __/ _` | |_| | | | |
 | |_) | |_| | |_| || (_| |  _| | |_| |
@@ -39,7 +30,7 @@
 <h1>
 <a id="buttafly" class="anchor" href="#buttafly" aria-hidden="true"><span class="octicon octicon-link"></span></a>Buttafly</h1>
 
-<p>Buttafly is a <a href="http://guides.rubyonrails.org/engines.html">Rails engine</a>. Once bolted onto your rails application, it allows you to manage bulk imports of real data from spreadsheets into your Rails application, complete with the correct associations. </p>
+<p>Buttafly is a <a href="http://guides.rubyonrails.org/engines.html">Rails engine</a> which, once you bolt it onto your [Ruby on Rails] application allows you to import real data from spreadsheets into your database, complete with the correct associations. </p>
 
 <h2>
 <a id="example" class="anchor" href="#example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example</h2>
@@ -47,12 +38,12 @@
 <p>Let us say that your app tracks information on wineries and that: </p>
 
 <ol>
-<li>Each <strong>winery</strong> <em>has many</em> <strong>wines</strong> that have been produced under its imprimatur in a number of different vintages.</li>
+<li>Each <strong>winery</strong> <em>has many</em> <strong>wines</strong> that have been produced under its imprimatur, in a number of different years or "vintages."</li>
 <li>Each <strong>wine</strong> axiomatically <em>belongs to</em> a <strong>winery</strong>, and also <em>has many</em> <strong>reviews</strong> written about it.</li>
-<li>Each wine <strong>review</strong> <em>belongs to</em> both the <strong>wine</strong> of which it is a subject, and to the <strong>reviewer</strong> who wrote it. </li>
+<li>Each wine <strong>review</strong> <em>belongs to</em> both the <strong>wine</strong> of which it is a subject, and to the <strong>reviewer</strong> who reviewed it. </li>
 </ol>
 
-<p>Your model associatons might look like this:</p>
+<p>Your model associatons might look something like this:</p>
 
 <div class="highlight highlight-ruby"><pre><span class="pl-c"># in app/models/winery.rb</span>
 
@@ -76,7 +67,7 @@ validates <span class="pl-c1">:reviewer</span>, <span class="pl-c1">:wine</span>
 
 has_many <span class="pl-c1">:reviews</span>, <span class="pl-c1">foreign_key:</span> <span class="pl-c1">:reviewer_id</span></pre></div>
 
-<p>Let us also say that you have entered into an arrangement with an infamous wine critic, in which she has agreed to let you publish some of her reviews. She isn't willing to recreate the reviews in your app by hand, but she has condescended to provide you a spreadsheet which might look something like this:</p>
+<p>Let us also say that you have entered into an arrangement with an infamous wine critic, in which she has agreed to let you publish some of her reviews. She isn't willing to recreate the reviews in your app by hand, but she has condescended to provide you a spreadsheet, the first few rows of which might look something like these:</p>
 
 <table>
 <thead>
@@ -113,9 +104,9 @@ has_many <span class="pl-c1">:reviews</span>, <span class="pl-c1">foreign_key:</
 </tbody>
 </table>
 
-<p>You could of course hand the above spreadsheet to an intern, and ask them to navigate your applicaton to create the reviews, wineries, and wineries all by hand. Alternatively you might commission a highly paid Ruby on Rails developer to write a script to do the same thing. But what if this spreadsheet is only the first of many, from different wine critics, each of which will have slightly different headers and columns? </p>
+<p>Great! Now to get those reviews into your database with the correct associations! If there aren't too many reviews, you can hand them off to an intern and ask her to navigate your applicaton to create the reviews, wineries, and wineries all by hand and with the correct associations. Alternatively you might commission a developer to write a script that could do the same thing. But what if this spreadsheet is only the first of many, from a diverse group of infamous wine critics, each of which has slightly different headers and columns? </p>
 
-<p>This is where Buttafly comes in.</p>
+<p>This is where Buttafly is designed to help out.</p>
 
 <p>Once installed, you can upload a spreadsheet such as the above into a spreadsheet table, which buttafly can then parse. Buttafly knows about your application's models, associations, and validations, and gives you an interface for mapping your spreadsheet columns to attributes in your application's models. For the spreadsheet example above, you would first create a mapping for wineries, then one for wines that belong to those wineries, then users, and then a final mapping for the review which can then be properly associated as belonging to both the user who wrote it and to the wine which is its subject. Once the mappings are created, you can then import the spreadsheet and it will use the mappings to create the correct associated winery, wine, user and review objects. </p>
 
@@ -150,9 +141,16 @@ has_many <span class="pl-c1">:reviews</span>, <span class="pl-c1">foreign_key:</
 <a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
 
 <p><a href="http://en.wikip%20edia.org/wiki/MIT_License">MIT-LICENSE</a></p>
-      </section>
-    </div>
 
-    
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/schadenfred/buttafly">Buttafly</a> is maintained by <a href="https://github.com/schadenfred">schadenfred</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
   </body>
 </html>
+
