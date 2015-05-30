@@ -29,14 +29,16 @@ module Originable
 
       event :import do 
         transitions from: [:not_imported, :imported], 
-                    to: :imported, 
-                    on_transition: -> f { f.set_transition_timestamp :imported }
+                    to: :imported
+                    # , 
+                    # on_transition: -> f { f.set_transition_timestamp :imported }
       end
 
       event :publish do 
         transitions from: [:imported, :unpublished],
-                    to: :published, 
-                    on_transition: -> f { f.set_transition_timestamp :published}
+                    to: :published
+                    # , 
+                    # on_transition: -> f { f.set_transition_timestamp :published}
       end
 
       event :unpublish do 

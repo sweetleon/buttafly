@@ -47,7 +47,7 @@ describe "Buttafly::Mapping" do
     it "#originable_models" do
 
       models = subject.originable_models
-      models.first.must_equal "Buttafly::Spreadsheet"
+      assert_equal models.first, "Buttafly::Spreadsheet"
     end
 
     it "#targetable_models" do 
