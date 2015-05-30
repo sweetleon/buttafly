@@ -8,17 +8,17 @@
 
 # Buttafly
 
-Buttafly is a [Rails engine](http://guides.rubyonrails.org/engines.html). Once bolted onto your rails application, it allows you to manage bulk imports of real data from spreadsheets into your Rails application, complete with the correct associations. 
+Buttafly is a [Rails engine](http://guides.rubyonrails.org/engines.html) which, once you bolt it onto your [Ruby on Rails] application allows you to import real data from spreadsheets into your database, complete with the correct associations. 
 
 ## Example
 
 Let us say that your app tracks information on wineries and that: 
 
-1. Each __winery__ *has many* __wines__ that have been produced under its imprimatur in a number of different vintages.
+1. Each __winery__ *has many* __wines__ that have been produced under its imprimatur, in a number of different years or "vintages."
 2. Each __wine__ axiomatically *belongs to* a __winery__, and also *has many* __reviews__ written about it.
-3. Each wine __review__ *belongs to* both the __wine__ of which it is a subject, and to the __reviewer__ who wrote it. 
+3. Each wine __review__ *belongs to* both the __wine__ of which it is a subject, and to the __reviewer__ who reviewed it. 
 
-Your model associatons might look like this:
+Your model associatons might look something like this:
 
 ```ruby
 # in app/models/winery.rb
@@ -47,7 +47,7 @@ validates :reviewer, :wine, presence: true
 has_many :reviews, foreign_key: :reviewer_id
 ```
 
-Let us also say that you have entered into an arrangement with an infamous wine critic, in which she has agreed to let you publish some of her reviews. She isn't willing to recreate the reviews in your app by hand, but she has condescended to provide you a spreadsheet which might look something like this:
+Let us also say that you have entered into an arrangement with an infamous wine critic, in which she has agreed to let you publish some of her reviews. She isn't willing to recreate the reviews in your app by hand, but she has condescended to provide you a spreadsheet, the first few rows of which might look something like these:
 
 | Winery name           | Wine name     | Vintage | Rating  | Review  |
 | --------------        |---------------|--------:|-------- |---------| 
@@ -55,9 +55,9 @@ Let us also say that you have entered into an arrangement with an infamous wine 
 | Charles Shah          | pinot noir    | 2008    | 83      | Nearly matured and corpulent Pinot Noir. Essenses of mint, sad dog-breath, perceptable fois gras. Drink now through 2015. |
 | Duckhorndog           | semillon      | 2003    | 99      | Overdressed nevertheless complex and stunning Semillon. Shows kalamata olive, hedonistic nectarine, bashful tomato. Drink now through Friday. |
 
-You could of course hand the above spreadsheet to an intern, and ask them to navigate your applicaton to create the reviews, wineries, and wineries all by hand. Alternatively you might commission a highly paid Ruby on Rails developer to write a script to do the same thing. But what if this spreadsheet is only the first of many, from different wine critics, each of which will have slightly different headers and columns? 
+Great! Now to get those reviews into your database with the correct associations! If there aren't too many reviews, you can hand them off to an intern and ask her to navigate your applicaton to create the reviews, wineries, and wineries all by hand and with the correct associations. Alternatively you might commission a developer to write a script that could do the same thing. But what if this spreadsheet is only the first of many, from a diverse group of infamous wine critics, each of which has slightly different headers and columns? 
 
-This is where Buttafly comes in.
+This is where Buttafly is designed to help out.
 
 Once installed, you can upload a spreadsheet such as the above into a spreadsheet table, which buttafly can then parse. Buttafly knows about your application's models, associations, and validations, and gives you an interface for mapping your spreadsheet columns to attributes in your application's models. For the spreadsheet example above, you would first create a mapping for wineries, then one for wines that belong to those wineries, then users, and then a final mapping for the review which can then be properly associated as belonging to both the user who wrote it and to the wine which is its subject. Once the mappings are created, you can then import the spreadsheet and it will use the mappings to create the correct associated winery, wine, user and review objects. 
 
