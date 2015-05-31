@@ -1,8 +1,6 @@
-%legend Upload new content
-= form_for :originable, url: { controller: "contents"}, :html => {:multipart => true} do |f|
-  = f.label :name
-  %br/
-  = f.text_field :name
+%legend Upload a Spreadsheet
+= simple_form_for :originable, url: { controller: "contents"}, :html => {:multipart => true} do |f|
+  = f.input :name, placeholder: "Optional -- if not supplied, we'll use the existing name"
   = f.label :flat_file
   = f.file_field :flat_file
   = f.submit "Upload file", class: "button"

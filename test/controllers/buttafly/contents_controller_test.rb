@@ -3,6 +3,8 @@ require 'test_helper'
 describe "Buttafly::ContentsController" do 
 
   before do 
+    @request.env['HTTP_REFERER'] = "/referring/url"
+
     @routes = Buttafly::Engine.routes
   end
 
@@ -46,26 +48,14 @@ describe "Buttafly::ContentsController" do
   it "should get index" do
     get :index
     assert_response :success
-    # assert_not_nil assigns :legend
-    # assert_not_nil assigns :legends
     assert_not_nil assigns :contents
-    # assert_not_nil assigns :originable
+  end
+
+  it "must GET :destroy" do 
+    delete :destroy, id: spreadsheet.id
+    assert_response 302
+
   end
 end
 
 
-
-
-#     test "should get update" do
-#       get :update
-#       assert_response :success
-#     end
-
-#     test "should gendet destroy" do
-#       get :destroy
-#       assert_response :success
-#     end
-
-
-#   end
-# end

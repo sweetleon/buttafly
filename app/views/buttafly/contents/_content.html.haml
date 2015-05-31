@@ -1,104 +1,42 @@
-/ - present @content do |content_presenter|
-
 %dl.accordion{"data-accordion" => ""}
   %dd.accordion-navigation
     %a{href: "#show-file-#{file.id}"} 
       .row
-        .small-1.columns= file.id
-        .small-4.columns= file.name
-        .small-4.columns
+        .small-1.columns
+        
+        .small-3.columns 
+          %dl
+            %dt uploaded
+            %dd= time_ago_in_words(file.created_at) + " ago."  
+        .small-3.columns 
+          %dl
+            %dt name
+            %dd= truncate(file.derived_name, length: 17)
+        .small-2.columns
+        
+        .small-2.columns
           .label= file.aasm_state.humanize.downcase
-    .content.active{ "id" => "show-file-#{file.id}" }
+    .content{ "id" => "show-file-#{file.id}" }
+      .small-2.columns
+        = button_to "delete", content_path(id: file.id), :method => :delete, class: "button alert" 
+
+
+
       %dl.tabs{"data-tab" => ""}
+        %dd
+          %a{href: "#mapping-#{file.id}"} Step 1: Choose a target model
+        %dd
+          %a{href: "#legend-#{file.id}"} legend
         %dd
           %a{href: "#status-#{file.id}"} info
         %dd
-          %a{href: "#legend-#{file.id}"} legend
-        %dd.active
-          %a{href: "#mappings-#{file.id}"} mapping
-        %dd
-          %a{href: "#panel2-4"} actions
+          %a{href: "#actions-#{file.id}"} actions
       .tabs-content
-        .content{ "id" => "status-#{file.id}"}
-          .small-12.columns
-            .small-3.columns.text-right
-              %br File uploaded at:
-              %br File imported at:
-              %br File processed at:
-              %br Json objects:
-              - file.mappings.each do |mapping|
-                %br created objects
-            .small-3.columns
-              %br= time_ago_in_words(file.created_at) + " ago."
-              %br= file.imported_at ? time_ago_in_words(file.imported_at) : "waiting to import"
-              %br= file.processed_at ? time_ago_in_words(file.processed_at) : "waiting to process"
-              %br= file.data ? file.data.size : "Not imported" 
-              
-              %br
-                / - if file.data && file.targetable.size == file.data.size
-                /   .label.success.round= file.targetable ? file.targetable.count : "no transactions" 
-                / - else
-                / .label.alert.round= file.targetable ? file.targetable.size : "no transactions" 
-                
-            .small-6.columns
-              
-        .content{ "id" => "legend-#{file.id}"}
-          %br
-          .small-12.columns
-            .small-6.columns
-              / = link_to "Create legend", new_legend_path(originable_id: file.id), class: "button"
-            .small-6.columns
-              %label
-                Select Legend
-              %select
-                - @legends.each do |legend|
-                  %option= legend.name
+        = render partial: "status",   locals: { file: file }     
+        = render partial: "legend",   locals: { file: file }     
+        = render partial: "mapping",  locals: { file: file }     
+        = render partial: "actions",  locals: { file: file }     
+        
 
-        .content.active{ "id" => "mappings-#{file.id}"}
-          .small-12.columns
-            
 
-            .small-6.columns
-              %fieldset
-                %legend Create new mapping
-                = form_for(@mapping, url: { controller: "mappings", action: "create", originable_id: file.id}) do |f|
-                  = f.hidden_field :originable_id, value: file.id
 
-                  = f.label :targetable_model
-                  = f.select :targetable_model, @targetable_models
-                  = f.submit "Select Target Model", class: "button", method: :post
-            .small-6.columns
-              %h3 Mappings
-              %table
-                %thead
-                  %tr 
-                    %th id
-                    %th target model
-                    %th legend name
-                    %th target object count
-                    %th Actions
-                %tbody
-                  - file.mappings.each do |m|
-                    %tr
-                      %td= m.id
-                      %td= m.targetable_model
-                      %td
-                        - if m.legend 
-                          = m.legend
-                        - else 
-                          = link_to "new legend", new_legend_path(mapping_id: m.id)
-                      %td= link_to "destroy", mapping_path(id: m.id), method: "delete"
-
-        #panel2-4.content
-          .small-6.columns
-            - file.aasm.events.each do |key|
-              - next if [:remove, :modify].include? key
-              - if file.aasm.events.include? key
-                - if key == :process_file
-                  = link_to("process", { controller: "contents", action: "#{key}", id: file.id}, class: "button tiny #{key}") 
-                - else   
-                  / = link_to(key, { controller: "contents", action: "#{key}", id: file.id}, class: "button tiny #{key}") 
-              - else
-                = link_to(key, "#", class: "button tiny disabled")
-            .panel.radius.callout
-              %br= status_description(file.aasm_state)

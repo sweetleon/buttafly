@@ -1,0 +1,11 @@
+.content{ "id" => "legend-#{file.id}"}
+  %br
+  .small-12.columns
+    .small-6.columns
+      = link_to "Create legend", new_legend_path(originable_id: file.id), class: "button"
+    .small-6.columns
+      %label
+        Select Legend
+      %select
+        - @legends.each do |legend|
+          %option= legend.name

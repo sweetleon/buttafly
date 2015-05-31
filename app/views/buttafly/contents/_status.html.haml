@@ -1,0 +1,23 @@
+.content{ "id" => "status-#{file.id}"}
+  .small-12.columns
+    .small-3.columns.text-right
+      %br File uploaded at:
+      %br File imported at:
+      %br File processed at:
+      %br Json objects:
+      - file.mappings.each do |mapping|
+        %br created objects
+    .small-3.columns
+      %br= time_ago_in_words(file.created_at) + " ago."
+      %br= file.imported_at ? time_ago_in_words(file.imported_at) : "waiting to import"
+      %br= file.processed_at ? time_ago_in_words(file.processed_at) : "waiting to process"
+      %br= file.data ? file.data.size : "Not imported" 
+      
+      %br
+        / - if file.data && file.targetable.size == file.data.size
+        /   .label.success.round= file.targetable ? file.targetable.count : "no transactions" 
+        / - else
+        / .label.alert.round= file.targetable ? file.targetable.size : "no transactions" 
+        
+    .small-6.columns
+        

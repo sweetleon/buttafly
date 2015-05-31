@@ -3,7 +3,7 @@ require_dependency "buttafly/application_controller"
 module Buttafly
   class ContentsController < ApplicationController
 
-    before_action :set_originable, only: [:edit, :show, :import]
+    before_action :set_originable, only: [:edit, :show, :import, :destroy]
 
     def new
       @originable = Buttafly::Spreadsheet.new
@@ -38,6 +38,11 @@ module Buttafly
     end
 
     def destroy
+      if @originable.destroy
+        render :index, notice: "#{@originable.name} successfully destroyed"
+      else
+        render :index, alert: "Could not destroy #{@originable.name}"
+      end
     end
 
     def index

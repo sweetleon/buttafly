@@ -13,7 +13,6 @@ module Originable
     
     has_many :mappings, as: :originable
     has_many :legends, through: :mappings
-    # has_many :targetable, through: :mappings, source: :targetable, source_type: "DummyChild"
 
     validates :name, uniqueness: true
 
@@ -29,16 +28,14 @@ module Originable
 
       event :import do 
         transitions from: [:not_imported, :imported], 
-                    to: :imported
-                    # , 
-                    # on_transition: -> f { f.set_transition_timestamp :imported }
+                    to: :imported, 
+                    on_transition: -> f { f.set_transition_timestamp :imported }
       end
 
       event :publish do 
         transitions from: [:imported, :unpublished],
-                    to: :published
-                    # , 
-                    # on_transition: -> f { f.set_transition_timestamp :published}
+                    to: :published, 
+                    on_transition: -> f { f.set_transition_timestamp :published}
       end
 
       event :unpublish do 
@@ -46,6 +43,10 @@ module Originable
       end
     end
 
+    def derived_name
+
+      name ? name : File.basename(s.flat_file) 
+    end
     def set_transition_timestamp(given_status, time=Time.now)
       timestamp_field = "#{given_status}_at".to_sym
       self[timestamp_field] = time
