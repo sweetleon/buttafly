@@ -6,7 +6,7 @@ module Buttafly
     before_action :set_originable, only: [:edit, :show, :import, :destroy]
 
     def new
-      @originable = Buttafly::Spreadsheet.new
+      @originable ||= Buttafly::Spreadsheet.new
     end
 
     def show
@@ -16,12 +16,12 @@ module Buttafly
     end
 
     def create
-      @originable = Buttafly::Spreadsheet.new(originable_params)
 
+      @originable = Buttafly::Spreadsheet.new(originable_params)
       if @originable.save
         redirect_to contents_path, notice: "#{@originable.name} has been uploaded."
       else
-        redirect_to :root, notice: "Could not upload content"
+        redirect_to contents_path, alert: "Could not upload content"
       end
     end
 
@@ -39,9 +39,9 @@ module Buttafly
 
     def destroy
       if @originable.destroy
-        render :index, notice: "#{@originable.name} successfully destroyed"
+        redirect_to contents_path, notice: "content successfully destroyed"
       else
-        render :index, alert: "Could not destroy #{@originable.name}"
+        redirect_to contents_path, alert: "Could not destroy content"
       end
     end
 

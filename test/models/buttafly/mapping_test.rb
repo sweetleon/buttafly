@@ -45,7 +45,6 @@ describe "Buttafly::Mapping" do
   describe "get eligible models" do 
 
     it "#originable_models" do
-
       models = subject.originable_models
       assert_equal models.first, "Buttafly::Spreadsheet"
     end

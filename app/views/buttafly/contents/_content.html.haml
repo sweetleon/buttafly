@@ -1,36 +1,32 @@
 %dl.accordion{"data-accordion" => ""}
   %dd.accordion-navigation
-    %a{href: "#show-file-#{file.id}"} 
+    %a{href: "#show-file-#{file.id}" } 
       .row
-        .small-1.columns
-        
-        .small-3.columns 
+        / .small-2.columns 
+        /   %dl
+        /     %dt uploaded
+        /     %dd= time_ago_in_words(file.created_at) + " ago."  
+        .small-2.columns 
           %dl
-            %dt uploaded
-            %dd= time_ago_in_words(file.created_at) + " ago."  
-        .small-3.columns 
+            %dt file
+            %dd= File.basename(file.flat_file.to_s)
+        .small-2.columns 
           %dl
             %dt name
-            %dd= truncate(file.derived_name, length: 17)
+            %dd
+              = file.name.present? ? file.name : "no name"
+          
         .small-2.columns
+          #state-not-imported 
+            = file.aasm_state.humanize.downcase
         
-        .small-2.columns
-          .label= file.aasm_state.humanize.downcase
-    .content{ "id" => "show-file-#{file.id}" }
-      .small-2.columns
-        = button_to "delete", content_path(id: file.id), :method => :delete, class: "button alert" 
-
-
+    .content{ "id" => "show-file-#{file.id}", "class" => "#{tab_active?(file.aasm_state)}" }
 
       %dl.tabs{"data-tab" => ""}
-        %dd
-          %a{href: "#mapping-#{file.id}"} Step 1: Choose a target model
-        %dd
-          %a{href: "#legend-#{file.id}"} legend
-        %dd
-          %a{href: "#status-#{file.id}"} info
-        %dd
-          %a{href: "#actions-#{file.id}"} actions
+        %dd= link_to "status", "#status-#{file.id}"
+        %dd= link_to "mappings", "#mapping-#{file.id}"
+        %dd= link_to "legend", "#legend-#{file.id}"
+        %dd= link_to "actions", "#actions-#{file.id}"
       .tabs-content
         = render partial: "status",   locals: { file: file }     
         = render partial: "legend",   locals: { file: file }     

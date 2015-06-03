@@ -1,5 +1,4 @@
-require "simple_form"
-
+require 'simple_form'
 # Use this setup block to configure all options available in SimpleForm.
 SimpleForm.setup do |config|
   # Don't forget to edit this file to adapt it to your needs (specially

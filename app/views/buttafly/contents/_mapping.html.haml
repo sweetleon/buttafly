@@ -1,34 +1,22 @@
-.content{ "id" => "mapping-#{file.id}"}
-  .small-12.columns
-    .small-1.columns
-            
+.content{ "id" => "mapping-#{file.id}", "class" => "#{tab_active?(file.aasm_state)}" }
+  .small-6.columns
+    = form_for(@mapping, url: { controller: "mappings", action: "create", originable_id: file.id}) do |f|
+      = f.hidden_field :originable_id, value: file.id
 
-    .small-6.columns
-      %legend Create new mapping
-      = form_for(@mapping, url: { controller: "mappings", action: "create", originable_id: file.id}) do |f|
-        = f.hidden_field :originable_id, value: file.id
-
-        = f.label :targetable_model
-        = f.select :targetable_model, @targetable_models
-        = f.submit "Select Target Model", class: "button", method: :post
-    .small-6.columns
-      %h3 Mappings
-      %table
-        %thead
-          %tr 
-            %th id
-            %th target model
-            %th legend name
-            %th target object count
-            %th Actions
-        %tbody
-          - file.mappings.each do |m|
-            %tr
-              %td= m.id
-              %td= m.targetable_model
-              %td
-                - if m.legend 
-                  = m.legend
-                - else 
-                  = link_to "new legend", new_legend_path(mapping_id: m.id)
-              %td= link_to "destroy", mapping_path(id: m.id), method: "delete"
+      = f.label :targetable_model
+      = f.select :targetable_model, @targetable_models
+      = f.submit "Select Target Model", class: "button", method: :post
+  .small-6.columns
+    %dl 
+      %dt 
+        mappings: 
+        = file.mappings.count
+      / %dd
+      /   = form_for(@mapping, url: { controller: "mappings", action: "create", originable_id: file.id}) do |f|
+      /     = f.hidden_field :originable_id, value: file.id
+      /     = f.select :targetable_model, @targetable_models
+      /     = f.submit "create new mapping", class: "button expand", method: :post
+    %dl
+      %dt Actions
+      %dd
+        = button_to "delete", content_path(id: file.id), :method => :delete, class: "button alert" 

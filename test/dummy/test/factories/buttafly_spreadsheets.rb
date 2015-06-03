@@ -1,5 +1,3 @@
-# Read about factories at https://github.com/thoughtbot/factory_girl
-
 FactoryGirl.define do
 
   sequence :name do |n|
@@ -18,8 +16,8 @@ FactoryGirl.define do
         "grandparent"=>"Vicki Pacurar"
       }]
 
-    factory :not_imported_file do
-      aasm_state "not_imported"
+    factory :uploaded_file do
+      aasm_state "uploaded"
       data {{}}
 
       factory :originable

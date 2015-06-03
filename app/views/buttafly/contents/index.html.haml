@@ -1,16 +1,11 @@
+= render 'form'
 
 
-.small-12.columns
-  .small-12.columns
-    .row
-      .blah
-        %fieldset
-          .new-content-form
-            = render 'form'
+.row
+  - @contents.each do |file|
+    = render 'content', file: file      
 
-  .row
-    - @contents.each do |file|
-      = render 'content', file: file      
+  %hr
+  .pagination= paginate @contents
 
-    %hr
-    .pagination= paginate @contents
+
