@@ -24,8 +24,11 @@ module Targetable
     has_one :mapping, as: :targetable
     TargetableModels.add self
     
-    def self.targetable_attrs
-      associated_cols = self.class.reflect_on_all_associations(:belongs_to)
+    def associated_cols
+      self.class.reflect_on_all_associations(:belongs_to)
+    end
+    
+    def targetable_attrs
       foreign_key_cols = associated_cols.map(&:foreign_key)
       meta_cols = ["updated_at", "created_at", "id"]
       ignored_cols = meta_cols + foreign_key_cols

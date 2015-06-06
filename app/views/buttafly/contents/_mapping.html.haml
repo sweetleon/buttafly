@@ -9,6 +9,7 @@
           %th= header
     %tbody
       - file.mappings.each do |m|
+        = m.targetable_model.classify.constantize.associated_cols
         = fields_for m do |f|
           %tr
             %td 
