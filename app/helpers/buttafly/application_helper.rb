@@ -13,6 +13,42 @@ module Buttafly
       aasm_state.to_s == "uploaded" ? "active" : "inactive"
     end
 
+    def event_button(event)
+      content_tag(
+        :span, submit_tag( 
+          event, class: "button small expand" 
+        ), 
+        class: "has-tip tip-left", 
+          :'aria-haspopup' => true, "data-tooltip" => "", 
+          :title => "#{event_description(event.to_s)}" 
+      )
+    end
+
+    def event_description(event)
+
+      case event
+      
+      when "import"
+        "Save a json representation of the csv data in the spreadsheet model."
+      when "target"
+        "blah"
+      end
+    end
+
+    def parent_dependency_notice(array_of_models)
+      size = array_of_models.size
+      case
+      when size == 0
+        "No parent dependencies"
+      when size == 1
+        "#{array_of_models.first.to_s.classify} must be created first"
+      when size > 1
+        a = array_of_models.map { |i| i.to_s.classify }
+        "#{a.split("").join(" and ")} records must be created first."
+      end
+
+    end
+
     def status_description(status)
       
       case status

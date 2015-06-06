@@ -4,4 +4,7 @@ class Wine < ActiveRecord::Base
 
   belongs_to :winery
   has_many :reviews
+
+  validates :winery, presence: true
+
 end

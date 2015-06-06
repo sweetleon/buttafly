@@ -1442,9 +1442,37 @@ $include-html-global-classes: $include-html-classes;
 
 @import 'foundation';
 
-#state-not-imported {
-  @extend .panel.callout;
-}
+$state-uploaded-color: $warning-color;
+$state-targeted-color: $primary-color;
+$state-mapped-color: $warning-color;
+$state-transferred-color: $success-color;
+$state-destroyed-color: $alert-color;
+$state-archived-color: $secondary-color;
 
-#file-state-uploaded {
+.panel {
+    
+  &.panel-state-uploaded {
+    background: $state-uploaded-color;
+  }
+  
+  &.panel-state-targeted {
+    background: $state-targeted-color;
+  }
+  
+  &.panel-state-mapped {
+    background: $state-mapped-color;
+  }
+
+  &.panel-state-transferred {
+    background: $state-transferred-color;
+  }
+
+  &.panel-state-destroyed {
+    background: $state-destroyed-color;
+  }
+
+  &.panel-state-archived {
+    background: $state-archived-color;
+    color: $oil;
+  }
 }

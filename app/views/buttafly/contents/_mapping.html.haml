@@ -1,22 +1,26 @@
-.content{ "id" => "mapping-#{file.id}", "class" => "#{tab_active?(file.aasm_state)}" }
-  .small-6.columns
-    = form_for(@mapping, url: { controller: "mappings", action: "create", originable_id: file.id}) do |f|
-      = f.hidden_field :originable_id, value: file.id
+.row
+  %table
+    %thead
+      %tr
+        %td
+          = "file headers".upcase
+        - file.list_headers.each do |header|
+          %th= header
+    %tbody
+      - file.mappings.each do |m|
+        %tr
+          %td 
+            = m.targetable_model
+          - file.list_headers.each do |header|
+            %th 
+              = m.targetable_model.classify.constantize.targetable_attrs
 
-      = f.label :targetable_model
-      = f.select :targetable_model, @targetable_models
-      = f.submit "Select Target Model", class: "button", method: :post
-  .small-6.columns
-    %dl 
-      %dt 
-        mappings: 
-        = file.mappings.count
-      / %dd
-      /   = form_for(@mapping, url: { controller: "mappings", action: "create", originable_id: file.id}) do |f|
-      /     = f.hidden_field :originable_id, value: file.id
-      /     = f.select :targetable_model, @targetable_models
-      /     = f.submit "create new mapping", class: "button expand", method: :post
-    %dl
-      %dt Actions
-      %dd
-        = button_to "delete", content_path(id: file.id), :method => :delete, class: "button alert" 
+/ %ul.tabs.vertical{"data-tab" => ""}
+/   - file.mappings.each do |m|
+/     %li.tab-title
+/       %a{:href => "#panel-mapping-#{m.id}"}
+/         = m.targetable_model
+/ .tabs-content
+/   - file.mappings.each do |m|
+/     .content{ "id" => "panel-mapping-#{m.id}" }
+/       .small-6.columns= parent_dependency_notice(m.parent_models)

@@ -23,15 +23,30 @@ module Originable
       state :uploaded, initial: true
       state :targeted
       state :mapped
-      state :transferred
+      state :replicated
       state :destroyed
       state :archived
 
       event :target do 
-        transitions from: :uploaded, to: :targeted, 
-                    after: -> f { f.set_transition_timestamp :targeted}
+        # transitions from: :uploaded, to: :key => "value", targeted, 
+        #             after: -> f { f.set_transition_timestamp :targeted}
       end
 
+      event :map do 
+
+      end
+
+      event :replicate do 
+
+      end
+
+      event :destroy do 
+
+      end
+
+      event :archive do 
+
+      end
       # cruft?
       state :not_imported
       state :imported, before_enter: :convert_data_to_json!
@@ -44,10 +59,11 @@ module Originable
       #               on_transition: -> f { f.set_transition_timestamp :imported }
       # end
 
-
+      event :target do 
+        transitions from: [:uploaded], to: :targeted
+      end
       event :publish do 
-        transitions from: [:imported, :unpublished],
-                    to: :published, 
+        transitions from: [:imported, :unpublished], to: :published, 
                     on_transition: -> f { f.set_transition_timestamp :published}
       end
 
@@ -55,6 +71,12 @@ module Originable
         transitions from: :published
       end
     end
+
+    def possible_events
+      events_array = aasm.events.map(&:name)
+      data.nil? ? (events_array << :import) : events_array << :wipe 
+    end
+
 
     def derived_name
       if name.present?
@@ -67,6 +89,19 @@ module Originable
     def set_transition_timestamp(given_status, time=Time.now)
       timestamp_field = "#{given_status}_at".to_sym
       self[timestamp_field] = time
+    end
+
+    def list_headers
+      data = CSV.read(self.flat_file.path)
+      data.first
+    end
+
+    def may_import?
+      data.nil?
+    end
+
+    def may_wipe?
+      data.present?
     end
 
     # def convert_data_to_json!

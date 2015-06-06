@@ -1,11 +1,7 @@
 %dl.accordion{"data-accordion" => ""}
   %dd.accordion-navigation
     %a{href: "#show-file-#{file.id}" } 
-      .row
-        / .small-2.columns 
-        /   %dl
-        /     %dt uploaded
-        /     %dd= time_ago_in_words(file.created_at) + " ago."  
+      .row  
         .small-2.columns 
           %dl
             %dt file
@@ -17,21 +13,32 @@
               = file.name.present? ? file.name : "no name"
           
         .small-2.columns
-          #state-not-imported 
+          .panel{ "class" => "panel-state-#{file.aasm_state}" }
             = file.aasm_state.humanize.downcase
         
-    .content{ "id" => "show-file-#{file.id}", "class" => "#{tab_active?(file.aasm_state)}" }
+        
+    .content{ "id" => "show-file-#{file.id}" }
+      
+      .row
+        .small-9.columns
+          = render partial: "mapping",  locals: { file: file }  
+        .small-3.columns
+          = render partial: "actions", locals: { file: file }   
 
-      %dl.tabs{"data-tab" => ""}
-        %dd= link_to "status", "#status-#{file.id}"
-        %dd= link_to "mappings", "#mapping-#{file.id}"
-        %dd= link_to "legend", "#legend-#{file.id}"
-        %dd= link_to "actions", "#actions-#{file.id}"
-      .tabs-content
-        = render partial: "status",   locals: { file: file }     
-        = render partial: "legend",   locals: { file: file }     
-        = render partial: "mapping",  locals: { file: file }     
-        = render partial: "actions",  locals: { file: file }     
+      / %dl.tabs{"data-tab" => ""}
+      /   / %table.table
+      /   /   %thead
+      /   /     %tr
+      /   /       - file.list_headers.each do |header|
+      /   /         %td= header
+      /   / %dd= link_to "status", "#status-#{file.id}"
+      /   / %dd= link_to "#{pluralize(file.mappings.count, 'mapping')}", "#mapping-#{file.id}"
+      /   / %dd= link_to "legend", "#legend-#{file.id}"
+      /   / # %dd= link_to "actions", "#actions-#{file.id}"
+      /   / .tabs-content
+      /   /   = render partial: "status",   locals: { file: file }     
+      /   /   = render partial: "legend",   locals: { file: file }     
+      /   /   = render partial: "actions",  locals: { file: file }     
         
 
 

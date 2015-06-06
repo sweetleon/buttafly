@@ -1,13 +1,7 @@
-#panel2-4.content
-  .small-6.columns
-    - file.aasm.events.each do |key|
-      - next if [:remove, :modify].include? key
-      - if file.aasm.events.include? key
-        - if key == :process_file
-          = link_to("process", { controller: "contents", action: "#{key}", id: file.id}, class: "button tiny #{key}") 
-        - else   
-          / = link_to(key, { controller: "contents", action: "#{key}", id: file.id}, class: "button tiny #{key}") 
-      - else
-        = link_to(key, "#", class: "button tiny disabled")
-    .panel.radius.callout
-      %br= status_description(file.aasm_state)
+.panel
+  .text-center
+    permissible actions
+  %hr
+  - file.possible_events.each do |event|
+    - next if event.to_s == "target" 
+    = event_button(event)
