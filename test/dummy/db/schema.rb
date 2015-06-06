@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 20150527060117) do
     t.integer  "originable_id"
     t.string   "originable_type"
     t.string   "targetable_model"
+    t.text     "data",             array: true
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -1,0 +1,7 @@
+= form_for(@mapping, url: { controller: "mappings", action: "create", originable_id: file.id}) do |f|
+  = f.hidden_field :originable_id, value: file.id
+  .small-6.columns
+    = f.select :targetable_model, @targetable_models
+  .small-6.columns
+    .has-tip{"aria-haspopup" => "true", "data-tooltip" => "", :title => "Select the model you want to map to first."} 
+      = f.submit "Create new mapping", class: "button small expand", method: :post

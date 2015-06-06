@@ -1,4 +1,5 @@
 .row
+  .expand
   %table
     %thead
       %tr
@@ -8,13 +9,15 @@
           %th= header
     %tbody
       - file.mappings.each do |m|
-        %tr
-          %td 
-            = m.targetable_model
-          - file.list_headers.each do |header|
-            %th 
-              = m.targetable_model.classify.constantize.targetable_attrs
-
+        = fields_for m do |f|
+          %tr
+            %td 
+              = m.targetable_model
+            - file.list_headers.each do |header|
+              %th
+                = f.select :data, m.targetable_model.classify.constantize.targetable_attrs
+.row
+  = render partial: "new_target", locals: { file: file }
 / %ul.tabs.vertical{"data-tab" => ""}
 /   - file.mappings.each do |m|
 /     %li.tab-title

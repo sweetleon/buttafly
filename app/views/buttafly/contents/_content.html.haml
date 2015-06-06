@@ -17,13 +17,13 @@
             = file.aasm_state.humanize.downcase
         
         
-    .content{ "id" => "show-file-#{file.id}" }
+    .content.active{ "id" => "show-file-#{file.id}" }
       
       .row
         .small-9.columns
           = render partial: "mapping",  locals: { file: file }  
         .small-3.columns
-          = render partial: "actions", locals: { file: file }   
+          / = render partial: "actions", locals: { file: file }   
 
       / %dl.tabs{"data-tab" => ""}
       /   / %table.table

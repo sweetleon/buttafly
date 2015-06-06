@@ -6,7 +6,6 @@ module Buttafly
     # before_action :set_originable, on: :new
 
     def new
-      # binding.pry
       @originable = Buttafly.originable.find(id: params[:originable_id])
       legends = Mapping.where(targetable_model: params).map(&:legend_id)
     end

@@ -5,6 +5,7 @@ class CreateButtaflyMappings < ActiveRecord::Migration
       t.integer :originable_id
       t.string :originable_type
       t.string :targetable_model
+      t.text :data, array: true
 
       t.timestamps
     end
