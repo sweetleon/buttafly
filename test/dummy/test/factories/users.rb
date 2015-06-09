@@ -3,5 +3,9 @@
 FactoryGirl.define do
   factory :user do
     name "MyString"
+
+    factory :reviewer do 
+
+    end
   end
 end

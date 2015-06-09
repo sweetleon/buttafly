@@ -20,6 +20,12 @@ module Buttafly
     end
 
     def update
+      @mapping = Buttafly::Mapping.find(params[:id])
+      if @mapping.update(mapping_params)
+        redirect_to :back
+      else
+        redirect_to :back
+      end  
     end
 
     def destroy

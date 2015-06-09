@@ -1,6 +1,6 @@
 require "test_helper"
 
-feature "create content" do
+feature "upload content" do
   
   given(:existing_content) { create(:spreadsheet) }
 

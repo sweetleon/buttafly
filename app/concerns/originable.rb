@@ -64,7 +64,7 @@ module Originable
       end
       event :publish do 
         transitions from: [:imported, :unpublished], to: :published, 
-                    on_transition: -> f { f.set_transition_timestamp :published}
+                    after: -> f { f.set_transition_timestamp :published}
       end
 
       event :unpublish do 

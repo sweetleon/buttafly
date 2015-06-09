@@ -2,6 +2,10 @@ module Targetable
   extend ActiveSupport::Concern
 
   module ClassMethods
+    def targetable?
+      true
+    end
+    
     def targetable
       true
     end
@@ -33,6 +37,14 @@ module Targetable
       meta_cols = ["updated_at", "created_at", "id"]
       ignored_cols = meta_cols + foreign_key_cols
       mappable_columns = self.attributes.keys - ignored_cols
+    end
+
+    def self.targetable_fields
+      fields = column_names - ignored_columns
+    end
+    
+    def self.ignored_columns 
+      ["updated_at", "created_at", "id"]
     end
 
     def self.targetable_attrs

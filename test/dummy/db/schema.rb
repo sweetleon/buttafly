@@ -113,6 +113,7 @@ ActiveRecord::Schema.define(version: 20150527060117) do
   create_table "wines", force: true do |t|
     t.string   "name"
     t.integer  "vintage"
+    t.integer  "winery_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

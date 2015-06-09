@@ -10,6 +10,7 @@ feature "create mapping" do
   end
   
   scenario "success" do
+    skip
     existing_content.mappings.count.must_equal 0
     within("#show-file-#{existing_content.id}") do 
       select("DummyChild", from: "mapping_targetable_model")

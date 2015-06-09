@@ -54,7 +54,7 @@ skip
   end
 
   it "must GET :destroy" do 
-
+skip
     delete :destroy, id: spreadsheet.id
     assert_response 302
 

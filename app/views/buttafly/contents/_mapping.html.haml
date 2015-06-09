@@ -6,17 +6,18 @@
         %td
           = "file headers".upcase
         - file.list_headers.each do |header|
-          %th= header
+          %td.text-center= header
     %tbody
       - file.mappings.each do |m|
-        = m.targetable_model.classify.constantize.associated_cols
+        / # = m.targetable_model.classify.constantize.associated_cols
         = fields_for m do |f|
           %tr
             %td 
-              = m.targetable_model
+              = m.targetable_model.classify
             - file.list_headers.each do |header|
               %th
-                = f.select :data, m.targetable_model.classify.constantize.targetable_attrs
+                / = f.select :data, field_choices(m.targetable_model)
+                / = f.select :data, m.targetable_model.classify.constantize.targetable
 .row
   = render partial: "new_target", locals: { file: file }
 / %ul.tabs.vertical{"data-tab" => ""}

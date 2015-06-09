@@ -2,7 +2,7 @@ require 'test_helper'
 
 describe "Buttafly::targetable" do 
 
-  [DummyChild, DummyParent, DummyGrandparent].each do |targetable_model|
+  [Review].each do |targetable_model|
 
     subject { targetable_model }
 
@@ -13,6 +13,23 @@ describe "Buttafly::targetable" do
     it "must have one :mapping" do 
       must_have_one(:mapping)
     end
+
+    it "must respond to :belongs_to_cols" do
+      skip
+      assert subject.respond_to? :belongs_to_cols
+      assert_equal [:reviewer, :wine], subject.belongs_to_cols
+    end
+
+    it "must respond to :targetable_attrs" do 
+      assert subject.respond_to? :targetable_attrs
+      assert_equal %w[rating content], subject.targetable_attrs
+    end
+    
+    it "must respond to :targetable_fields" do
+    skip
+      assert subject.respond_to? :targetable_fields
+      assert_includes ["wine:name"], subject.targetable_fields
+    end 
   end
 
   # [:dummy_child, e:dummy_parent, :dummy_grandparent].each do |factory|

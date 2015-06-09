@@ -21,6 +21,29 @@ describe "Buttafly::MappingsController" do
     m.targetable_model.must_equal "DummyChild"
   end
 
+  it "must PATCH #update" do 
+    request.env['HTTP_REFERER'] = "/referring/url"
+    patch :update, id: mapping, mapping: { 
+      data: { 
+        review: { 
+          reviewer: {
+            name: "Bill Newsome"}
+            }
+          },
+          wine: {
+            name: "Oppenlander Nebbiolo",
+            vintage: "2000"
+          },
+          winery: {
+            name: "Ernest & Julio Gallow",
+            mission: "blah",
+            history: "dedah balah"
+          }  
+        }
+    assert_response 302
+
+  end
+
   it "must 'DELETE' destroy" do 
     mapping
     request.env['HTTP_REFERER'] = "/referring/url"
