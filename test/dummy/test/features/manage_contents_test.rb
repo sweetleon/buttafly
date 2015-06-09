@@ -1,31 +1,28 @@
 require "test_helper"
 
-feature "upload content" do
-  
-  given(:existing_content) { create(:spreadsheet) }
+feature "manage content" do
 
   background do 
     visit '/buttafly/contents'
   end
   
-  scenario "success " do
+  scenario "upload a spreadsheet" do
     within(".new-content-form") do
-      fill_in 'Name', :with => 'pinot noirs'
+      fill_in 'Name', :with => 'getsome noirs'
       attach_file( "originable_flat_file", "test/dummy/test/samples/family.odt.csv")
       click_button "Upload spreadsheet"
     end
-    page.assert_selector(".alert-box", text: "pinot noirs has been uploaded")
-    Buttafly::Spreadsheet.where(name: "pinot noirs").size.must_equal 1
+    page.assert_selector(".alert-box", text: "getsome noirs has been uploaded")
+    Buttafly::Spreadsheet.where(name: "getsome noirs").size.must_equal 1
   end
-  
-  scenario "fail renders message" do
-skip
-    within(".new-content-form") do
-      # fill_in 'Name', :with => existing_content.name
-      # attach_file( "originable_flat_file", "test/dummy/test/samples/family.odt.csv")
-      click_button "Upload file"
-    end
-    page.assert_selector(".alert-box", text: "Could not upload content")
-    Buttafly::Spreadsheet.where(name: "pinot noirs").size.must_equal 0
-  end
+
+  # scenario "target a spreadsheet to a model" do 
+
+  #   existing_content = FactoryGirl.create(:spreadsheet) 
+  #   within("#show-file-#{existing_content.id}") do 
+
+  #     select "Review", from: "mapping_targetable_model"
+  #     click_button "Create new mapping"
+  #   end
+  # end
 end
