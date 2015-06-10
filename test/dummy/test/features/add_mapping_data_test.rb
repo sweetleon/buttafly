@@ -11,7 +11,7 @@ feature "submit mapping data" do
     # page.find("#show-file-#{existing_content.id} table tbody tr td", text: "Review")
     within("#show-file-#{existing_content.id} table tbody tr") do
       find('td', text: "Review")
-      find('td #blah', text: "Review")
+      find('td select')
     end
 
       
