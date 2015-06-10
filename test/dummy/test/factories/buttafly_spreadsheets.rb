@@ -23,6 +23,10 @@ FactoryGirl.define do
       factory :originable
     end
 
+    factory :targeted_file do 
+      aasm_state "targeted"
+    end
+
     factory :imported_file do 
       aasm_state "imported"
     end

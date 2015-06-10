@@ -1,6 +1,6 @@
 require 'database_cleaner'
 
-DatabaseCleaner.strategy = :transaction
+DatabaseCleaner.strategy = :deletion
 
 class MiniTest::Spec
   before :each do

@@ -16,7 +16,7 @@
               = m.targetable_model.classify
             - file.list_headers.each do |header|
               %th
-                / = f.select :data, field_choices(m.targetable_model)
+                = f.select :data, ["first", "second"]
                 / = f.select :data, m.targetable_model.classify.constantize.targetable
 .row
   = render partial: "new_target", locals: { file: file }
