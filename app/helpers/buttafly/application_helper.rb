@@ -9,6 +9,32 @@ module Buttafly
       end
     end
 
+    def field_choices(targetable_model)
+      [ 
+        "name",
+        "content",
+        "rating",
+        "wine::name",
+        "wine::vintage",
+        "reviewer::name",
+        "winery::name"
+
+      ]
+
+      # { targetable_model => ["name", "vintage"] }     
+
+       # m = targetable_model
+      # fields = m.targetable_attrs
+      # m.parent_models.each do |p|
+      #   attrs = p.to_s.classify.constantize.targetable_attrs
+      #   # attrs.each do |a|
+      #   #   fields << "#{p}:#{a}"
+          
+      #   # end
+      # end
+      # fields
+    end
+
     def tab_active?(aasm_state)
       aasm_state.to_s == "uploaded" ? "active" : "inactive"
     end

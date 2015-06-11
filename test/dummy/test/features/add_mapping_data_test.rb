@@ -6,12 +6,13 @@ feature "submit mapping data" do
     mapping = FactoryGirl.create(:mapping) 
     existing_content = mapping.originable
     visit '/buttafly/contents'
-    page.find("#show-file-#{existing_content.id}")
-      .find('table').find('thead').find('tr').find('td', text: "HEADERS")
-    # page.find("#show-file-#{existing_content.id} table tbody tr td", text: "Review")
-    within("#show-file-#{existing_content.id} table tbody tr") do
-      find('td', text: "Review")
-      find('td select')
+    within("#file-mapping-#{mapping.id}") do
+      select('wine::name', from: "mapping[data][wine]")
+      select('winery::name', from: "mapping[data][winery]")
+      select('wine::vintage', from: "mapping[data][vintage]")
+      select('content', from: "mapping[data][review]")
+      select('rating', from: "mapping[data][rating]")
+      click_button "map it"
     end
 
       

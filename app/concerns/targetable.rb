@@ -40,7 +40,7 @@ module Targetable
     end
 
     def self.targetable_fields
-      fields = column_names - ignored_columns
+      self.column_names
     end
     
     def self.ignored_columns 

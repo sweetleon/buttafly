@@ -8,13 +8,8 @@ FactoryGirl.define do
     name
     flat_file do 
       Rack::Test::UploadedFile.new(File.join(
-        Rails.root, 'test', 'samples', 'family.odt.csv')) 
+        Rails.root, 'test', 'samples', 'reviews.csv')) 
     end
-    data [
-      {"mother"=>"Sarah Jane Schoeneman", 
-        "child"=>"Ella Mac Pacurar", 
-        "grandparent"=>"Vicki Pacurar"
-      }]
 
     factory :uploaded_file do
       aasm_state "uploaded"

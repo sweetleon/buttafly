@@ -21,6 +21,7 @@ module Buttafly
 
     def update
       @mapping = Buttafly::Mapping.find(params[:id])
+      binding.pry
       if @mapping.update(mapping_params)
         redirect_to :back
       else
@@ -53,7 +54,7 @@ module Buttafly
     end
 
     def mapping_params
-      params.require(:mapping).permit(:originable_id, :targetable_model)
+      params.require(:mapping).permit!
     end
   end
 end
