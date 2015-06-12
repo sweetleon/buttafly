@@ -1,6 +1,7 @@
 module Buttafly
   class Mapping < ActiveRecord::Base
     require 'tsortable'
+    serialize :data
 
     # associations
     belongs_to :legend

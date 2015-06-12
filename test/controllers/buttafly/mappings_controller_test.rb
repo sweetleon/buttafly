@@ -22,6 +22,7 @@ describe "Buttafly::MappingsController" do
   end
 
   it "must PATCH #update" do 
+    skip
     request.env['HTTP_REFERER'] = "/referring/url"
     patch :update, id: mapping, mapping: { 
       data: { 

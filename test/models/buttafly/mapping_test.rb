@@ -92,7 +92,7 @@ describe "Buttafly::Mapping" do
     it "must return headers" do 
 
       headers = mapping.get_origin_headers
-      headers.must_equal ["child name", "parent name", "grandparent name", "tribe name", "age"]
+      headers.must_equal %w[wine winery vintage review rating]
     end 
   end
 end 

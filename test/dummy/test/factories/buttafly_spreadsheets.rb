@@ -13,13 +13,12 @@ FactoryGirl.define do
 
     factory :uploaded_file do
       aasm_state "uploaded"
-      data {{}}
 
-      factory :originable
     end
 
     factory :targeted_file do 
       aasm_state "targeted"
+      factory :originable
     end
 
     factory :imported_file do 

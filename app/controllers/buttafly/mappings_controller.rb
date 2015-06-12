@@ -22,7 +22,7 @@ module Buttafly
     def update
       @mapping = Buttafly::Mapping.find(params[:id])
       binding.pry
-      if @mapping.update(mapping_params)
+      if @mapping.update(data: mapping_params[:data].to_a)
         redirect_to :back
       else
         redirect_to :back

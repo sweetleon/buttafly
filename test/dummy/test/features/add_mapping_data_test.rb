@@ -3,8 +3,9 @@ require "test_helper"
 feature "submit mapping data" do
 
   scenario "success" do 
-    mapping = FactoryGirl.create(:mapping) 
-    existing_content = mapping.originable
+    existing_content = FactoryGirl.create(:spreadsheet)
+    mapping = existing_content.mappings.new(targetable_model: "Review", data: nil)
+    mapping.save
     visit '/buttafly/contents'
     within("#file-mapping-#{mapping.id}") do
       select('wine::name', from: "mapping[data][wine]")
