@@ -3,10 +3,7 @@ require_dependency "buttafly/application_controller"
 module Buttafly
   class MappingsController < ApplicationController
 
-    # before_action :set_originable, on: :new
-
     def new
-      @originable = Buttafly.originable.find(id: params[:originable_id])
       legends = Mapping.where(targetable_model: params).map(&:legend_id)
     end
 
@@ -21,8 +18,7 @@ module Buttafly
 
     def update
       @mapping = Buttafly::Mapping.find(params[:id])
-      binding.pry
-      if @mapping.update(data: mapping_params[:data].to_a)
+      if @mapping.update(legend_data: mapping_params[:data].to_a)
         redirect_to :back
       else
         redirect_to :back

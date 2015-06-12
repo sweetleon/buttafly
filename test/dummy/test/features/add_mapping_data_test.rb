@@ -3,8 +3,9 @@ require "test_helper"
 feature "submit mapping data" do
 
   scenario "success" do 
+    
     existing_content = FactoryGirl.create(:spreadsheet)
-    mapping = existing_content.mappings.new(targetable_model: "Review", data: nil)
+    mapping = existing_content.mappings.new(targetable_model: "Review", legend_data: nil)
     mapping.save
     visit '/buttafly/contents'
     within("#file-mapping-#{mapping.id}") do

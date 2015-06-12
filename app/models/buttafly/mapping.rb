@@ -8,7 +8,8 @@ module Buttafly
     belongs_to :originable, polymorphic: true, class_name: "Buttafly::Spreadsheet"
 
     # validations
-    validates :originable, presence: true
+    validates :originable,        presence: true
+    validates :targetable_model,  presence: true
 
     def self.originable_models      
       Rails.application.eager_load!

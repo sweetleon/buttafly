@@ -8,7 +8,7 @@ FactoryGirl.define do
 
     factory :mapping_with_data do
 
-      data do 
+      legend_data do 
         { 
           review: { 
             rating: 94,
