@@ -1,29 +1,39 @@
 require "test_helper"
 
+feature "replicate spreadsheet rows" do 
+
+end
+
 feature "submit mapping data" do
 
   scenario "success" do 
     
+    legends = {
+      "wine" => "wine::name", 
+      "winery" => "winery::name",
+      "review" => "content",
+      "vintage" => "wine::vintage",
+      "rating" => "rating"
+    }
+
     existing_content = FactoryGirl.create(:spreadsheet)
-    mapping = existing_content.mappings.new(targetable_model: "Review", legend_data: nil)
-    mapping.save
+    mapping = existing_content.mappings.create(targetable_model: "Review", legend_data: nil)
+    
     visit '/buttafly/contents'
     within("#file-mapping-#{mapping.id}") do
-      select('wine::name', from: "mapping[data][wine]")
-      select('winery::name', from: "mapping[data][winery]")
-      select('wine::vintage', from: "mapping[data][vintage]")
-      select('content', from: "mapping[data][review]")
-      select('rating', from: "mapping[data][rating]")
-      click_button "map it"
+      legends.each_pair do |k,v|
+        select(v, from: "mapping[data][#{k}]")
+      end
+      click_button "map!"
     end
+    page.assert_selector(".alert-box", text: "mapping updated")
+    
+    within("#file-mapping-#{mapping.id}") do
 
-      
-   # within("#show-file-#{existing_content.id}") do 
-
-   #    select "Review", from: "mapping_targetable_model"
-   #    click_button "Create new mapping"
-   #  end
-   #  page.assert_selector(".alert-box.success")
-   #  existing_content.mappings.first.targetable_model.must_equal "Review"
+      legends.each_pair do |k,v|
+        
+        has_field?("mapping[data][#{k}]", with: v).must_equal true
+      end
+    end
   end
 end

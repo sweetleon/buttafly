@@ -1,18 +1,17 @@
 module Targetable
+
   extend ActiveSupport::Concern
 
   module ClassMethods
     def targetable?
       true
     end
-    
-    def targetable
-      true
-    end
   end
 
   module TargetableModels
+    
     extend self
+    
     @included_in ||= []
 
     def add(klass)
@@ -28,36 +27,34 @@ module Targetable
     has_one :mapping, as: :targetable
     TargetableModels.add self
     
-    def associated_cols
-      self.class.reflect_on_all_associations(:belongs_to)
-    end
-    
-    def targetable_attrs
-      foreign_key_cols = associated_cols.map(&:foreign_key)
-      meta_cols = ["updated_at", "created_at", "id"]
-      ignored_cols = meta_cols + foreign_key_cols
-      mappable_columns = self.attributes.keys - ignored_cols
-    end
-
-    def self.targetable_fields
-      self.column_names
-    end
-    
-    def self.ignored_columns 
+    def self.targetable_ignored_columns 
       ["updated_at", "created_at", "id"]
     end
 
-    def self.targetable_attrs
-      associated_cols = self.reflect_on_all_associations(:belongs_to)
-      foreign_key_cols = associated_cols.map(&:foreign_key)
-      meta_cols = ["updated_at", "created_at", "id"]
-      ignored_cols = meta_cols + foreign_key_cols
-      mappable_columns = self.column_names - ignored_cols
+    def self.targetable_columns
+      column_names - targetable_ignored_columns
     end
 
-    def self.parent_models
-      # self.reflect_on_all_associations(:belongs_to).first.class_name
-      self.validators.map(&:attributes).flatten
+    def self.targetable_parent_models
+      parent_models = []
+      self.reflect_on_all_associations(:belongs_to).each do |parent_model|
+        if parent_model.options[:class_name].nil?
+          parent_models << parent_model.name 
+        else
+          parent_models << parent_model.options[:class_name].constantize.model_name.i18n_key
+        end
+      end
+      parent_models
     end
+
+    def self.targetable_attrs
+      attrs = targetable_columns
+      parents = self.reflect_on_all_associations(:belongs_to).map(&:name)
+      parents.each do |p|
+        fk = p.to_s.capitalize.foreign_key
+        attrs.delete(fk)
+      end
+      attrs
+    end  
   end
 end

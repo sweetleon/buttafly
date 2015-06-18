@@ -3,11 +3,9 @@ module Buttafly
     require 'tsortable'
     serialize :data
 
-    # associations
     belongs_to :legend
     belongs_to :originable, polymorphic: true, class_name: "Buttafly::Spreadsheet"
 
-    # validations
     validates :originable,        presence: true
     validates :targetable_model,  presence: true
 
@@ -19,7 +17,7 @@ module Buttafly
       model_names = models.map(&:name)
       model_names
     end
-
+    
     def self.targetable_models
       Rails.application.eager_load!
       models = ActiveRecord::Base.descendants.select do |c| 
@@ -28,51 +26,30 @@ module Buttafly
       model_names = models.map(&:name)
       model_names
     end
-
-    def targetable_order
-      dependency_hash = TsortableHash.new
-      Mapping.targetable_models.each do |m|
-        dependency_hash[m.underscore.to_sym] = m.constantize.validators.map(&:attributes).flatten
-      end
-      sorted_dependencies = dependency_hash.tsort
-      sorted_dependencies[0..sorted_dependencies.index(self.targetable_model.underscore.to_sym)]
-    end
-
-    def self.targetable_order(targetable_model=nil)
-      dependency_hash = TsortableHash.new
-      self.targetable_models.each do |m|
-        dependency_hash[m.underscore.to_sym] = m.constantize.validators.map(&:attributes).flatten
-      end
-      sorted_dependencies = dependency_hash.tsort
-      if targetable_model.nil?
-        sorted_dependencies
-      else
-        sorted_dependencies[0..sorted_dependencies.index(targetable_model)]
-      end
-    end
-
-    def get_origin_headers
+    
+    def originable_headers
       data = CSV.read(self.originable.flat_file.path)
       data.first
     end
 
-    def parent_models
-      model = self.targetable_model.to_s.classify.constantize
-      model.validators.map(&:attributes).flatten
+    def targetable_field_choices
+      choices = self.targetable_model.classify.constantize.targetable_attrs
+      self.targetable_order.flatten.flatten.each do |parent|
+        parent.to_s.classify.constantize.targetable_attrs.each do |attribute|
+          choices << "#{parent}::#{attribute}"
+        end
+      end
+      choices
     end
-#     def self.ancestors_hash(model)
-# def self.get_target_keys(model)
-#       def self.get_parent_models(model)
-#     def self.get_dependencies(model)
-#       {
-#         :attrs => self.get_target_keys(model),
-#         :parents => self.get_parent_models(model)
-#       }
 
-    # end
- # end
-    # private
-  
-    # @ignored_models = [:mapping, :spreadsheet, :legend]
+
+    def targetable_order
+      dependency_hash = TsortableHash[]
+      targetable_model.classify.constantize.targetable_parent_models.each do |parent|
+        dependency_hash[parent] = parent.to_s.classify.constantize.targetable_parent_models
+        grandparents = parent.to_s.classify.constantize.targetable_parent_models        
+      end
+      dependency_hash
+    end
   end
 end

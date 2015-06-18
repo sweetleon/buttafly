@@ -9,30 +9,16 @@ module Buttafly
       end
     end
 
-    def field_choices(targetable_model)
-      [ 
-        "name",
-        "content",
-        "rating",
-        "wine::name",
-        "wine::vintage",
-        "reviewer::name",
-        "winery::name"
+    def mapping_select_tag(header, m)
+      choices = field_choices(m)
+      selected = m.legend_data.to_h[header.to_s]
+      options = options_for_select(choices, selected)
+      input = "mapping[data][#{header}]"
+      select_tag(input, options)
+    end
 
-      ]
-
-      # { targetable_model => ["name", "vintage"] }     
-
-       # m = targetable_model
-      # fields = m.targetable_attrs
-      # m.parent_models.each do |p|
-      #   attrs = p.to_s.classify.constantize.targetable_attrs
-      #   # attrs.each do |a|
-      #   #   fields << "#{p}:#{a}"
-          
-      #   # end
-      # end
-      # fields
+    def field_choices(mapping)
+      mapping.targetable_field_choices
     end
 
     def tab_active?(aasm_state)
@@ -49,8 +35,6 @@ module Buttafly
           :title => "#{event_description(event.to_s)}" 
       )
     end
-
-
 
     def event_description(event)
 

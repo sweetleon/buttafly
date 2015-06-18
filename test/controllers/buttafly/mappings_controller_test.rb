@@ -31,7 +31,7 @@ describe "Buttafly::MappingsController" do
         "review"=>"content",
         "rating"=>"rating"}
       }
-    assert_response 200
+    assert_response 302
 
   end
 

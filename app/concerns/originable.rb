@@ -1,6 +1,13 @@
 module Originable
   extend ActiveSupport::Concern
 
+  module ClassMethods
+
+    def originable?
+      true
+    end
+  end
+
   included do
 
     require "csv"
@@ -15,11 +22,10 @@ module Originable
     has_many :legends, through: :mappings
 
     mount_uploader :flat_file, Buttafly::FlatFileUploader
-    validates_presence_of :flat_file
+    validates :flat_file, presence: true
 
     aasm do 
 
-      # initial state, after successful upload.
       state :uploaded, initial: true
       state :targeted
       state :mapped
@@ -28,16 +34,15 @@ module Originable
       state :archived
 
       event :target do 
-        # transitions from: :uploaded, to: :key => "value", targeted, 
-        #             after: -> f { f.set_transition_timestamp :targeted}
+        transitions from: :uploaded, to: :targeted
       end
 
       event :map do 
-
+        transitions from: :targeted, to: :mapped
       end
 
       event :replicate do 
-
+        transitions from: :mapped, to: :replicated
       end
 
       event :destroy do 
@@ -112,12 +117,5 @@ module Originable
     #   end
     #   self.update(data: json_array)
     # end
-  end
-  
-  module ClassMethods
-
-    def originable
-      true
-    end
   end
 end

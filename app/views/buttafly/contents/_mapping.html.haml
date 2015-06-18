@@ -9,16 +9,15 @@
           %td.text-center= header
     %tbody
       - file.mappings.each do |m|
-        / # = m.targetable_model.classify.constantize.associated_cols
         = form_tag(m, method: 'patch') do 
           %tr{ id: "file-mapping-#{m.id}" }
             %td 
               = m.targetable_model.classify
             - file.list_headers.each do |header|
               %td
-                = select_tag("mapping[data][#{header}]", options_for_select(field_choices(m.targetable_model)))
+                = mapping_select_tag(header, m)
             %td
-              = submit_tag "map it", class: "button success"
+              = submit_tag "map!", class: "button success"
 .row
   = render partial: "new_target", locals: { file: file }
 / %ul.tabs.vertical{"data-tab" => ""}
