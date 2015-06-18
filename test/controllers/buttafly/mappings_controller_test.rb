@@ -21,17 +21,25 @@ describe "Buttafly::MappingsController" do
     assert_response 302
   end
 
-  it "must PATCH #update" do 
+  describe "must PATCH #update" do 
     
-    patch :update, id: mapping, mapping: { 
-      "data"=> {
-        "wine"=>"wine::name",
-        "winery"=>"winery::name",
-        "vintage"=>"wine::vintage",
-        "review"=>"content",
-        "rating"=>"rating"}
-      }
-    assert_response 302
+    it "stores data" do 
+
+      patch :update, id: mapping, mapping: { 
+        "data"=> {
+          "wine"=>"wine::name",
+          "winery"=>"winery::name",
+          "vintage"=>"wine::vintage",
+          "review"=>"content",
+          "rating"=>"rating"}
+        }
+      assert_response 302
+      mapping.reload.legend_data.wont_equal nil
+      mapping.legend_data.must_include ["wine", "wine::name"]
+      mapping.legend_data.must_include ["review", "review::content"]
+      mapping.legend_data.must_include ["winery", "winery::name"]
+      mapping.originable.mapped?.must_equal true
+    end
 
   end
 
