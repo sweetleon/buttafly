@@ -16,14 +16,15 @@ module Originable
 
     include AASM
 
+    mount_uploader :flat_file, Buttafly::FlatFileUploader
+    
     belongs_to :user
     
     has_many :mappings, as: :originable
     has_many :legends, through: :mappings
 
-    mount_uploader :flat_file, Buttafly::FlatFileUploader
     validates :flat_file, presence: true
-
+    
     aasm do 
 
       state :uploaded, initial: true
@@ -34,15 +35,18 @@ module Originable
       state :archived
 
       event :target do 
-        transitions from: :uploaded, to: :targeted
+        transitions from: :uploaded, 
+                      to: :targeted
       end
 
       event :map do 
-        transitions from: :targeted, to: :mapped
+        transitions from: :targeted, 
+                      to: :mapped
       end
 
       event :replicate do 
-        transitions from: :mapped, to: :replicated
+        transitions from: :mapped, 
+                      to: :replicated
       end
 
       event :destroy do 
@@ -50,13 +54,15 @@ module Originable
       end
 
       event :archive do 
+        transitions from: [:uploaded, :targeted, :mapped, :replicated], 
+                      to: :archived
 
       end
       # cruft?
-      state :not_imported
-      state :imported, before_enter: :convert_data_to_json!
-      state :published
-      state :unpublished
+      # state :not_imported
+      # state :imported, before_enter: :convert_data_to_json!
+      # state :published
+      # state :unpublished
 
       # event :import do 
       #   transitions from: [:not_imported, :imported], 
@@ -65,16 +71,16 @@ module Originable
       # end
 
       event :target do 
-        transitions from: [:uploaded], to: :targeted
+        transitions from: [:uploaded, :targeted], to: :targeted
       end
-      event :publish do 
-        transitions from: [:imported, :unpublished], to: :published, 
-                    after: -> f { f.set_transition_timestamp :published}
-      end
+      # event :publish do 
+      #   transitions from: [:imported, :unpublished], to: :published, 
+      #               after: -> f { f.set_transition_timestamp :published}
+      # end
 
-      event :unpublish do 
-        transitions from: :published
-      end
+      # event :unpublish do 
+      #   transitions from: :published
+      # end
     end
 
     def possible_events

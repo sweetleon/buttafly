@@ -9,6 +9,10 @@ module Buttafly
       end
     end
 
+    def active_element?(i)
+      "active" if i == 0
+    end
+
     def mapping_select_tag(header, m)
       choices = field_choices(m)
       selected = m.legend_data.to_h[header.to_s]
@@ -23,6 +27,18 @@ module Buttafly
 
     def tab_active?(aasm_state)
       aasm_state.to_s == "uploaded" ? "active" : "inactive"
+    end
+
+    def available_events(file)
+      file.aasm.events.map(&:name) - mapping_events
+    end 
+
+    def mapping_events
+      [:target]
+    end
+
+    def map_legend_button(mapping)
+      mapping.legend_data.nil? ? "write legend" : "(re)write legend"
     end
 
     def event_button(event)
@@ -43,7 +59,11 @@ module Buttafly
       when "import"
         "Save a json representation of the csv data in the spreadsheet model."
       when "target"
-        "blah"
+        "Select the root model, and we will figure out which models it belongs to."
+      when "archive"
+        "Archive spreadsheet."
+      when "write legend" 
+        "After selecting the model and attribute you wish to map each of the headers at to, save the legend."
       end
     end
 

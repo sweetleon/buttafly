@@ -35,5 +35,8 @@ feature "submit mapping data" do
         has_field?("mapping[data][#{k}]", with: v).must_equal true
       end
     end
+    assert_selector(".panel.panel-state-mapped")
+
+
   end
 end

@@ -3,5 +3,5 @@
   .small-6.columns
     = f.select :targetable_model, @targetable_models
   .small-6.columns
-    .has-tip{"aria-haspopup" => "true", "data-tooltip" => "", :title => "Select the model you want to map to first."} 
-      = f.submit "Create new mapping", class: "button small expand", method: :post
+    .has-tip{"aria-haspopup" => "true", "data-tooltip" => "", title: event_description("target")} 
+      = f.submit "create new mapping", class: "button small expand", method: :post

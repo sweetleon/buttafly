@@ -31,19 +31,10 @@ describe "Buttafly::ContentsController" do
     assert_response 302
   end
   
-  # it "patch #import saves a spreadsheet" do
-  #   skip
-  #   request.env['HTTP_REFERER'] = "/referring/url"
-  #   patch :import, id: spreadsheet.id, originable_type: "Buttafly::Spreadsheet"
-  # end
-
   it "post #create saves a spreadsheet" do
-skip
+    attrs = attributes_for(:spreadsheet)
     assert_difference "Buttafly::Spreadsheet.count" do
-      post :create, originable: { 
-        name: "sweeet name",
-        flat_file: "summer.csv"
-      }
+      post :create, originable: attrs 
     end
   end
   

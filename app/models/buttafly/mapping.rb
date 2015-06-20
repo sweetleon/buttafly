@@ -4,10 +4,16 @@ module Buttafly
     serialize :data
 
     belongs_to :legend
-    belongs_to :originable, polymorphic: true, class_name: "Buttafly::Spreadsheet"
+    belongs_to :originable, 
+      polymorphic: true, 
+      class_name: "Buttafly::Spreadsheet",
+      touch: true
 
     validates :originable,        presence: true
     validates :targetable_model,  presence: true
+
+
+    after_save :set_originable_state
 
     def self.originable_models      
       Rails.application.eager_load!
@@ -50,6 +56,13 @@ module Buttafly
         grandparents = parent.to_s.classify.constantize.targetable_parent_models        
       end
       dependency_hash
+    end
+  
+  private
+
+    def set_originable_state
+      self.originable.target! if self.originable.uploaded?
+      self.originable.map! if !self.legend_data.nil? && self.originable.targeted? 
     end
   end
 end

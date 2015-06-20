@@ -13,5 +13,7 @@ feature "create new mapping" do
     end
     page.assert_selector(".alert-box.success")
     existing_content.mappings.first.targetable_model.must_equal "Review"
+    assert_selector(".panel.panel-state-targeted")
+
   end
 end

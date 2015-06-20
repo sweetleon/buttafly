@@ -4,7 +4,7 @@ FactoryGirl.define do
   factory :mapping, :class => 'Buttafly::Mapping' do
 
     targetable_model "Review"
-    originable
+    association :originable, factory: :spreadsheet
 
     factory :mapping_with_data do
 
@@ -26,9 +26,7 @@ FactoryGirl.define do
           } 
         }
       end
-
     end
-
 
     factory :mapping_with_legend do
       legend 

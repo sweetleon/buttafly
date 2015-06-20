@@ -17,7 +17,8 @@
               %td
                 = mapping_select_tag(header, m)
             %td
-              = submit_tag "map!", class: "button success"
+              .has-tip{"aria-haspopup" => "true", "data-tooltip" => "", title: event_description("write legend")}
+                = submit_tag map_legend_button(m), class: "button success"
 .row
   = render partial: "new_target", locals: { file: file }
 / %ul.tabs.vertical{"data-tab" => ""}

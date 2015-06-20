@@ -1,4 +1,4 @@
-require 'test_helper'
+ require 'test_helper'
 
 describe "Buttafly::MappingsController" do 
 
@@ -36,7 +36,7 @@ describe "Buttafly::MappingsController" do
       assert_response 302
       mapping.reload.legend_data.wont_equal nil
       mapping.legend_data.must_include ["wine", "wine::name"]
-      mapping.legend_data.must_include ["review", "review::content"]
+      mapping.legend_data.must_include ["review", "content"]
       mapping.legend_data.must_include ["winery", "winery::name"]
       mapping.originable.mapped?.must_equal true
     end

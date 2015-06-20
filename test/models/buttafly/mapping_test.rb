@@ -63,6 +63,25 @@ describe "Buttafly::Mapping" do
       headers = mapping.originable_headers
       headers.must_equal %w[wine winery vintage review rating]
     end 
+
+    describe "#update_originable" do 
+
+      it "first mapping must change aasm_state to :targeted" do
+      skip 
+        originable = FactoryGirl.create(:spreadsheet)
+        originable.targeted?.must_equal false
+        originable.mappings.create(attributes_for(:mapping))
+        originable.reload.targeted?.must_equal true
+      end
+
+      it "adding mapping data must change originable aasm_state to :mapped" do
+
+        mapping = FactoryGirl.create(:mapping)
+        mapping.originable.targeted?.must_equal true
+        mapping.update(legend_data: [])
+        mapping.originable.mapped?.must_equal true
+      end
+    end
   end
 
   describe "targetable methods" do 

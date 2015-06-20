@@ -4,8 +4,9 @@ FactoryGirl.define do
     "test_file_name#{n}"
   end
 
-  factory :spreadsheet, :class => 'Buttafly::Spreadsheet' do
+  factory :spreadsheet, class: 'Buttafly::Spreadsheet' do
     name
+    aasm_state "uploaded"
     flat_file do 
       Rack::Test::UploadedFile.new(File.join(
         Rails.root, 'test', 'samples', 'reviews.csv')) 
@@ -13,12 +14,11 @@ FactoryGirl.define do
 
     factory :uploaded_file do
       aasm_state "uploaded"
-
     end
 
-    factory :targeted_file do 
+    factory :targeted_file do
+
       aasm_state "targeted"
-      factory :originable
     end
 
     factory :imported_file do 

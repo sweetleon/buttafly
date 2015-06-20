@@ -21,7 +21,8 @@ feature "select target model and create mapping" do
     mapping = existing_content.mappings.first
     mapping.targetable_model.must_equal "DummyChild"
     mapping.originable.must_equal existing_content
-    existing_content.targeted?.just_equal true
+    existing_content.reload.targeted?.must_equal true
+    page.assert_selector(".panel.panel-state-targeted")
   end
 end
 

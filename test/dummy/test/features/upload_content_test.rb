@@ -13,6 +13,8 @@ feature "upload content" do
       click_button "Upload spreadsheet"
     end
     page.assert_selector(".alert-box", text: "getsome noirs has been uploaded")
-    Buttafly::Spreadsheet.where(name: "getsome noirs").size.must_equal 1
+    originable = Buttafly::Spreadsheet.where(name: "getsome noirs")
+    originable.size.must_equal 1
+    assert_selector(".panel.panel-state-uploaded")
   end
 end

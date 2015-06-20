@@ -11,13 +11,19 @@
             %dt name
             %dd
               = file.name.present? ? file.name : "no name"
-          
-        .small-2.columns
-          .panel{ "class" => "panel-state-#{file.aasm_state}" }
-            = file.aasm_state.humanize.downcase
+        .small-2.columns 
+          %dl
+            %dt status
+            %dd
+              .label= file.aasm_state.humanize.downcase
+            
+        .small-4.offset-2.columns
+          - available_events(file).each do |e|
+            .pull-right
+              = event_button(e)
         
         
-    .content.active{ "id" => "show-file-#{file.id}" }
+    .content{ "id" => "show-file-#{file.id}", class: active_element?(index) }
       
       .row
         .small-12.columns
