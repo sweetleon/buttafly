@@ -1,10 +1,6 @@
 FactoryGirl.define do
 
-  sequence :name do |n|
-    "test_file_name#{n}"
-  end
-
-  factory :spreadsheet, class: 'Buttafly::Spreadsheet' do
+  factory :originable, class: 'Buttafly::Spreadsheet' do
     name
     aasm_state "uploaded"
     flat_file do 
@@ -13,24 +9,17 @@ FactoryGirl.define do
     end
 
     factory :uploaded_file do
+      
       aasm_state "uploaded"
     end
 
     factory :targeted_file do
-
       aasm_state "targeted"
     end
 
-    factory :imported_file do 
-      aasm_state "imported"
-    end
+    factory :mapped_file do
 
-    factory :published_file do 
-      aasm_state "published"
-    end
-
-    factory :unpublished_file do 
-      aasm_state "unpublished"
+      aasm_state "mapped"
     end
   end
 end

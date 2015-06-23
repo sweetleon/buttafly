@@ -15,7 +15,7 @@
           %dl
             %dt status
             %dd
-              .label= file.aasm_state.humanize.downcase
+              .label{ class: "panel-state-#{file.aasm_state}" }= file.aasm_state.humanize.downcase
             
         .small-4.offset-2.columns
           - available_events(file).each do |e|

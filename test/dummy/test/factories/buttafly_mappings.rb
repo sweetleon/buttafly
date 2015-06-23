@@ -4,32 +4,19 @@ FactoryGirl.define do
   factory :mapping, :class => 'Buttafly::Mapping' do
 
     targetable_model "Review"
-    association :originable, factory: :spreadsheet
+    association :originable
 
     factory :mapping_with_data do
 
-      legend_data do 
-        { 
-          review: { 
-            rating: 94,
-            content: "blah",
-            reviewer: {
-              name: "Robert Parker"
-            },
-            wine: {
-              name: "Oppenlander Nebbiolo",
-              vintage: 2000,
-              winery: {
-                name: "Ernie & Julio Gallows"
-              }
-            } 
-          } 
-        }
-      end
-    end
-
-    factory :mapping_with_legend do
-      legend 
+      legend_data {
+        [
+          ["wine", "wine::name"], 
+          ["winery", "winery::name"], 
+          ["vintage", "wine::vintage"], 
+          ["review", "content"], 
+          ["rating", "rating"]
+        ]
+      }
     end
   end
 end

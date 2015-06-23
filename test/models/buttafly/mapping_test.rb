@@ -68,7 +68,7 @@ describe "Buttafly::Mapping" do
 
       it "first mapping must change aasm_state to :targeted" do
       skip 
-        originable = FactoryGirl.create(:spreadsheet)
+        originable = FactoryGirl.create(:originable)
         originable.targeted?.must_equal false
         originable.mappings.create(attributes_for(:mapping))
         originable.reload.targeted?.must_equal true

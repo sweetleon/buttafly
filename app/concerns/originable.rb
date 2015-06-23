@@ -35,11 +35,11 @@ module Originable
       state :archived
 
       event :target do 
-        transitions from: :uploaded, 
+        transitions from: [:uploaded, :targeted], 
                       to: :targeted
       end
 
-      event :map do 
+      event :map do       
         transitions from: :targeted, 
                       to: :mapped
       end
@@ -49,38 +49,16 @@ module Originable
                       to: :replicated
       end
 
-      event :destroy do 
-
-      end
-
       event :archive do 
         transitions from: [:uploaded, :targeted, :mapped, :replicated], 
                       to: :archived
+      end
+
+
+      event :destroy do 
+        transitions from: :archived
 
       end
-      # cruft?
-      # state :not_imported
-      # state :imported, before_enter: :convert_data_to_json!
-      # state :published
-      # state :unpublished
-
-      # event :import do 
-      #   transitions from: [:not_imported, :imported], 
-      #               to: :imported, 
-      #               on_transition: -> f { f.set_transition_timestamp :imported }
-      # end
-
-      event :target do 
-        transitions from: [:uploaded, :targeted], to: :targeted
-      end
-      # event :publish do 
-      #   transitions from: [:imported, :unpublished], to: :published, 
-      #               after: -> f { f.set_transition_timestamp :published}
-      # end
-
-      # event :unpublish do 
-      #   transitions from: :published
-      # end
     end
 
     def possible_events

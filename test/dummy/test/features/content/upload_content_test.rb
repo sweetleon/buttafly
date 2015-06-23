@@ -15,6 +15,6 @@ feature "upload content" do
     page.assert_selector(".alert-box", text: "getsome noirs has been uploaded")
     originable = Buttafly::Spreadsheet.where(name: "getsome noirs")
     originable.size.must_equal 1
-    assert_selector(".panel.panel-state-uploaded")
+    assert_selector(".label.panel-state-uploaded")
   end
 end

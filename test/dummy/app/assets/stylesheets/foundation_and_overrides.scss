@@ -1449,7 +1449,7 @@ $state-transferred-color: $success-color;
 $state-destroyed-color: $alert-color;
 $state-archived-color: $secondary-color;
 
-.panel {
+.label {
     
   &.panel-state-uploaded {
     background: $state-uploaded-color;

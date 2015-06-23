@@ -12,7 +12,6 @@ require 'test_helper'
       must_have_column(:name, :string)
       must_have_column(:user_id, :integer)
       must_have_column(:imported_at, :datetime)
-      must_have_column(:processed_at, :datetime)
       must_have_column(:aasm_state, :string)
       must_have_column(:source_row_count, :integer)
       must_have_column(:mtime, :integer)
@@ -22,7 +21,6 @@ require 'test_helper'
     
       must_have_index(:aasm_state)
       must_have_index(:imported_at)
-      must_have_index(:processed_at)
       must_have_index(:user_id)
       must_have_index(:name)
     end
@@ -78,17 +76,17 @@ skip
         # file.may_unpublish?.must_equal false
       end
 
-      it ":imported" do 
+      it ":uploaded" do 
   
-        file = build_stubbed(:imported_file)
+        file = build_stubbed(:uploaded_file)
         # file.may_import?.must_equal true
-        file.may_publish?.must_equal true
-        file.may_unpublish?.must_equal false
+        # file.may_publish?.must_equal true
+        # file.may_unpublish?.must_equal false
       end
 
-      it ":published" do 
+      it ":targeted" do 
 
-        file = create(:published_file)
+        file = create(:targeted_file)
         # file.may_import?.must_equal false
         # file.may_publish?.must_equal false
         # file.may_unpublish?.must_equal true

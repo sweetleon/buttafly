@@ -8,17 +8,17 @@ describe "Buttafly::ContentsController" do
     @routes = Buttafly::Engine.routes
   end
 
-  let(:spreadsheet) { create(:uploaded_file) }
+  let(:originable) { create(:uploaded_file) }
 
   it "get #show must assign @originable" do
 
-    get :show, id: spreadsheet.id
+    get :show, id: originable.id
     assert_response :success
     assert_not_nil assigns(:originable)
   end
   
   it "get #edit" do
-    get :edit, id: spreadsheet.id
+    get :edit, id: originable.id
     assert_response :success
     assert_not_nil assigns(:originable)
   end
@@ -32,7 +32,7 @@ describe "Buttafly::ContentsController" do
   end
   
   it "post #create saves a spreadsheet" do
-    attrs = attributes_for(:spreadsheet)
+    attrs = attributes_for(:originable)
     assert_difference "Buttafly::Spreadsheet.count" do
       post :create, originable: attrs 
     end

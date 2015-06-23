@@ -1,6 +1,8 @@
 require "test_helper"
 
-feature "replicate spreadsheet rows" do 
+feature "delete mapping" do
+end 
+feature "edit mapping" do 
 
 end
 
@@ -16,7 +18,7 @@ feature "submit mapping data" do
       "rating" => "rating"
     }
 
-    existing_content = FactoryGirl.create(:spreadsheet)
+    existing_content = FactoryGirl.create(:originable)
     mapping = existing_content.mappings.create(targetable_model: "Review", legend_data: nil)
     
     visit '/buttafly/contents'
@@ -24,7 +26,7 @@ feature "submit mapping data" do
       legends.each_pair do |k,v|
         select(v, from: "mapping[data][#{k}]")
       end
-      click_button "map!"
+      click_button("write legend")
     end
     page.assert_selector(".alert-box", text: "mapping updated")
     
@@ -35,7 +37,7 @@ feature "submit mapping data" do
         has_field?("mapping[data][#{k}]", with: v).must_equal true
       end
     end
-    assert_selector(".panel.panel-state-mapped")
+    assert_selector(".label.panel-state-mapped")
 
 
   end

@@ -7,7 +7,7 @@ describe "Buttafly::MappingsController" do
     request.env['HTTP_REFERER'] = "/referring/url"
   end    
 
-  let(:originable)  { create(:spreadsheet) }
+  let(:originable)  { create(:originable) }
   let(:mapping)     { create(:mapping) }
 
   it "must POST #create" do 
