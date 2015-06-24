@@ -12,9 +12,9 @@ feature "upload content" do
       attach_file( "originable_flat_file", "test/dummy/test/samples/family.odt.csv")
       click_button "Upload spreadsheet"
     end
-    page.assert_selector(".alert-box", text: "getsome noirs has been uploaded")
+    assert_selector(".alert-box", text: "getsome noirs has been uploaded")
     originable = Buttafly::Spreadsheet.where(name: "getsome noirs")
     originable.size.must_equal 1
-    assert_selector(".label.panel-state-uploaded")
+    assert_selector(".label.state-uploaded")
   end
 end

@@ -34,7 +34,7 @@ module Buttafly
     end 
 
     def mapping_events
-      [:target]
+      [:target, :map]
     end
 
     def map_legend_button(mapping)
@@ -44,12 +44,21 @@ module Buttafly
     def event_button(event)
       content_tag(
         :span, submit_tag( 
-          event, class: "button small expand" 
+          event, controller: "contents", action: event, class: "button tiny #{event_color(event)}" 
         ), 
-        class: "has-tip tip-left", 
+        class: "has-tip", 
           :'aria-haspopup' => true, "data-tooltip" => "", 
           :title => "#{event_description(event.to_s)}" 
       )
+    end
+
+    def event_color(event)
+
+      case event
+      
+      when "remove file"
+        "alert"
+      end
     end
 
     def event_description(event)
@@ -64,6 +73,8 @@ module Buttafly
         "Archive spreadsheet."
       when "write legend" 
         "After selecting the model and attribute you wish to map each of the headers at to, save the legend."
+      when "remove file"
+        "Removes the file from the server. Does NOT remove replicated objects." 
       end
     end
 

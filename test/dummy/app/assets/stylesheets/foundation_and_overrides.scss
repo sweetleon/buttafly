@@ -1451,27 +1451,27 @@ $state-archived-color: $secondary-color;
 
 .label {
     
-  &.panel-state-uploaded {
+  &.state-uploaded {
     background: $state-uploaded-color;
   }
   
-  &.panel-state-targeted {
+  &.state-targeted {
     background: $state-targeted-color;
   }
   
-  &.panel-state-mapped {
+  &.state-mapped {
     background: $state-mapped-color;
   }
 
-  &.panel-state-transferred {
+  &.state-transferred {
     background: $state-transferred-color;
   }
 
-  &.panel-state-destroyed {
+  &.state-destroyed {
     background: $state-destroyed-color;
   }
 
-  &.panel-state-archived {
+  &.state-archived {
     background: $state-archived-color;
     color: $oil;
   }

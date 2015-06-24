@@ -67,7 +67,6 @@ describe "Buttafly::Mapping" do
     describe "#update_originable" do 
 
       it "first mapping must change aasm_state to :targeted" do
-      skip 
         originable = FactoryGirl.create(:originable)
         originable.targeted?.must_equal false
         originable.mappings.create(attributes_for(:mapping))
@@ -102,56 +101,5 @@ describe "Buttafly::Mapping" do
       actual = mapping.targetable_order
       assert_equal expected, actual
     end
-
-    # it "self#targetable_order()" do 
-    #   skip
-    #   expected_order = [
-    #     :wine, :reviewer]
-    #   subject.targetable_order.must_equal expected_order
-    # end
-
-    # it "self#targetable_order()" do 
-    #   skip
-    #   expected_order = [:dummy_tribe, :dummy_grandparent]
-    #   subject.targetable_order(:dummy_grandparent).must_equal expected_order
-    # end
   end
 end 
-
-
-
-#   it "must respond to :targetable_attrs" do 
-#     assert subject.respond_to? :targetable_attrs
-#     assert_equal %w[rating content], subject.targetable_attrs
-#   end
-  
-#   it "must respond to :targetable_fields" do
-#   skip
-#     assert subject.respond_to? :targetable_fields
-#     assert_includes ["wine:name"], subject.targetable_fields
-#   end 
-# end
-
-# 
-
-# # [:dummy_child, e:dummy_parent, :dummy_grandparent].each do |factory|
-# [:review].each do |factory|
-
-#   let(:record) { create(factory) }
-  
-#   it "#targetable_attrs" do 
-#     skip
-#     record.targetable_attrs.must_include "content"
-#     record.targetable_attrs.wont_include "dummy_tribe_id"
-#   end
-
-#   it "#self.targetable_attrs" do 
-#     skip
-#     record.class.targetable_attrs.must_include "name"
-#     record.class.targetable_attrs.wont_include "dummy_tribe_id"
-#   end
-
-
-  
-# end
-# end

@@ -18,12 +18,14 @@ describe "Buttafly::ContentsController" do
   end
   
   it "get #edit" do
+  
     get :edit, id: originable.id
     assert_response :success
     assert_not_nil assigns(:originable)
   end
 
   it "post #create" do
+  
     post :create, originable: { 
       name: "slick name",
       flat_file: "slickname.csv"
@@ -32,6 +34,7 @@ describe "Buttafly::ContentsController" do
   end
   
   it "post #create saves a spreadsheet" do
+  
     attrs = attributes_for(:originable)
     assert_difference "Buttafly::Spreadsheet.count" do
       post :create, originable: attrs 
@@ -39,16 +42,30 @@ describe "Buttafly::ContentsController" do
   end
   
   it "should get index" do
+  
     get :index
     assert_response :success
     assert_not_nil assigns :contents
   end
 
   it "must GET :destroy" do 
-skip
-    delete :destroy, id: spreadsheet.id
-    assert_response 302
 
+    delete :destroy, id: originable.id
+    assert_response 302
+  end
+
+  it "patch #archive" do
+
+    patch :archive, id: originable.id
+    assert_response 302
+    assert originable.reload.archived?
+  end
+
+  it "patch #archive" do
+
+    patch :archive, id: originable.id
+    assert_response 302
+    assert originable.reload.archived?
   end
 end
 

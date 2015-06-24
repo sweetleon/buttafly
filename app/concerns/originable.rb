@@ -23,10 +23,12 @@ module Originable
     has_many :mappings, as: :originable
     has_many :legends, through: :mappings
 
-    validates :flat_file, presence: true
-    
+    validates_presence_of   :flat_file
+    validates_uniqueness_of :name, scope: :flat_file, allow_blank: true
+
     aasm do 
 
+      # aasm states
       state :uploaded, initial: true
       state :targeted
       state :mapped
@@ -34,6 +36,7 @@ module Originable
       state :destroyed
       state :archived
 
+      # aasm events
       event :target do 
         transitions from: [:uploaded, :targeted], 
                       to: :targeted
@@ -52,12 +55,6 @@ module Originable
       event :archive do 
         transitions from: [:uploaded, :targeted, :mapped, :replicated], 
                       to: :archived
-      end
-
-
-      event :destroy do 
-        transitions from: :archived
-
       end
     end
 

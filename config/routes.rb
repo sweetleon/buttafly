@@ -4,8 +4,8 @@ Buttafly::Engine.routes.draw do
   resources :mappings
   resources :contents do
     member do 
-      get 'import'
-      get 'publish'
+      patch 'archive'
+      patch 'replicate'
     end
   end
 
