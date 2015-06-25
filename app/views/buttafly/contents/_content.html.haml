@@ -15,36 +15,16 @@
           %dl
             %dt status
             %dd
-              .label{ class: "panel-state-#{file.aasm_state}" }= file.aasm_state.humanize.downcase
-            
-        .small-4.offset-2.columns
-          - available_events(file).each do |e|
-            .pull-right
-              = event_button(e)
-        
+              .label{ class: "state-#{file.aasm_state}" }= file.aasm_state.humanize.downcase
         
     .content{ "id" => "show-file-#{file.id}", class: active_element?(index) }
       
       .row
         .small-12.columns
           = render partial: "mapping",  locals: { file: file }  
-        .small-3.columns
-          / = render partial: "actions", locals: { file: file }   
-
-      / %dl.tabs{"data-tab" => ""}
-      /   / %table.table
-      /   /   %thead
-      /   /     %tr
-      /   /       - file.list_headers.each do |header|
-      /   /         %td= header
-      /   / %dd= link_to "status", "#status-#{file.id}"
-      /   / %dd= link_to "#{pluralize(file.mappings.count, 'mapping')}", "#mapping-#{file.id}"
-      /   / %dd= link_to "legend", "#legend-#{file.id}"
-      /   / # %dd= link_to "actions", "#actions-#{file.id}"
-      /   / .tabs-content
-      /   /   = render partial: "status",   locals: { file: file }     
-      /   /   = render partial: "legend",   locals: { file: file }     
-      /   /   = render partial: "actions",  locals: { file: file }     
+      .row
+        .small-12.columns
+          = render partial: "content_actions", locals: { file: file }
         
 
 

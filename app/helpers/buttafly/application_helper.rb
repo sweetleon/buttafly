@@ -41,16 +41,34 @@ module Buttafly
       mapping.legend_data.nil? ? "write legend" : "(re)write legend"
     end
 
-    def event_button(event)
-      content_tag(
-        :span, submit_tag( 
-          event, controller: "contents", action: event, class: "button tiny #{event_color(event)}" 
-        ), 
-        class: "has-tip", 
-          :'aria-haspopup' => true, "data-tooltip" => "", 
-          :title => "#{event_description(event.to_s)}" 
-      )
+    def event_button_to(event, originable_id, options = {})
+      options[:action]      ||= event
+      options[:method]      ||= "put"
+      options[:orientation] ||= "tip-top"
+      content_tag(:span, button_to( 
+        event, { 
+          action: options[:action], id: originable_id 
+        }, 
+        method: options[:method], 
+        class: "button tiny #{event_color(event.to_s)}" 
+      ), 
+      class: "has-tip #{ options[:orientation] }",
+        :'data-tooltiip aria-haspopup' => true, "data-tooltip" => "",
+        :title => event_description(event.to_s)
+    )  
     end
+
+    # def event_button(event, originable_id, orientation="top")
+    #   content_tag(
+    #     :span, submit_tag( 
+    #       event, controller: "contents", action: event, id: originable_id, 
+    #       class: "button tiny #{event_color(event)}" 
+    #     ), 
+    #     class: "has-tip #{orientation}", 
+    #       :'aria-haspopup' => true, "data-tooltip" => "", 
+    #       :title => "#{event_description(event.to_s)}" 
+    #   )
+    # end
 
     def event_color(event)
 
@@ -58,6 +76,13 @@ module Buttafly
       
       when "remove file"
         "alert"
+      # when "archive"
+      #   "default"
+      # when "import"
+      #   "success"
+      when "replicate"
+        "warning"
+
       end
     end
 
@@ -75,6 +100,8 @@ module Buttafly
         "After selecting the model and attribute you wish to map each of the headers at to, save the legend."
       when "remove file"
         "Removes the file from the server. Does NOT remove replicated objects." 
+      when "replicate"
+        "replicates spreadsheet rows as objects in database"
       end
     end
 

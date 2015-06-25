@@ -19,8 +19,6 @@
             %td
               .has-tip{"aria-haspopup" => "true", "data-tooltip" => "", title: event_description("write legend")}
                 = submit_tag map_legend_button(m), class: "button success"
-.row
-  = render partial: "new_target", locals: { file: file }
 / %ul.tabs.vertical{"data-tab" => ""}
 /   - file.mappings.each do |m|
 /     %li.tab-title

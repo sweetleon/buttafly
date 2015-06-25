@@ -1,7 +1,5 @@
-.panel
-  .text-center
-    permissible actions
-  %hr
-  - file.possible_events.each do |event|
-    - next if event.to_s == "target" 
-    = event_button(event)
+%ul.button-group
+  %li
+    = event_button_to("remove file", file.id, method: :delete, action: :destroy)
+  - file.originable_events.each do |event|
+    %li= event_button_to(event, file.id)

@@ -58,8 +58,8 @@ module Originable
       end
     end
 
-    def possible_events
-      events_array = aasm.events.map(&:name)
+    def originable_events
+      events_array = aasm.events.map(&:name) - [:target, :map]
       data.nil? ? (events_array << :import) : events_array << :wipe 
     end
 

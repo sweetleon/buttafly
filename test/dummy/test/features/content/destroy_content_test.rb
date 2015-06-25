@@ -8,16 +8,11 @@ feature "destroy content" do
   end
   
   scenario "success" do
-    save_and_open_page
-    within("#show-file-#{@existing_content.id}") do
-      click_button "remove file" 
-
-    end
-    save_and_open_page
-    
+    within("#content-scope-all") do 
+      within("#show-file-#{@existing_content.id}") do
+        click_button "remove file" 
+      end
+    end    
     assert_selector(".alert-box", text: "file has been removed")
-
-
-    # save_and_open_page
   end
 end

@@ -42,6 +42,9 @@ module Buttafly
       end
     end
 
+    def import
+    end
+
     def destroy
       if @originable.destroy
         redirect_to contents_path, notice: "content successfully destroyed"
