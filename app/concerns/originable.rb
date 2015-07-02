@@ -28,15 +28,12 @@ module Originable
 
     aasm do 
 
-      # aasm states
       state :uploaded, initial: true
       state :targeted
       state :mapped
-      state :replicated
-      state :destroyed
+      state :transmogrified
       state :archived
 
-      # aasm events
       event :target do 
         transitions from: [:uploaded, :targeted], 
                       to: :targeted
@@ -47,13 +44,13 @@ module Originable
                       to: :mapped
       end
 
-      event :replicate do 
+      event :transmogrify do 
         transitions from: :mapped, 
-                      to: :replicated
+                      to: :transmogrified
       end
 
       event :archive do 
-        transitions from: [:uploaded, :targeted, :mapped, :replicated], 
+        transitions from: [:uploaded, :targeted, :mapped, :transmogrified], 
                       to: :archived
       end
     end
@@ -63,13 +60,50 @@ module Originable
       data.nil? ? (events_array << :import) : events_array << :wipe 
     end
 
-
     def derived_name
       if name.present?
         name
       else 
         File.basename(flat_file.to_s)
       end 
+    end
+
+    # get sorted model order
+    # each sorted model do 
+    #   Get matching attrs from legend_data
+    #   find_or_create by matching attrs
+    #   if model has parents?
+    #    find parent foreign key using parent attrs  
+    #      
+    #   get parent model 
+
+
+    def create_records!
+
+      self.mappings.each do |mapping|
+        tm = mapping.targetable_model.classify.constantize
+        legend = mapping.legend_data.to_h
+        csv = CSV.open(self.flat_file.path, headers:true).readlines
+        csv.each do |csv_row|
+          params_hash = {}
+          tm.targetable_columns.each do |col|
+            params_hash[col] = csv_row[legend.key("#{tm.to_s.downcase}::#{col}")]
+          end
+          # binding.pry
+          # if tm.targetable_parent_models.size == 1
+
+          # unless tm.targetable_parent_models.empty?
+          #   tm.targetable_parent_models.each do |parent|
+          #     fk = p.to_s.foreign_key
+          #     binding.pry
+          #   end
+          # end
+              
+
+
+          tm.find_or_create_by(params_hash)
+        end
+      end
     end
 
     def set_transition_timestamp(given_status, time=Time.now)

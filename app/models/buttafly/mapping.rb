@@ -48,16 +48,49 @@ module Buttafly
       choices
     end
 
-
-    def targetable_order
-      dependency_hash = TsortableHash[]
-      targetable_model.classify.constantize.targetable_parent_models.each do |parent|
-        dependency_hash[parent] = parent.to_s.classify.constantize.targetable_parent_models
-        grandparents = parent.to_s.classify.constantize.targetable_parent_models        
+    def targetable_order(parent=nil)
+      ancestors = Hash.new
+      targetable_parents(parent).each do |p|
+        ancestors[p] = targetable_parents(p).empty? ? {} : targetable_order(p)
       end
-      dependency_hash
+      ancestors
     end
-  
+
+    def ancestral_lines(klass=nil)
+      lines_array = []
+      targetable_parents(klass).each do |p|
+        lines_array << [p]
+        if targetable_parents(p).empty?
+          next 
+        else
+          lines_array << [p, targetable_parents(p)].flatten
+        end
+      end
+      lines_array
+    end
+
+    def targetable_parents(klass=nil) 
+      parent_models = []
+      klass ||= targetable_model
+      klass.to_s.classify.constantize.reflect_on_all_associations(:belongs_to).each do |parent_model|
+        if parent_model.options[:class_name].nil?
+          parent_models << parent_model.name 
+        else
+          parent_models << parent_model.options[:class_name].constantize.model_name.i18n_key
+        end
+      end
+      parent_models
+    end
+
+
+#   def targetable_order
+#       dependency_hash = TsortableHash[]
+#       targetable_model.classify.constantize.targetable_parent_models.each do |parent|
+#         dependency_hash[parent] = parent.to_s.classify.constantize.targetable_parent_models
+#         # grandparents = parent.to_s.classify.constantize.targetable_parent_models        
+#       end
+#       dependency_hash
+#     end  
   private
 
     def set_originable_state

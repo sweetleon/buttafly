@@ -61,8 +61,14 @@ describe "Buttafly::ContentsController" do
     assert originable.reload.archived?
   end
 
-  it "patch #archive" do
+  it "patch #transmogrify" do
+    originable = FactoryGirl.create(:mapped_file)
+    patch :transmogrify, id: originable.id
+    assert_response 302
+    assert originable.reload.transmogrified?
+  end
 
+  it "patch #archive" do
     patch :archive, id: originable.id
     assert_response 302
     assert originable.reload.archived?

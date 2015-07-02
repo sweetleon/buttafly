@@ -13,12 +13,15 @@ module Buttafly
       "active" if i == 0
     end
 
-    def mapping_select_tag(header, m)
-      choices = field_choices(m)
-      selected = m.legend_data.to_h[header.to_s]
-      options = options_for_select(choices, selected)
-      input = "mapping[data][#{header}]"
-      select_tag(input, options)
+    def mapping_form_select(mapping, klass, column)
+      choices = mapping.originable.list_headers
+      options = options_for_select(choices, "blah")
+      select_tag("mapping")
+      select_tag("mapping[data][#{klass.to_s.underscore}][#{column}]", options)
+    end
+
+    def klassify(model)
+      model.to_s.classify.constantize
     end
 
     def field_choices(mapping)
@@ -38,12 +41,13 @@ module Buttafly
     end
 
     def map_legend_button(mapping)
-      mapping.legend_data.nil? ? "write legend" : "(re)write legend"
+      klass = mapping.targetable_model.downcase
+      mapping.legend_data.nil? ? "write #{klass} legend" : "(re)write #{klass} legend"
     end
 
     def event_button_to(event, originable_id, options = {})
       options[:action]      ||= event
-      options[:method]      ||= "put"
+      options[:method]      ||= "patch"
       options[:orientation] ||= "tip-top"
       content_tag(:span, button_to( 
         event, { 
@@ -58,17 +62,13 @@ module Buttafly
     )  
     end
 
-    # def event_button(event, originable_id, orientation="top")
-    #   content_tag(
-    #     :span, submit_tag( 
-    #       event, controller: "contents", action: event, id: originable_id, 
-    #       class: "button tiny #{event_color(event)}" 
-    #     ), 
-    #     class: "has-tip #{orientation}", 
-    #       :'aria-haspopup' => true, "data-tooltip" => "", 
-    #       :title => "#{event_description(event.to_s)}" 
-    #   )
-    # end
+    def state_color(state)
+      case state
+
+      when "archived"
+        "disabled"
+      end
+    end
 
     def event_color(event)
 
@@ -76,11 +76,9 @@ module Buttafly
       
       when "remove file"
         "alert"
-      # when "archive"
-      #   "default"
-      # when "import"
-      #   "success"
-      when "replicate"
+      when "archive"
+      when "import"
+      when "transmogrify"
         "warning"
 
       end
@@ -98,10 +96,10 @@ module Buttafly
         "Archive spreadsheet."
       when "write legend" 
         "After selecting the model and attribute you wish to map each of the headers at to, save the legend."
+      when "transmogrify"
+        "Generate active_record objects from file."
       when "remove file"
-        "Removes the file from the server. Does NOT remove replicated objects." 
-      when "replicate"
-        "replicates spreadsheet rows as objects in database"
+        "Removes the file from the server. Does NOT remove transmogrified objects." 
       end
     end
 

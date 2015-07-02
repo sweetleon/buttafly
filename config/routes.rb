@@ -6,7 +6,7 @@ Buttafly::Engine.routes.draw do
     member do 
       patch 'archive'
       patch 'import'
-      patch 'replicate'
+      patch 'transmogrify'
     end
   end
 

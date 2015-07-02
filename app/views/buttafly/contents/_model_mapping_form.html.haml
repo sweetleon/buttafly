@@ -1,0 +1,5 @@
+- klass.constantize.targetable_attrs.each do |attribute|
+  .small-6.columns
+    = klass + " => " + attribute
+  .small-6.columns
+    = mapping_form_select(mapping, mapping.targetable_model, attribute)

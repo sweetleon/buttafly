@@ -17,6 +17,18 @@ FactoryGirl.define do
           ["rating", "rating"]
         ]
       }
+
+      factory :mapping_without_parents do
+        targetable_model "Winery"
+      end
+      
+      factory :mapping_with_parent do
+        targetable_model "Wine"
+      end
+
+      factory :mapping_with_parents do
+        targetable_model "Review"
+      end
     end
   end
 end

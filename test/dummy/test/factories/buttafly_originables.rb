@@ -14,12 +14,20 @@ FactoryGirl.define do
     end
 
     factory :targeted_file do
+
       aasm_state "targeted"
+      after(:create) do |originable|
+        create(:mapping, originable: originable)
+      end
     end
 
     factory :mapped_file do
 
       aasm_state "mapped"
+      
+      after(:create) do |originable|
+        create(:mapping_with_data, originable: originable)
+      end
     end
   end
 end

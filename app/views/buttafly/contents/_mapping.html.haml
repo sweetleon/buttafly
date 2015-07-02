@@ -1,24 +1,110 @@
 .row
-  .expand
-  %table
-    %thead
-      %tr
-        %td
-          = "file headers".upcase
-        - file.list_headers.each do |header|
-          %td.text-center= header
-    %tbody
-      - file.mappings.each do |m|
-        = form_tag(m, method: 'patch') do 
-          %tr{ id: "file-mapping-#{m.id}" }
-            %td 
-              = m.targetable_model.classify
-            - file.list_headers.each do |header|
-              %td
-                = mapping_select_tag(header, m)
-            %td
-              .has-tip{"aria-haspopup" => "true", "data-tooltip" => "", title: event_description("write legend")}
-                = submit_tag map_legend_button(m), class: "button success"
+  - file.mappings.each do |mapping|
+    .div{ id: "file-mapping-#{mapping.id}" }
+      = form_tag(mapping, method: 'patch') do
+        - target = klassify(mapping.targetable_model.to_s)
+        - models = mapping.targetable_order
+        .row
+          .small-1.columns
+            .label 
+              = mapping.id
+        
+          .small-3.columns
+            .label= target
+          .small-8.columns
+            .panel
+              - target.targetable_attrs.each do |col|
+                .row
+                  .small-3.columns
+                    .right= col + " => "
+                  .small-9.columns
+                    = mapping_form_select(mapping, target, col)
+        = models
+        %hr
+        / # = ancestral_lines(nil, mapping.targetable_order)
+        %hr
+        - models.each do |key, value|
+          .row
+            .small-1.columns
+
+            .small-3.small-offset-1.columns
+              .label= target.to_s + " => " + key.to_s.classify 
+            .small-8.columns
+              .panel
+
+      %hr      
+      / .panel= generate_form(nil, models)
+      /   - models.each do |klass|
+      /     / = generate_form(nil, klass)
+      /     / = klass
+      /     %br
+      /     / = klass
+      /     - label = target + " << " + klass.first.to_s.classify
+      /     .row
+      /       .small-3.columns
+      /         .label
+      /           / = label
+      /       .small-9.columns
+      /         .panel
+      /   %hr    
+
+      /   / = [mapping.targetable_model]
+      /   / # = mapping.targetable_order
+      /   / - mapping.targetable_order.each do |klass|
+      /   /   .small-1.columns
+      /   /     .label= klass[0]
+      /   /   .small-11.columns
+      /   /     .panel.callout
+
+      / = form_tag(mapping, method: 'patch') do 
+      /   - klass = mapping.targetable_model.classify
+      /   .small-1.columns
+      /     Target
+      /     %br
+      /     .label= klass
+      /   .small-11.columns
+      /     .panel.callout
+      /       .row
+      /         .small-10.columns
+      /           = render partial: "model_mapping_form", locals: { mapping: mapping, klass: klass }
+      /   %hr
+      /     Parent models -- we will find these
+      /   %hr
+      /     = mapping.targetable_order
+      /   %hr
+      /   - mapping.targetable_model.classify.constantize.targetable_parent_models.each do |parent|
+      /     - klass = parent.to_s.classify
+      /     .small-1.columns
+      /       %br
+      /       .label= klass
+      /     .small-11.columns
+      /       .panel
+      /         .row
+      /           .small-10.columns
+      /             = render partial: "model_mapping_form", locals: { mapping: mapping, klass: klass }   
+
+
+
+      /   .has-tip{"aria-haspopup" => "true", "data-tooltip" => "", title: event_description("write legend for #{mapping.targetable_model}")}
+      /     = submit_tag map_legend_button(mapping), class: "button tiny success"
+      / %hr    
+      / .small-6.columns
+      /   = form_tag(mapping, method: 'patch') do 
+      /     = mapping.targetable_model.classify.constantize.targetable_columns.each do |tc|
+      /       = mapping_form_select(mapping, mapping.targetable_model, tc)
+    /     = mapping_form_inputs()
+    /     / - m.targetable_order.flatten.flatten.each do |model|
+    /     /   - model.to_s.classify.constantize.targetable_columns.each do |col|  
+    /     /     %td
+    /     /       = model.to_s.capitalize + "." + col
+    /     /       = mapping_select_tag(col, m)
+
+    /     / - file.list_headers.each do |header|
+    /     /   %td
+    /     /     = mapping_select_tag(header, m)
+    /     %td
+    /       .has-tip{"aria-haspopup" => "true", "data-tooltip" => "", title: event_description("write legend")}
+    /         = submit_tag map_legend_button(m), class: "button success"
 / %ul.tabs.vertical{"data-tab" => ""}
 /   - file.mappings.each do |m|
 /     %li.tab-title

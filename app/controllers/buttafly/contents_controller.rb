@@ -4,7 +4,7 @@ module Buttafly
   class ContentsController < ApplicationController
 
     before_action :set_originable, only: [
-                  :edit, :show, :archive, :replicate, :destroy]
+        :edit, :show, :archive, :destroy, :transmogrify]
 
     def new
       @originable ||= Buttafly::Spreadsheet.new
@@ -42,9 +42,13 @@ module Buttafly
       end
     end
 
-    def import
+    def transmogrify
+      if @originable.transmogrify!
+        redirect_to :back, notice: "#{@originable.name} successfully archived."
+      else
+        redirect_to :back, notice: "#{@originable.name} could not be archived."
+      end
     end
-
     def destroy
       if @originable.destroy
         redirect_to contents_path, notice: "content successfully destroyed"

@@ -86,7 +86,7 @@ describe "Buttafly::Mapping" do
   describe "targetable methods" do 
 
     it "#targetable_field_choices" do 
-      
+      skip
       mapping.update(targetable_model: "Review")
       actual = mapping.targetable_field_choices
       assert_includes actual, "rating"
@@ -94,12 +94,54 @@ describe "Buttafly::Mapping" do
       assert_includes actual, "winery::name"
     end
 
-    it "#targetable_order" do 
+    it "#targetable_parents" do 
+      mapping.targetable_parents.must_equal [:user, :wine]
+      mapping.targetable_parents(:user).must_equal []
+      mapping.update(targetable_model: "DummyChild")
+      mapping.targetable_parents().must_equal [:dummy_parent, :dummy_tribe]
+    end
+
+    describe "#ancestral_lines" do 
       
-      mapping.update(targetable_model: "Review")
-      expected = { :user => [], :wine => [:winery] }
-      actual = mapping.targetable_order
-      assert_equal expected, actual
+      it "must respond with an array" do 
+        mapping.ancestral_lines.must_equal [[:user],[:wine],[:wine, :winery]]
+        mapping.update(targetable_model: "DummyChild")
+        mapping.ancestral_lines.must_include [:dummy_tribe]
+        mapping.ancestral_lines.must_include [:dummy_parent, :dummy_grandparent, :dummy_tribe]
+        # mapping.ancestral_lines.must_include [:dummy_parent, :dummy_tribe]
+        # mapping.ancestral_lines.must_include [:dummy_parent, :dummy_grandparent]
+      end
+    end
+
+    describe "#targetable_order" do 
+      
+      it "simple" do 
+        mapping.update(targetable_model: "Review")
+        expected = { 
+          :user => {}, 
+          :wine => { 
+            :winery => {}
+          }
+        }
+        actual = mapping.targetable_order
+        assert_equal expected, actual
+      end
+
+      it "complex" do 
+        
+        mapping.update(targetable_model: "DummyChild") 
+        expected = { 
+          :dummy_parent => { 
+            :dummy_grandparent => { 
+              :dummy_tribe => {}
+            }, 
+            :dummy_tribe => {}
+          }, 
+          :dummy_tribe => {}
+        }
+        actual = mapping.targetable_order
+        assert_equal expected, actual
+      end
     end
   end
 end 

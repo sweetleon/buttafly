@@ -25,6 +25,7 @@ module Targetable
 
   included do
     has_one :mapping, as: :targetable
+    
     TargetableModels.add self
     
     def self.targetable_ignored_columns 
@@ -45,6 +46,10 @@ module Targetable
         end
       end
       parent_models
+    end
+
+    def self.targetable_foreign_keys
+      parents = self.reflect_on_all_associations(:belongs_to).map(&:name)
     end
 
     def self.targetable_attrs

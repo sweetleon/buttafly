@@ -8,9 +8,12 @@ feature "archive content" do
   end
   
   scenario "success" do
-    within("#show-file-#{@existing_content.id}") do
-      click_button "archive" 
+    within("#content-scope-all") do 
+
+      within("#show-file-#{@existing_content.id}") do
+        click_button "archive" 
+      end
     end    
-    assert_selector(".alert-box", text: "file has been removed")
+    assert_selector(".alert-box", text: /successfully archived/)
   end
 end

@@ -51,24 +51,61 @@ require 'test_helper'
         file = build_stubbed(:uploaded_file)
         file.may_target?.must_equal true
         file.may_map?.must_equal false
-        file.may_replicate?.must_equal false
+        file.may_transmogrify?.must_equal false
       end
 
       it ":targeted" do 
   
         file = build_stubbed(:targeted_file)
         file.may_map?.must_equal true
-        file.may_replicate?.must_equal false
+        file.may_transmogrify?.must_equal false
       end
 
       it ":targeted" do 
 
         file = create(:mapped_file)
-        file.may_replicate?.must_equal true
+        file.may_transmogrify?.must_equal true
       end
     end
 
     describe "events" do
+
+      describe "#transmogrify!" do
+
+        let(:file) { FactoryGirl.create(:originable) }
+        
+        describe ":create_records" do 
+          
+
+          it "without parents" do
+            skip
+            file.mappings.create(FactoryGirl.attributes_for(:mapping_without_parents))
+            file.create_records!
+            Winery.count.must_equal 5
+          end
+
+          it "with one parent" do
+skip
+            file.mappings.create(FactoryGirl.attributes_for(:mapping_with_parent))
+            file.create_records!
+            # Winery.count.must_equal 5
+            Wine.count.must_equal 5
+          end
+
+        end
+
+        describe "must create" do 
+
+          it "target objects" do 
+            skip
+            file.transmogrify!
+            Review.count.must_equal 1
+          end
+
+          it "parent_objects" do
+          end
+        end
+      end
 
       describe "#import!" do 
 
