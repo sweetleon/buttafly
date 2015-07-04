@@ -101,16 +101,8 @@ describe "Buttafly::Mapping" do
       mapping.targetable_parents().must_equal [:dummy_parent, :dummy_tribe]
     end
 
-    describe "#ancestral_lines" do 
-      
-      it "must respond with an array" do 
-        mapping.ancestral_lines.must_equal [[:user],[:wine],[:wine, :winery]]
-        mapping.update(targetable_model: "DummyChild")
-        mapping.ancestral_lines.must_include [:dummy_tribe]
-        mapping.ancestral_lines.must_include [:dummy_parent, :dummy_grandparent, :dummy_tribe]
-        # mapping.ancestral_lines.must_include [:dummy_parent, :dummy_tribe]
-        # mapping.ancestral_lines.must_include [:dummy_parent, :dummy_grandparent]
-      end
+    it "" do 
+
     end
 
     describe "#targetable_order" do 

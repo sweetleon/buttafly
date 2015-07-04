@@ -13,6 +13,9 @@ module Buttafly
       "active" if i == 0
     end
 
+    def mapping_form_builder()
+    end
+
     def mapping_form_select(mapping, klass, column)
       choices = mapping.originable.list_headers
       options = options_for_select(choices, "blah")

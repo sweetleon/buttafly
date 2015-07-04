@@ -56,19 +56,6 @@ module Buttafly
       ancestors
     end
 
-    def ancestral_lines(klass=nil)
-      lines_array = []
-      targetable_parents(klass).each do |p|
-        lines_array << [p]
-        if targetable_parents(p).empty?
-          next 
-        else
-          lines_array << [p, targetable_parents(p)].flatten
-        end
-      end
-      lines_array
-    end
-
     def targetable_parents(klass=nil) 
       parent_models = []
       klass ||= targetable_model

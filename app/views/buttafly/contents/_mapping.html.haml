@@ -19,10 +19,22 @@
                     .right= col + " => "
                   .small-9.columns
                     = mapping_form_select(mapping, target, col)
-        = models
+        = models 
         %hr
-        / # = ancestral_lines(nil, mapping.targetable_order)
-        %hr
+        = mapping_form_builder
+        / - models.each do |m| 
+        /   = m.class
+        /   - m.each do |p|
+        /     %br
+        /     = p.class
+        /     %br
+        /     = p.size
+        /     / # - p.each do |g|
+        /     / #   = g.class
+        /     /   - g.each do |x|
+        /     /     = x.class
+                
+
         - models.each do |key, value|
           .row
             .small-1.columns
