@@ -13,14 +13,38 @@ module Buttafly
       "active" if i == 0
     end
 
-    def mapping_form_builder()
+    def model_tree(array)
+
+      array.split(",").join("::")
+    end 
+
+    def mapping_form_builder(parentArray, targetableHash)
+      parentArray ||= []
+      targetableHash.each do |key, value|
+        parentArray << [key] if value.empty? 
+        value.each do |k1,v|
+          parentArray << [key, k1] if v.empty?
+          v.each do |k2,v|
+            parentArray << [key, k1, k2]
+          end
+        end
+      end
+      parentArray
     end
 
-    def mapping_form_select(mapping, klass, column)
+    def mapping_form_select(mapping, column, array=nil, target=nil )
+      if array.nil? 
+        parent_params = nil
+      else 
+        parent_params = array.split(target).first.to_s + "[#{target}]"
+      end
       choices = mapping.originable.list_headers
       options = options_for_select(choices, "blah")
+      target = "mapping[data][#{mapping.targetable_model.to_s.underscore}]"
+      parents = "#{parent_params}"
+      column = "[#{column}]"
       select_tag("mapping")
-      select_tag("mapping[data][#{klass.to_s.underscore}][#{column}]", options)
+      select_tag(target+parents+column, options)
     end
 
     def klassify(model)

@@ -9,42 +9,39 @@
             .label 
               = mapping.id
         
-          .small-3.columns
-            .label= target
-          .small-8.columns
-            .panel
-              - target.targetable_attrs.each do |col|
+          .small-11.columns
+            .row.panel
+              .small-4.columns
+                .label= target
+              .small-7.columns
+                - target.targetable_attrs.each do |col|
+                  .row
+                    .small-3.columns
+                      .right= col + " => "
+                    .small-9.columns
+                      = mapping_form_select(mapping, col)
+            - mapping_form_builder(nil, models).each do |array|
+              .row
+                %br
+                belongs to: 
+                .label
+                  = model_tree(array)
                 .row
-                  .small-3.columns
-                    .right= col + " => "
-                  .small-9.columns
-                    = mapping_form_select(mapping, target, col)
-        = models 
+              %br
+              .row.panel
+                - array.each do |parent|
+                  .row
+                    .small-4.columns
+                      .label= parent.to_s.classify
+                    .small-7.columns
+                      - parent.to_s.classify.constantize.targetable_attrs.each do |col|
+                        .row
+                          .small-3.columns
+                            .right= col + " => "
+                          .small-9.columns
+                            = mapping_form_select(mapping, col, array, parent)
         %hr
-        = mapping_form_builder
-        / - models.each do |m| 
-        /   = m.class
-        /   - m.each do |p|
-        /     %br
-        /     = p.class
-        /     %br
-        /     = p.size
-        /     / # - p.each do |g|
-        /     / #   = g.class
-        /     /   - g.each do |x|
-        /     /     = x.class
-                
 
-        - models.each do |key, value|
-          .row
-            .small-1.columns
-
-            .small-3.small-offset-1.columns
-              .label= target.to_s + " => " + key.to_s.classify 
-            .small-8.columns
-              .panel
-
-      %hr      
       / .panel= generate_form(nil, models)
       /   - models.each do |klass|
       /     / = generate_form(nil, klass)
