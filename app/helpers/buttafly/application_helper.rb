@@ -35,8 +35,12 @@ module Buttafly
     def mapping_form_select(mapping, column, array=nil, target=nil )
       if array.nil? 
         parent_params = nil
-      else 
-        parent_params = array.split(target).first.to_s + "[#{target}]"
+      elsif array.size == 1
+        parent_params = "[#{target}]"
+      else
+          
+        e = array.split(target).first.to_s
+        parent_params = e + "[#{target}]" 
       end
       choices = mapping.originable.list_headers
       options = options_for_select(choices, "blah")

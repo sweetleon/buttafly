@@ -39,8 +39,15 @@ describe "Buttafly::ApplicationHelper" do
     end
 
     it "with array" do 
-      actual = mapping_form_select(mapping, :content, [:wine], :wine )
-      assert_equal actual, nil
+skip
+      actual = mapping_form_select(mapping, :name, [:wine], :wine )
+      assert_match actual, nil
+    end
+
+    it "with array" do 
+      
+      actual = mapping_form_select(mapping, :name, [:wine, :winery], :wine )
+      assert_match actual, nil
     end
   end
 end
