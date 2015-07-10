@@ -36,11 +36,11 @@ module TestMatchers
   end
 
   def must_belong_to(parent_model)
-    subject.reflections[parent_model.to_sym].macro.must_equal :belongs_to
+    subject.reflect_on_all_associations(:belongs_to).map(&:name).must_include parent_model
   end
 
   def must_have_one(model)
-    subject.reflections[model.to_sym].macro.must_equal :has_one
+    subject.reflect_on_all_associations(:has_one).map(&:name).must_include model
   end
 
   def wont_belong_to(parent_model)
@@ -48,7 +48,7 @@ module TestMatchers
   end
 
   def must_have_many(child_model)
-    subject.reflections[child_model].macro.must_equal :has_many
+    subject.reflect_on_all_associations(:has_many).map(&:name).must_include child_model
   end
 
   def wont_have_many(model)

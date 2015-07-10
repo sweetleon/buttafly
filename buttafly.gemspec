@@ -17,8 +17,8 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
 
-  s.add_dependency "rails", "~> 4.1"
-  s.add_dependency "haml-rails", "~> 0.5.3"
+  s.add_dependency "rails", "~> 4.2"
+  s.add_dependency "haml-rails"
   s.add_dependency "pg"
   s.add_dependency "aasm"
   s.add_dependency "carrierwave"
@@ -37,5 +37,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency "guard-minitest"
   s.add_development_dependency "database_cleaner"
   s.add_development_dependency "guard-livereload"
+  s.add_development_dependency "byebug"
 
 end

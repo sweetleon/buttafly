@@ -69,7 +69,7 @@ describe "Buttafly::Mapping" do
       it "first mapping must change aasm_state to :targeted" do
         originable = FactoryGirl.create(:originable)
         originable.targeted?.must_equal false
-        originable.mappings.create(attributes_for(:mapping_with_data))
+        originable.mappings.create(attributes_for(:mapping))
         originable.reload.targeted?.must_equal true
       end
 
@@ -77,7 +77,8 @@ describe "Buttafly::Mapping" do
 
         mapping = FactoryGirl.create(:mapping)
         mapping.originable.targeted?.must_equal true
-        mapping.update(legend_data: {})
+        data = FactoryGirl.attributes_for(:mapping_with_data)[:legend_data]
+        mapping.update(legend_data: data )
         mapping.originable.mapped?.must_equal true
       end
     end

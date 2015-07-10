@@ -14,9 +14,9 @@ feature "submit mapping data" do
     mapping = existing_content.mappings.create(attributes_for(:mapping))
 
     legends = {
-      "mapping_data_review_rating" => "rating", 
-      "mapping_data_review_content" => "review",
-      "mapping_data_review_wine_vintage" => "vintage"
+      "mapping_legend_data_review_rating" => "rating", 
+      "mapping_legend_data_review_content" => "review",
+      "mapping_legend_data_review_wine_vintage" => "vintage"
     }
     
     visit '/buttafly/contents'
@@ -28,7 +28,6 @@ feature "submit mapping data" do
         click_button("write #{mapping.targetable_model} legend")
       end
     end
-save_and_open_page
     assert_selector(".alert-box", text: "mapping updated")
     
     within("#content-scope-all") do 

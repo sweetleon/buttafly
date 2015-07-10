@@ -10,5 +10,6 @@ module Buttafly
   require 'kaminari'
   require 'foundation-rails'
   require 'simple_form'
+  require 'byebug'
   
 end

@@ -72,7 +72,7 @@ module Buttafly
 
     def set_originable_state
       self.originable.target! if self.originable.uploaded?
-      self.originable.map! if !self.legend_data.nil? && self.originable.targeted? 
+      self.originable.map! if !self.legend_data.empty? && self.originable.targeted? 
     end
   end
 end
