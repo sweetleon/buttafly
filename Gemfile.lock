@@ -202,4 +202,6 @@ DEPENDENCIES
   guard-minitest
   launchy
   minitest-rails-capybara
-  pry
+
+BUNDLED WITH
+   1.10.5

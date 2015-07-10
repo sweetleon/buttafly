@@ -69,7 +69,7 @@ describe "Buttafly::Mapping" do
       it "first mapping must change aasm_state to :targeted" do
         originable = FactoryGirl.create(:originable)
         originable.targeted?.must_equal false
-        originable.mappings.create(attributes_for(:mapping))
+        originable.mappings.create(attributes_for(:mapping_with_data))
         originable.reload.targeted?.must_equal true
       end
 
@@ -77,22 +77,13 @@ describe "Buttafly::Mapping" do
 
         mapping = FactoryGirl.create(:mapping)
         mapping.originable.targeted?.must_equal true
-        mapping.update(legend_data: [])
+        mapping.update(legend_data: {})
         mapping.originable.mapped?.must_equal true
       end
     end
   end
 
   describe "targetable methods" do 
-
-    it "#targetable_field_choices" do 
-      skip
-      mapping.update(targetable_model: "Review")
-      actual = mapping.targetable_field_choices
-      assert_includes actual, "rating"
-      assert_includes actual, "wine::name"
-      assert_includes actual, "winery::name"
-    end
 
     it "#targetable_parents" do 
       mapping.targetable_parents.must_equal [:user, :wine]

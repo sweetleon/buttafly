@@ -25,19 +25,34 @@ describe "Buttafly::MappingsController" do
     
     it "stores data" do 
 
-      patch :update, id: mapping, mapping: { 
-        "data"=> {
-          "wine"=>"wine::name",
-          "winery"=>"winery::name",
-          "vintage"=>"wine::vintage",
-          "review"=>"content",
-          "rating"=>"rating"}
+      legend_data = {
+        "legend_data" => {
+          "review"=> {
+            "rating"=>"rating",
+            "content"=>"review",
+            "user"=> {
+              "name"=>"wine"
+            },
+            "wine"=> {
+              "name"=>"wine",
+              "vintage"=>"vintage",
+              "winery"=> {
+                "name"=>"winery", 
+                "mission"=>"wine", 
+                "history"=>"wine"
+              }
+            }
+          }
         }
+      }
+
+      patch :update, id: mapping, mapping: legend_data
       assert_response 302
       mapping.reload.legend_data.wont_equal nil
-      mapping.legend_data.must_include ["wine", "wine::name"]
-      mapping.legend_data.must_include ["review", "content"]
-      mapping.legend_data.must_include ["winery", "winery::name"]
+      mapping.legend_data["review"]["rating"].must_equal "rating"
+      mapping.legend_data["review"]["content"].must_equal "review"
+      mapping.legend_data["review"]["wine"]["vintage"].must_equal "vintage"
+      mapping.legend_data["review"]["wine"]["winery"]["name"].must_equal "winery"
       mapping.originable.mapped?.must_equal true
     end
 

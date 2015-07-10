@@ -89,13 +89,11 @@ module Originable
           tm.targetable_columns.each do |col|
             params_hash[col] = csv_row[legend.key("#{tm.to_s.downcase}::#{col}")]
           end
-          # binding.pry
           # if tm.targetable_parent_models.size == 1
 
           # unless tm.targetable_parent_models.empty?
           #   tm.targetable_parent_models.each do |parent|
           #     fk = p.to_s.foreign_key
-          #     binding.pry
           #   end
           # end
               

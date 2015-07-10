@@ -6,16 +6,31 @@ FactoryGirl.define do
     targetable_model "Review"
     association :originable
 
+    factory :mapping_without_legend_data do
+    end
+
+
     factory :mapping_with_data do
 
-      legend_data {
-        [
-          ["wine", "wine::name"], 
-          ["winery", "winery::name"], 
-          ["vintage", "wine::vintage"], 
-          ["review", "content"], 
-          ["rating", "rating"]
-        ]
+      legend_data { {
+
+          "review"=> {
+            "rating"=>"rating",
+            "content"=>"review",
+            "user"=> {
+              "name"=>"wine"
+            },
+            "wine"=> {
+              "name"=>"wine",
+              "vintage"=>"vintage",
+              "winery"=> {
+                "name"=>"winery", 
+                "mission"=>"wine", 
+                "history"=>"wine"
+              }
+            }
+          }
+        }
       }
 
       factory :mapping_without_parents do

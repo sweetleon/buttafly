@@ -37,14 +37,19 @@ module Buttafly
         parent_params = nil
       elsif array.size == 1
         parent_params = "[#{target}]"
+      elsif array.split(target).first.size == 0
+        parent_params = "[#{target}]"
       else
-          
-        e = array.split(target).first.to_s
-        parent_params = e + "[#{target}]" 
+        e = array.split(target).first.map!(&:to_s)
+        parent_params = ""
+        e.each do |m|
+          parent_params << "[#{m}]"
+        end
+        parent_params << "[#{target.to_s}]" 
       end
       choices = mapping.originable.list_headers
       options = options_for_select(choices, "blah")
-      target = "mapping[data][#{mapping.targetable_model.to_s.underscore}]"
+      target = "mapping[legend_data][#{mapping.targetable_model.to_s.underscore}]"
       parents = "#{parent_params}"
       column = "[#{column}]"
       select_tag("mapping")
@@ -53,10 +58,6 @@ module Buttafly
 
     def klassify(model)
       model.to_s.classify.constantize
-    end
-
-    def field_choices(mapping)
-      mapping.targetable_field_choices
     end
 
     def tab_active?(aasm_state)
@@ -72,7 +73,7 @@ module Buttafly
     end
 
     def map_legend_button(mapping)
-      klass = mapping.targetable_model.downcase
+      klass = mapping.targetable_model
       mapping.legend_data.nil? ? "write #{klass} legend" : "(re)write #{klass} legend"
     end
 

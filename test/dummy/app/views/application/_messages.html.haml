@@ -1,6 +1,5 @@
 .row
   - flash.each do |name, msg|
-    / - binding.pry
     - if msg.is_a?(String)
       %div{class: "alert-box radius #{name.to_s == "notice" ? "success" : "alert"}", "data-alert" => ""}
         = content_tag :div, msg

@@ -9,28 +9,26 @@ end
 feature "submit mapping data" do
 
   scenario "success" do 
-skip    
-    legends = {
-      "wine" => "wine::name", 
-      "winery" => "winery::name",
-      "review" => "content",
-      "vintage" => "wine::vintage",
-      "rating" => "rating"
-    }
 
     existing_content = FactoryGirl.create(:targeted_file)
     mapping = existing_content.mappings.create(attributes_for(:mapping))
+
+    legends = {
+      "mapping_data_review_rating" => "rating", 
+      "mapping_data_review_content" => "review",
+      "mapping_data_review_wine_vintage" => "vintage"
+    }
     
     visit '/buttafly/contents'
-
     within("#content-scope-all") do 
       within("#file-mapping-#{mapping.id}") do
         legends.each_pair do |k,v|
-          select(v, from: "mapping[data][#{k}]")
+          select(v, from: k)
         end
-        click_button("write legend")
+        click_button("write #{mapping.targetable_model} legend")
       end
     end
+save_and_open_page
     assert_selector(".alert-box", text: "mapping updated")
     
     within("#content-scope-all") do 

@@ -33,7 +33,6 @@
 #   describe "#get_origin_keys" do 
 
 #     it "must return keys from default model" do
-#       skip
 #       file = create(:imported_file)
 #       keys = subject.get_origin_keys(Buttafly::Spreadsheet, file.id )
 #       desired_keys = ["mother", "child", "grandparent"]

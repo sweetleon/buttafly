@@ -7,7 +7,6 @@ module Buttafly
   require 'carrierwave'
   require 'factory_girl_rails'
   require 'jquery-rails'
-  require 'pry'
   require 'kaminari'
   require 'foundation-rails'
   require 'simple_form'

@@ -74,8 +74,7 @@ require 'test_helper'
 
         let(:file) { FactoryGirl.create(:originable) }
         
-        describe ":create_records" do 
-          
+        describe ":create_records" do           
 
           it "without parents" do
             skip

@@ -12,7 +12,6 @@
 #   describe "GET #new" do 
 
 #     before do 
-#       skip
 #       get :new, mapping_id: mapping.id
 #     end
 

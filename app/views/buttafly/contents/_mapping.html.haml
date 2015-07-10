@@ -20,6 +20,7 @@
                       .right= col + " => "
                     .small-9.columns
                       = mapping_form_select(mapping, col)
+
             - mapping_form_builder(nil, models).each do |array|
               .row
                 %br
@@ -33,6 +34,7 @@
                   .row
                     .small-4.columns
                       .label= parent.to_s.classify
+                      find or create by
                     .small-7.columns
                       - parent.to_s.classify.constantize.targetable_attrs.each do |col|
                         .row
@@ -40,86 +42,8 @@
                             .right= col + " => "
                           .small-9.columns
                             = mapping_form_select(mapping, col, array, parent)
-        %hr
-
-      / .panel= generate_form(nil, models)
-      /   - models.each do |klass|
-      /     / = generate_form(nil, klass)
-      /     / = klass
-      /     %br
-      /     / = klass
-      /     - label = target + " << " + klass.first.to_s.classify
-      /     .row
-      /       .small-3.columns
-      /         .label
-      /           / = label
-      /       .small-9.columns
-      /         .panel
-      /   %hr    
-
-      /   / = [mapping.targetable_model]
-      /   / # = mapping.targetable_order
-      /   / - mapping.targetable_order.each do |klass|
-      /   /   .small-1.columns
-      /   /     .label= klass[0]
-      /   /   .small-11.columns
-      /   /     .panel.callout
-
-      / = form_tag(mapping, method: 'patch') do 
-      /   - klass = mapping.targetable_model.classify
-      /   .small-1.columns
-      /     Target
-      /     %br
-      /     .label= klass
-      /   .small-11.columns
-      /     .panel.callout
-      /       .row
-      /         .small-10.columns
-      /           = render partial: "model_mapping_form", locals: { mapping: mapping, klass: klass }
-      /   %hr
-      /     Parent models -- we will find these
-      /   %hr
-      /     = mapping.targetable_order
-      /   %hr
-      /   - mapping.targetable_model.classify.constantize.targetable_parent_models.each do |parent|
-      /     - klass = parent.to_s.classify
-      /     .small-1.columns
-      /       %br
-      /       .label= klass
-      /     .small-11.columns
-      /       .panel
-      /         .row
-      /           .small-10.columns
-      /             = render partial: "model_mapping_form", locals: { mapping: mapping, klass: klass }   
+                  %hr
 
 
-
-      /   .has-tip{"aria-haspopup" => "true", "data-tooltip" => "", title: event_description("write legend for #{mapping.targetable_model}")}
-      /     = submit_tag map_legend_button(mapping), class: "button tiny success"
-      / %hr    
-      / .small-6.columns
-      /   = form_tag(mapping, method: 'patch') do 
-      /     = mapping.targetable_model.classify.constantize.targetable_columns.each do |tc|
-      /       = mapping_form_select(mapping, mapping.targetable_model, tc)
-    /     = mapping_form_inputs()
-    /     / - m.targetable_order.flatten.flatten.each do |model|
-    /     /   - model.to_s.classify.constantize.targetable_columns.each do |col|  
-    /     /     %td
-    /     /       = model.to_s.capitalize + "." + col
-    /     /       = mapping_select_tag(col, m)
-
-    /     / - file.list_headers.each do |header|
-    /     /   %td
-    /     /     = mapping_select_tag(header, m)
-    /     %td
-    /       .has-tip{"aria-haspopup" => "true", "data-tooltip" => "", title: event_description("write legend")}
-    /         = submit_tag map_legend_button(m), class: "button success"
-/ %ul.tabs.vertical{"data-tab" => ""}
-/   - file.mappings.each do |m|
-/     %li.tab-title
-/       %a{:href => "#panel-mapping-#{m.id}"}
-/         = m.targetable_model
-/ .tabs-content
-/   - file.mappings.each do |m|
-/     .content{ "id" => "panel-mapping-#{m.id}" }
-/       .small-6.columns= parent_dependency_notice(m.parent_models)
+          .has-tip{"aria-haspopup" => "true", "data-tooltip" => "", title: event_description("write legend for #{mapping.targetable_model}")}
+            = submit_tag map_legend_button(mapping), class: "button tiny success"

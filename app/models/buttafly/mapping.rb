@@ -1,7 +1,7 @@
 module Buttafly
   class Mapping < ActiveRecord::Base
     require 'tsortable'
-    serialize :data
+    serialize :legend_data, Hash
 
     belongs_to :legend
     belongs_to :originable, 
@@ -36,16 +36,6 @@ module Buttafly
     def originable_headers
       data = CSV.read(self.originable.flat_file.path)
       data.first
-    end
-
-    def targetable_field_choices
-      choices = self.targetable_model.classify.constantize.targetable_attrs
-      self.targetable_order.flatten.flatten.each do |parent|
-        parent.to_s.classify.constantize.targetable_attrs.each do |attribute|
-          choices << "#{parent}::#{attribute}"
-        end
-      end
-      choices
     end
 
     def targetable_order(parent=nil)
