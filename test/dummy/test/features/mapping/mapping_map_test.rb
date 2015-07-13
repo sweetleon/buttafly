@@ -12,11 +12,11 @@ feature "submit mapping data" do
 
     existing_content = FactoryGirl.create(:targeted_file)
     mapping = existing_content.mappings.create(attributes_for(:mapping))
-
+    base_id = "mapping_legend_data_review"
     legends = {
-      "mapping_legend_data_review_rating" => "rating", 
-      "mapping_legend_data_review_content" => "review",
-      "mapping_legend_data_review_wine_vintage" => "vintage"
+      "#{base_id}_rating" => "rating", 
+      "#{base_id}_content" => "review",
+      "#{base_id}_wine_vintage" => "vintage"
     }
     
     visit '/buttafly/contents'

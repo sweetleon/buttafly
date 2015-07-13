@@ -28,7 +28,23 @@ describe "Buttafly::ApplicationHelper" do
   let(:base_name) { "mapping\[legend_data\]\[#{target_model}\]" }
   let(:base_id) { "mapping_legend_data_#{target_model}_" }
 
-  describe ":mapping_form_select()" do 
+  describe ":mapping_form_select()" do
+
+    describe "options" do 
+
+      let(:target_model) { "review" }
+
+      describe "without legend_data, no matching header" do 
+
+        it "should be blank" do 
+
+
+          actual = mapping_form_select(mapping, :content)
+          expected = "blah"
+          assert_match actual, expected
+        end
+      end
+    end 
 
     describe "review as target" do 
 

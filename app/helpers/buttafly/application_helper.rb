@@ -48,12 +48,13 @@ module Buttafly
         parent_params << "[#{target.to_s}]" 
       end
       choices = mapping.originable.list_headers
-      options = options_for_select(choices, "blah")
+      # options = options_from_collection_for_select(choices, "id", "name")
       target = "mapping[legend_data][#{mapping.targetable_model.to_s.underscore}]"
       parents = "#{parent_params}"
+      selected = choices.include?(column) ? column : ""
       column = "[#{column}]"
       select_tag("mapping")
-      select_tag(target+parents+column, options)
+      select_tag(target+parents+column, options_for_select(choices, selected ), include_blank: true)
     end
 
     def klassify(model)
