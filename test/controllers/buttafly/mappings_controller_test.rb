@@ -23,30 +23,13 @@ describe "Buttafly::MappingsController" do
 
   describe "must PATCH #update" do 
     
+    let(:legend_data) do
+      FactoryGirl.attributes_for(:mapping_with_data)[:legend_data]
+    end
+    
     it "stores data" do 
 
-      legend_data = {
-        "legend_data" => {
-          "review"=> {
-            "rating"=>"rating",
-            "content"=>"review",
-            "user"=> {
-              "name"=>"wine"
-            },
-            "wine"=> {
-              "name"=>"wine",
-              "vintage"=>"vintage",
-              "winery"=> {
-                "name"=>"winery", 
-                "mission"=>"wine", 
-                "history"=>"wine"
-              }
-            }
-          }
-        }
-      }
-
-      patch :update, id: mapping, mapping: legend_data
+      patch :update, id: mapping, mapping: { "legend_data" => legend_data }
       assert_response 302
       mapping.reload.legend_data.wont_equal nil
       mapping.legend_data["review"]["rating"].must_equal "rating"
