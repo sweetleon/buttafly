@@ -22,9 +22,9 @@
       .row
         .small-12.columns
           = render partial: "mapping",  locals: { file: file }  
-      .row
-        .small-12.columns
-          = render partial: "content_actions", locals: { file: file }
+      
+        / .small-11.small-offset-1.columns
+        /   = render partial: "content_actions", locals: { file: file }
         
 
 
