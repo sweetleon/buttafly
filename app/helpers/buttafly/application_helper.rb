@@ -40,7 +40,7 @@ module Buttafly
         if mapping.legend_data.empty? 
           selected = choices.include?(column) ? column : ""
         else
-          selected = mapping.legend_data[mapping.targetable_model.downcase][column]
+          selected = mapping.legend_data[mapping.targetable_model.underscore][column]
         end
       elsif array.size == 1 
         parent_params = "[#{target}]"
@@ -49,7 +49,7 @@ module Buttafly
         else
         
           # selected = "rating"
-          selected = mapping.legend_data[mapping.targetable_model.downcase][target][column]
+          selected = mapping.legend_data[mapping.targetable_model.underscore][target][column]
         end
       elsif array.split(target).first.size == 0
         parent_params = "[#{target}]"
@@ -57,7 +57,7 @@ module Buttafly
           selected = choices.include?(column) ? column : ""
         else
         
-          selected = mapping.legend_data[mapping.targetable_model.downcase][target][column]
+          selected = mapping.legend_data[mapping.targetable_model.underscore][target][column]
         end
       else
         e = array.split(target).first.map!(&:to_s)
@@ -69,7 +69,7 @@ module Buttafly
         if mapping.legend_data.empty? 
           selected = choices.include?(column) ? column : ""
         else
-          selected = mapping.legend_data[mapping.targetable_model.downcase][array.first][array.last][column]
+          selected = mapping.legend_data[mapping.targetable_model.underscore][array.first][array.last][column]
         end
 
       end
