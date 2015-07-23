@@ -13,7 +13,7 @@ require 'test_helper'
 
     specify "has many" do 
   
-      must_have_many(:legends)
+      # must_have_many(:legends)
       must_have_many(:mappings)
     end
   end
@@ -28,7 +28,7 @@ require 'test_helper'
     end
 
     specify "uniqueness of flat_file and name" do 
-
+skip
       existing_sheet = FactoryGirl.create(:originable)
       new_sheet = FactoryGirl.build(:originable, name: existing_sheet.name)
       new_sheet.save
@@ -56,13 +56,14 @@ require 'test_helper'
 
       it ":targeted" do 
   
-        file = build_stubbed(:targeted_file)
+        file = create(:targeted_file)
+        byebug
         file.may_map?.must_equal true
         file.may_transmogrify?.must_equal false
       end
 
       it ":targeted" do 
-
+skip
         file = create(:mapped_file)
         file.may_transmogrify?.must_equal true
       end
@@ -77,8 +78,8 @@ require 'test_helper'
         describe ":create_records" do           
 
           it "without parents" do
-            skip
-            file.mappings.create(FactoryGirl.attributes_for(:mapping_without_parents))
+            file.mappings.create(FactoryGirl.attributes_for(
+              :mapping_without_parents))
             file.create_records!
             Winery.count.must_equal 5
           end

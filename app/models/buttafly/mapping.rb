@@ -12,7 +12,6 @@ module Buttafly
     validates :originable,        presence: true
     validates :targetable_model,  presence: true
 
-
     after_save :set_originable_state
 
     def self.originable_models      

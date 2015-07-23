@@ -105,7 +105,7 @@ module Buttafly
 
     def map_legend_button(mapping)
       klass = mapping.targetable_model
-      mapping.legend_data.nil? ? "write #{klass} legend" : "(re)write #{klass} legend"
+      mapping.legend_data.empty? ? "write #{klass} legend" : "(re)write #{klass} legend"
     end
 
     def event_button_to(event, originable_id, options = {})
