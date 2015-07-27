@@ -37,27 +37,27 @@ module Buttafly
       if array.nil? 
         parent_params = nil
       
-        if mapping.legend_data.empty? 
+        if mapping.legend.empty? 
           selected = choices.include?(column) ? column : ""
         else
-          selected = mapping.legend_data[mapping.targetable_model.underscore][column]
+          selected = mapping.legend[mapping.targetable_model.underscore][column]
         end
       elsif array.size == 1 
         parent_params = "[#{target}]"
-        if mapping.legend_data.empty? 
+        if mapping.legend.empty? 
           selected = choices.include?(column) ? column : ""
         else
         
           # selected = "rating"
-          selected = mapping.legend_data[mapping.targetable_model.underscore][target][column]
+          selected = mapping.legend[mapping.targetable_model.underscore][target][column]
         end
       elsif array.split(target).first.size == 0
         parent_params = "[#{target}]"
-        if mapping.legend_data.empty? 
+        if mapping.legend.empty? 
           selected = choices.include?(column) ? column : ""
         else
         
-          selected = mapping.legend_data[mapping.targetable_model.underscore][target][column]
+          selected = mapping.legend[mapping.targetable_model.underscore][target][column]
         end
       else
         e = array.split(target).first.map!(&:to_s)
@@ -66,17 +66,17 @@ module Buttafly
           parent_params << "[#{m}]"
         end
         parent_params << "[#{target.to_s}]" 
-        if mapping.legend_data.empty? 
+        if mapping.legend.empty? 
           selected = choices.include?(column) ? column : ""
         else
-          selected = mapping.legend_data[mapping.targetable_model.underscore][array.first][array.last][column]
+          selected = mapping.legend[mapping.targetable_model.underscore][array.first][array.last][column]
         end
 
       end
       # options = options_from_collection_for_select(choices, "id", "name")
-      target = "mapping[legend_data][#{mapping.targetable_model.to_s.underscore}]"
+      target = "mapping[legend][#{mapping.targetable_model.to_s.underscore}]"
       parents = "#{parent_params}"
-      # if mapping.legend_data.empty?
+      # if mapping.legend.empty?
       #   selected = choices.include?(column) ? column : ""
       # else
       #   selected = "winery"
@@ -105,7 +105,7 @@ module Buttafly
 
     def map_legend_button(mapping)
       klass = mapping.targetable_model
-      mapping.legend_data.empty? ? "write #{klass} legend" : "(re)write #{klass} legend"
+      mapping.legend.empty? ? "write #{klass} legend" : "(re)write #{klass} legend"
     end
 
     def event_button_to(event, originable_id, options = {})

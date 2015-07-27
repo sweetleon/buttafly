@@ -1,9 +1,8 @@
 module Buttafly
   class Mapping < ActiveRecord::Base
     require 'tsortable'
-    serialize :legend_data, Hash
+    serialize :legend, Hash
 
-    belongs_to :legend
     belongs_to :originable, 
       polymorphic: true, 
       class_name: "Buttafly::Spreadsheet",
@@ -71,7 +70,7 @@ module Buttafly
 
     def set_originable_state
       self.originable.target! if self.originable.uploaded?
-      self.originable.map! if !self.legend_data.empty? && self.originable.targeted? 
+      self.originable.map! if !self.legend.empty? && self.originable.targeted? 
     end
   end
 end

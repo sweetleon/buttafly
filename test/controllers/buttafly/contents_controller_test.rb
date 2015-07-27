@@ -1,5 +1,6 @@
 require 'test_helper'
 
+
 describe "Buttafly::ContentsController" do 
 
   before do 

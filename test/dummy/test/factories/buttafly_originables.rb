@@ -26,7 +26,7 @@ FactoryGirl.define do
       aasm_state "mapped"
       
       after(:create) do |originable|
-        create(:mapping_with_data, originable: originable)
+        create(:mapping_with_legend, originable: originable)
       end
     end
   end

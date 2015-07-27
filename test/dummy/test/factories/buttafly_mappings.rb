@@ -6,13 +6,16 @@ FactoryGirl.define do
     targetable_model "Review"
     association :originable
 
-    factory :mapping_without_legend_data do
+    factory :mapping_without_legend do
     end
 
+    factory :mapping_with_empty_legend do
+      legend {{}}
+    end
 
-    factory :mapping_with_data do
+    factory :mapping_with_legend do
 
-      legend_data { {
+      legend { {
 
           "review"=> {
             "rating"=>"rating",

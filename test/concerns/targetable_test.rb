@@ -1,6 +1,6 @@
 require 'test_helper'
 
-describe "Buttafly::targetable" do 
+describe "Buttafly::Targetable" do 
 
   subject { Review }
 

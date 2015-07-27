@@ -67,8 +67,7 @@ module Buttafly
       @contents = files.order(:created_at).page(params[:page]).per(5)
       @legends = Buttafly::Legend.all
       @mapping = Mapping.new
-      @targetable_models = Buttafly::Legend.targetable_models
-
+      @targetable_models = Buttafly::Spreadsheet.targetable_models
     end
 
     private

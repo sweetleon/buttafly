@@ -6,6 +6,15 @@ module Originable
     def originable?
       true
     end
+
+    def targetable_models
+      Rails.application.eager_load!
+      models = ActiveRecord::Base.descendants.select do |c| 
+        c.included_modules.include?(Targetable)
+      end
+      model_names = models.map(&:name)
+      model_names
+    end
   end
 
   included do
@@ -21,7 +30,6 @@ module Originable
     belongs_to :user
     
     has_many :mappings, as: :originable
-    has_many :legends, through: :mappings
 
     validates_presence_of   :flat_file
     validates_uniqueness_of :name, scope: :flat_file, allow_blank: true
@@ -61,25 +69,45 @@ module Originable
     end
 
     def derived_name
-      name.present? ? name : File.basename(flat_file.to_s)
+      if name.present?
+        name
+      else 
+        File.basename(flat_file.to_s)
+      end 
     end
 
     def create_records!
 
-      self.mappings.each do |mapping|
-#         tm = mapping.targetable_model.classify.constantize
-#         legend = mapping.legend_data.to_h
-#         csv = CSV.open(self.flat_file.path, headers:true).readlines
-#         csv.each do |csv_row|
-# byebug
-#           params_hash = {}
-#           tm.targetable_columns.each do |col|
-#             params_hash[col] = csv_row[legend.key("#{tm.to_s.downcase}::#{col}")]
-#           end
-#           tm.find_or_create_by(params_hash)
-        end
+      mappings.each do |m|
+
+byebug
       end
+
+
     end
+      # self.mappings.each do |mapping|
+      #   tm = mapping.targetable_model.classify.constantize
+      #   legend = mapping.legend_data.to_h
+      #   csv = CSV.open(self.flat_file.path, headers:true).readlines
+      #   csv.each do |csv_row|
+      #     params_hash = {}
+      #     tm.targetable_columns.each do |col|
+      #       params_hash[col] = csv_row[legend.key("#{tm.to_s.downcase}::#{col}")]
+      #     end
+      #     # if tm.targetable_parent_models.size == 1
+
+      #     # unless tm.targetable_parent_models.empty?
+      #     #   tm.targetable_parent_models.each do |parent|
+      #     #     fk = p.to_s.foreign_key
+      #     #   end
+      #     # end
+              
+
+
+      #     tm.find_or_create_by(params_hash)
+      #   end
+      # end
+    # end
 
     def set_transition_timestamp(given_status, time=Time.now)
       timestamp_field = "#{given_status}_at".to_sym

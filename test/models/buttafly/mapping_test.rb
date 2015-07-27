@@ -8,7 +8,7 @@ describe "Buttafly::Mapping" do
 
     specify "columns & types" do 
 
-      must_have_column(:legend_id, :integer)
+      must_have_column(:legend, :text)
       must_have_column(:originable_id, :integer)
       must_have_column(:originable_type)
       must_have_column(:targetable_model, :string)
@@ -16,7 +16,6 @@ describe "Buttafly::Mapping" do
 
     specify "indexes" do 
 
-      must_have_index(:legend_id)
       must_have_index([:originable_id, :originable_type])
     end
   end
@@ -25,7 +24,6 @@ describe "Buttafly::Mapping" do
 
     specify "belongs to" do 
 
-      must_belong_to(:legend)
       must_belong_to(:originable)
     end    
   end
@@ -73,12 +71,12 @@ describe "Buttafly::Mapping" do
         originable.reload.targeted?.must_equal true
       end
 
-      it "adding mapping data must change originable aasm_state to :mapped" do
+      it "adding mapping legend must change originable aasm_state to :mapped" do
 
         mapping = FactoryGirl.create(:mapping)
         mapping.originable.targeted?.must_equal true
-        data = FactoryGirl.attributes_for(:mapping_with_data)[:legend_data]
-        mapping.update(legend_data: data )
+        data = FactoryGirl.attributes_for(:mapping_with_legend)[:legend]
+        mapping.update(legend: data )
         mapping.originable.mapped?.must_equal true
       end
     end

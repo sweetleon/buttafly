@@ -25,8 +25,8 @@ describe "Buttafly::ApplicationHelper" do
     end
   end
 
-  let(:base_name) { "mapping\[legend_data\]\[#{target_model}\]" }
-  let(:base_id) { "mapping_legend_data_#{target_model}_" }
+  let(:base_name) { "mapping\[legend\]\[#{target_model}\]" }
+  let(:base_id) { "mapping_legend_#{target_model}_" }
 
   describe ":mapping_form_select()" do
 
@@ -34,12 +34,12 @@ describe "Buttafly::ApplicationHelper" do
 
       let(:target_model) { "review" }
 
-      describe "with legend data empty" do
+      describe "with legend empty" do
 
 
       end
 
-      describe "with legend data empty" do 
+      describe "with legend empty" do 
 
         it "no matching header should be blank" do 
 skip
@@ -65,22 +65,21 @@ skip
         end
 
         it "with array" do 
-  skip
+  
           actual = mapping_form_select(mapping, :name, [:wine], :wine )
           assert_match base_id + "wine_name", actual
           assert_match base_name + "\[wine\]\[name\]", actual
         end
 
         it "with array targeted to first spot" do 
-  skip
+  
           actual = mapping_form_select(mapping, :name, [:wine, :winery], :wine )
           assert_match base_id + "wine_name", actual
           assert_match base_name + "\[wine\]\[name\]", actual
         end
 
         it "with array targeted to second spot" do 
-  skip
-          
+            
           actual = mapping_form_select(mapping, :name, [:wine, :winery], :winery )
           assert_match base_id + "wine_winery_name", actual
           assert_match base_name + "\[wine\]\[winery\]\[name\]", actual
@@ -91,7 +90,7 @@ skip
         let(:mapping) { FactoryGirl.create(:mapping_with_data) }
    
         it "without array" do 
-    
+    skip
           actual = mapping_form_select(mapping, :content)
           assert_match base_id + "content", actual
           assert_match base_name + "\[content\]", actual

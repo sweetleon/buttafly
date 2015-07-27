@@ -13,7 +13,6 @@ require 'test_helper'
 
     specify "has many" do 
   
-      # must_have_many(:legends)
       must_have_many(:mappings)
     end
   end
@@ -28,7 +27,7 @@ require 'test_helper'
     end
 
     specify "uniqueness of flat_file and name" do 
-skip
+
       existing_sheet = FactoryGirl.create(:originable)
       new_sheet = FactoryGirl.build(:originable, name: existing_sheet.name)
       new_sheet.save
@@ -57,13 +56,12 @@ skip
       it ":targeted" do 
   
         file = create(:targeted_file)
-        byebug
         file.may_map?.must_equal true
         file.may_transmogrify?.must_equal false
       end
 
       it ":targeted" do 
-skip
+
         file = create(:mapped_file)
         file.may_transmogrify?.must_equal true
       end
@@ -111,21 +109,19 @@ skip
 
         let(:file) { create(:uploaded_file) }
       
-        it "#convert_data_to_json!" do
-skip
-          file.convert_data_to_json!
-          file.data.first["child name"].must_equal "ella mac"
-          file.data.first["parent name"].must_equal "sara"
-          file.data.first["grandparent name"].must_equal "kc shekhar"        
-        end
+#         it "#convert_data_to_json!" do
+#           file.convert_data_to_json!
+#           file.data.first["child name"].must_equal "ella mac"
+#           file.data.first["parent name"].must_equal "sara"
+#           file.data.first["grandparent name"].must_equal "kc shekhar"        
+#         end
 
-        it "must populate data column with json" do 
-skip
-          file.import!
-          file.data.first.wont_equal nil
-          file.data.size.must_equal 2 
-          file.aasm_state.must_equal "imported"
-        end
+#         it "must populate data column with json" do 
+#           file.import!
+#           file.data.first.wont_equal nil
+#           file.data.size.must_equal 2 
+#           file.aasm_state.must_equal "imported"
+#         end
       end
     end
   end

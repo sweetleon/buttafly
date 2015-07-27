@@ -1,7 +1,6 @@
 class AddIndexes < ActiveRecord::Migration
   def change
 
-    add_index :buttafly_mappings, :legend_id
     add_index :buttafly_mappings, [:originable_id, :originable_type]
 
     add_index :buttafly_spreadsheets, :user_id

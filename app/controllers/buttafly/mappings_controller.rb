@@ -19,7 +19,7 @@ module Buttafly
     def update
 
       @mapping = Buttafly::Mapping.find(params[:id])
-      if @mapping.update(legend_data: mapping_params[:legend_data])
+      if @mapping.update(legend: mapping_params[:legend])
         redirect_to contents_path, notice: "mapping updated"
       else
         redirect_to :back, alert: "mapping did not update"
