@@ -76,11 +76,38 @@ module Originable
       end 
     end
 
+    def targetable_parents(klass=nil) 
+      parent_models = []
+      klass ||= targetable_model
+      klass.to_s.classify.constantize.reflect_on_all_associations(:belongs_to).each do |parent_model|
+        if parent_model.options[:class_name].nil?
+          parent_models << parent_model.name 
+        else
+          parent_models << parent_model.options[:class_name].constantize.model_name.i18n_key
+        end
+      end
+      parent_models
+    end
+
+    def targetable_order(parent=nil)
+      ancestors = Hash.new
+      targetable_parents(parent).each do |p|
+        ancestors[p] = targetable_parents(p).empty? ? {} : targetable_order(p)
+      end
+      ancestors
+    end
+
     def create_records!
 
       mappings.each do |m|
 
-byebug
+        # m.legend.each do |k,v|
+        #   if v.is_a(Hash)
+        #   else
+
+        #   end
+        # end
+
       end
 
 

@@ -9,6 +9,7 @@ end
 feature "submit mapping data" do
 
   scenario "success" do 
+
     existing_content = FactoryGirl.create(:targeted_file)
     mapping = existing_content.mappings.create(attributes_for(:mapping))
     base_id = "mapping_legend_review"

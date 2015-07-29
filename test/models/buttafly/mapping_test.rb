@@ -30,7 +30,7 @@ describe "Buttafly::Mapping" do
 
   describe "validations" do 
 
-    it "must have a legend" do 
+    it "must have originable_id" do 
 
       mapping = create(:mapping)
       mapping.update(originable_id: nil)
@@ -42,17 +42,6 @@ describe "Buttafly::Mapping" do
 
   describe "class methods" do 
 
-    it "#self.originable_models" do
-      models = subject.originable_models
-      assert_equal models.first, "Buttafly::Spreadsheet"
-    end
-
-    it "#self.targetable_models" do 
-      expected = ["DummyChild", "DummyParent", "DummyGrandparent", "DummyTribe", 
-        "Review", "Winery", "Wine", "User"]
-      models = subject.targetable_models
-      models.must_equal (models & expected) 
-    end
   end
 
   describe "originable methods" do 

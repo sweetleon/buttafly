@@ -76,6 +76,7 @@ require 'test_helper'
         describe ":create_records" do           
 
           it "without parents" do
+skip
             file.mappings.create(FactoryGirl.attributes_for(
               :mapping_without_parents))
             file.create_records!

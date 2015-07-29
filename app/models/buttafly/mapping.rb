@@ -13,15 +13,6 @@ module Buttafly
 
     after_save :set_originable_state
 
-    def self.originable_models      
-      Rails.application.eager_load!
-      models = ActiveRecord::Base.descendants.select do |c| 
-        c.included_modules.include?(Originable)
-      end
-      model_names = models.map(&:name)
-      model_names
-    end
-    
     def self.targetable_models
       Rails.application.eager_load!
       models = ActiveRecord::Base.descendants.select do |c| 
@@ -57,15 +48,6 @@ module Buttafly
       parent_models
     end
 
-
-#   def targetable_order
-#       dependency_hash = TsortableHash[]
-#       targetable_model.classify.constantize.targetable_parent_models.each do |parent|
-#         dependency_hash[parent] = parent.to_s.classify.constantize.targetable_parent_models
-#         # grandparents = parent.to_s.classify.constantize.targetable_parent_models        
-#       end
-#       dependency_hash
-#     end  
   private
 
     def set_originable_state
