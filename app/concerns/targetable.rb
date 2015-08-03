@@ -6,6 +6,10 @@ module Targetable
     def targetable?
       true
     end
+
+    def targetable_parents
+
+    end
   end
 
   module TargetableModels

@@ -3,6 +3,7 @@ require 'test_helper'
   describe "Buttafly::Originable" do 
 
   subject { Buttafly::Spreadsheet }
+  let(:spreadsheet) { FactoryGirl.create(:originable) }
 
   describe "associations" do 
 
@@ -28,12 +29,26 @@ require 'test_helper'
 
     specify "uniqueness of flat_file and name" do 
 
-      existing_sheet = FactoryGirl.create(:originable)
+      existing_sheet = spreadsheet
       new_sheet = FactoryGirl.build(:originable, name: existing_sheet.name)
       new_sheet.save
       refute new_sheet.valid?
     end
   end
+
+  it "#originable_headers must return correct headers" do 
+    headers = spreadsheet.originable_headers
+    headers.must_equal %w[wine winery vintage review rating]
+  end 
+
+  it "#targetable_parents" do 
+    targetable_parents(:winery).must_equal []
+    # .must_equal [:user, :wine]
+    # mapping.targetable_parents(:user).must_equal []
+    # mapping.update(targetable_model: "DummyChild")
+    # mapping.targetable_parents().must_equal [:dummy_parent, :dummy_tribe]
+  end
+
 
   describe "states" do 
 
@@ -90,7 +105,6 @@ skip
             # Winery.count.must_equal 5
             Wine.count.must_equal 5
           end
-
         end
 
         describe "must create" do 

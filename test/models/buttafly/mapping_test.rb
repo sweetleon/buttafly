@@ -46,11 +46,6 @@ describe "Buttafly::Mapping" do
 
   describe "originable methods" do 
 
-    it "#originable_headers must return correct headers" do 
-      headers = mapping.originable_headers
-      headers.must_equal %w[wine winery vintage review rating]
-    end 
-
     describe "#update_originable" do 
 
       it "first mapping must change aasm_state to :targeted" do
@@ -73,12 +68,12 @@ describe "Buttafly::Mapping" do
 
   describe "targetable methods" do 
 
-    it "#targetable_parents" do 
-      mapping.targetable_parents.must_equal [:user, :wine]
-      mapping.targetable_parents(:user).must_equal []
-      mapping.update(targetable_model: "DummyChild")
-      mapping.targetable_parents().must_equal [:dummy_parent, :dummy_tribe]
-    end
+    # it "#targetable_parents" do 
+    #   mapping.targetable_parents.must_equal [:user, :wine]
+    #   mapping.targetable_parents(:user).must_equal []
+    #   mapping.update(targetable_model: "DummyChild")
+    #   mapping.targetable_parents().must_equal [:dummy_parent, :dummy_tribe]
+    # end
 
     it "" do 
 

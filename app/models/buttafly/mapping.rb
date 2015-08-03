@@ -13,20 +13,6 @@ module Buttafly
 
     after_save :set_originable_state
 
-    def self.targetable_models
-      Rails.application.eager_load!
-      models = ActiveRecord::Base.descendants.select do |c| 
-        c.included_modules.include?(Targetable)
-      end
-      model_names = models.map(&:name)
-      model_names
-    end
-    
-    def originable_headers
-      data = CSV.read(self.originable.flat_file.path)
-      data.first
-    end
-
     def targetable_order(parent=nil)
       ancestors = Hash.new
       targetable_parents(parent).each do |p|

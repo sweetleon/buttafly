@@ -68,6 +68,11 @@ module Originable
       data.nil? ? (events_array << :import) : events_array << :wipe 
     end
 
+    def originable_headers
+      data = CSV.read(flat_file.path)
+      data.first
+    end
+
     def derived_name
       if name.present?
         name
