@@ -1,6 +1,6 @@
 module Buttafly
   class Mapping < ActiveRecord::Base
-    require 'tsortable'
+    # require 'tsortable'
     serialize :legend, Hash
 
     belongs_to :originable, 

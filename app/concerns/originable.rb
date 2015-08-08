@@ -6,15 +6,6 @@ module Originable
     def originable?
       true
     end
-
-    def targetable_models
-      Rails.application.eager_load!
-      models = ActiveRecord::Base.descendants.select do |c| 
-        c.included_modules.include?(Targetable)
-      end
-      model_names = models.map(&:name)
-      model_names
-    end
   end
 
   included do
@@ -22,6 +13,7 @@ module Originable
     require "csv"
     require "json"
     require "roo"
+    require "tsortable"
 
     include AASM
 
@@ -81,9 +73,18 @@ module Originable
       end 
     end
 
+    def targetable_models
+      Rails.application.eager_load!
+      models = ActiveRecord::Base.descendants.select do |c| 
+        c.included_modules.include?(Targetable)
+      end
+      model_names = models.map(&:name)
+      model_names
+    end
+    
     def targetable_parents(klass=nil) 
       parent_models = []
-      klass ||= targetable_model
+      # klass ||= targetable_
       klass.to_s.classify.constantize.reflect_on_all_associations(:belongs_to).each do |parent_model|
         if parent_model.options[:class_name].nil?
           parent_models << parent_model.name 
@@ -94,29 +95,86 @@ module Originable
       parent_models
     end
 
-    def targetable_order(parent=nil)
-      ancestors = Hash.new
-      targetable_parents(parent).each do |p|
-        ancestors[p] = targetable_parents(p).empty? ? {} : targetable_order(p)
-      end
-      ancestors
+    def tsorted_order
+
+      dependency_hash = TsortableHash[]
+      targetable_models.each do |m|
+        dependency_hash[m.underscore.to_sym] = parents_of(m)
+      end 
+      dependency_hash
     end
+
+    def parents_of(klass)
+      parent_models = []
+      klass.to_s.classify.constantize.reflect_on_all_associations(:belongs_to).each do |parent_model|
+        if parent_model.options[:class_name].nil?
+          parent_models << parent_model.name 
+        else
+          parent_models << parent_model.options[:class_name].constantize.model_name.i18n_key
+        end
+      end
+      parent_models
+    end
+
+    def ancestors_of(klass, ancestorsHash=nil)
+      ancestorsHash ||= {}
+      ancestorsHash[klass] = parents_of(klass)
+      ancestorsHash.each do |k,v|
+        if v.empty?
+          return
+        else 
+          ancestorsHash[k] = parents_of(k)
+        end
+      end
+      ancestorsHash
+    end
+
+
+    # def targetable_order(parent=nil)
+    #   ancestors = Hash.new
+    #   targetable_parents(parent).each do |p|
+    #     ancestors[p] = targetable_parents(p).empty? ? {} : targetable_order(p)
+    #   end
+    #   ancestors
+    # end
 
     def create_records!
 
-      mappings.each do |m|
-
-        # m.legend.each do |k,v|
-        #   if v.is_a(Hash)
-        #   else
-
-        #   end
-        # end
-
+      mappings.each do |mapping|
+        create_records_from_mapping!(mapping)
       end
-
-
     end
+
+    def create_records_from_mapping!(mapping)
+      csv = CSV.open(self.flat_file.path, headers:true).readlines
+      csv.each do |row|
+        # byebug
+      end
+    end
+
+    #     params_hash = {}
+    #       tm.targetable_columns.each do |col|
+    #         params_hash[col] = row[legend.key("#{tm.to_s.downcase}::#{col}")]
+    #       end
+    #       # if tm.targetable_parent_models.size == 1
+
+    #       # unless tm.targetable_parent_models.empty?
+    #       #   tm.targetable_parent_models.each do |parent|
+    #       #     fk = p.to_s.foreign_key
+    #       #   end
+    #     end
+    #   end
+
+    #   mapping.legend.each_pair do |k,v|
+
+    #     if v.is_a?(Hash)
+
+    #     else
+
+    #     end
+    #   end
+    # end
+
       # self.mappings.each do |mapping|
       #   tm = mapping.targetable_model.classify.constantize
       #   legend = mapping.legend_data.to_h

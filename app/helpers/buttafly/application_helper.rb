@@ -73,15 +73,8 @@ module Buttafly
         end
 
       end
-      # options = options_from_collection_for_select(choices, "id", "name")
       target = "mapping[legend][#{mapping.targetable_model.to_s.underscore}]"
       parents = "#{parent_params}"
-      # if mapping.legend.empty?
-      #   selected = choices.include?(column) ? column : ""
-      # else
-      #   selected = "winery"
-      #   []
-      # end
       column = "[#{column}]"
       select_tag("mapping")
       select_tag(target+parents+column, options_for_select(choices, selected ), include_blank: true)
@@ -93,14 +86,6 @@ module Buttafly
 
     def tab_active?(aasm_state)
       aasm_state.to_s == "uploaded" ? "active" : "inactive"
-    end
-
-    def available_events(file)
-      file.aasm.events.map(&:name) - mapping_events
-    end 
-
-    def mapping_events
-      [:target, :map]
     end
 
     def map_legend_button(mapping)

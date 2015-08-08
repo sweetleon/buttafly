@@ -1,5 +1,6 @@
 class DummyParent < ActiveRecord::Base
 
+
   include Targetable
 
   belongs_to :dummy_grandparent

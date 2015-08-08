@@ -3,6 +3,7 @@ require 'test_helper'
   describe "Buttafly::Originable" do 
 
   subject { Buttafly::Spreadsheet }
+
   let(:spreadsheet) { FactoryGirl.create(:originable) }
 
   describe "associations" do 
@@ -36,19 +37,54 @@ require 'test_helper'
     end
   end
 
+  it "must return true for originable models" do 
+    subject.originable?.must_equal true
+  end
+
+  it "self.targetable_models" do 
+
+    actual = spreadsheet.targetable_models
+    expected = ["DummyChild", "DummyGrandparent", "DummyParent", "DummyTribe", 
+                "Review", "User", "Wine", "Winery"]
+    assert_equal actual, expected
+  end
+
   it "#originable_headers must return correct headers" do 
     headers = spreadsheet.originable_headers
     headers.must_equal %w[wine winery vintage review rating]
   end 
 
-  it "#targetable_parents" do 
-    targetable_parents(:winery).must_equal []
-    # .must_equal [:user, :wine]
-    # mapping.targetable_parents(:user).must_equal []
-    # mapping.update(targetable_model: "DummyChild")
-    # mapping.targetable_parents().must_equal [:dummy_parent, :dummy_tribe]
+  it "tsorted_order" do 
+    spreadsheet.tsorted_order
   end
 
+  it "self.targetable_parents" do 
+    spreadsheet.targetable_parents(:winery).must_equal []
+    spreadsheet.targetable_parents(:user).must_equal []
+    spreadsheet.targetable_parents(:wine).must_equal [:winery]
+    spreadsheet.targetable_parents(:review).must_equal [:user, :wine]
+  end
+
+  it "ancestors_of(klass)" do 
+    # spreadsheet.ancestors_of(:winery).must_equal []
+    # spreadsheet.ancestors_of(:user).must_equal []
+    spreadsheet.ancestors_of(:wine).must_equal [:winery]
+    # spreadsheet.parents_of(:review).must_equal [:user, :wine]
+  end
+
+  it "parents_of(model)" do 
+    spreadsheet.parents_of(:winery).must_equal [[]]
+    spreadsheet.parents_of(:user).must_equal [[]]
+    spreadsheet.parents_of(:wine).must_equal [:winery]
+    spreadsheet.parents_of(:review).must_equal [:user, :wine]
+  end
+
+  it "tsorted_order" do 
+    skip
+    actual = spreadsheet.tsorted_order
+    byebug
+    actual.must_equal []
+  end
 
   describe "states" do 
 
@@ -91,8 +127,7 @@ require 'test_helper'
         describe ":create_records" do           
 
           it "without parents" do
-skip
-            file.mappings.create(FactoryGirl.attributes_for(
+    skip        file.mappings.create(FactoryGirl.attributes_for(
               :mapping_without_parents))
             file.create_records!
             Winery.count.must_equal 5

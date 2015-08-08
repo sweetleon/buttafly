@@ -65,8 +65,8 @@ module Buttafly
       end
       @originable = Buttafly.originable.new
       @contents = files.order(:created_at).page(params[:page]).per(5)
+      @targetable_models = @originable.targetable_models
       @mapping = Mapping.new
-      @targetable_models = Buttafly::Spreadsheet.targetable_models
     end
 
     private

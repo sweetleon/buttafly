@@ -38,6 +38,14 @@ FactoryGirl.define do
 
       factory :mapping_without_parents do
         targetable_model "Winery"
+        legend { {
+          "winery"=> {
+            "name"=>"winery", 
+            "mission"=>"wine", 
+            "history"=>"wine"
+          }
+        }
+      }
       end
       
       factory :mapping_with_parent do
