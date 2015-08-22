@@ -1,5 +1,7 @@
+require 'buttafly/application_controller'
+
 module Buttafly
   class ApplicationController < ::ApplicationController
-    layout 'layouts/application' 
+    # layout 'buttafly/application' 
   end
 end

@@ -11,7 +11,7 @@ module Buttafly
   require 'foundation-rails'
   require 'simple_form'
   require 'byebug'
-  require 'better_errors'
+  # require 'better_errors'
   require 'binding_of_caller'
   
 end
