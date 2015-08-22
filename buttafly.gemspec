@@ -28,11 +28,11 @@ Gem::Specification.new do |s|
   s.add_dependency "sass"
   s.add_dependency "kaminari"
   s.add_dependency "simple_form"
+  s.add_dependency "factory_girl_rails"
   
   # development & testing
   s.add_development_dependency "minitest-rails-capybara"
   s.add_development_dependency "launchy"
-  s.add_development_dependency "factory_girl_rails"
   s.add_development_dependency "guard-minitest"
   s.add_development_dependency "database_cleaner"
   s.add_development_dependency "guard-livereload"

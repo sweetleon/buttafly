@@ -11,5 +11,4 @@ module Buttafly
   require 'simple_form'
   require 'byebug'
   require 'binding_of_caller'
-  
 end
