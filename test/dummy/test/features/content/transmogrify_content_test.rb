@@ -5,7 +5,7 @@ feature "transmogrify content" do
   before do 
     @existing_content = FactoryGirl.create(:mapped_file)
     @existing_content.mappings.create(FactoryGirl.attributes_for(:mapping_with_legend))
-    visit '/buttafly/contents'
+    # visit '/buttafly/contents'
   end
   
   scenario "success" do

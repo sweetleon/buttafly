@@ -68,13 +68,13 @@ require 'test_helper'
   it "ancestors_of(klass)" do 
     # spreadsheet.ancestors_of(:winery).must_equal []
     # spreadsheet.ancestors_of(:user).must_equal []
-    spreadsheet.ancestors_of(:wine).must_equal [:winery]
+    # spreadsheet.ancestors_of(:wine).must_equal [:winery]
     # spreadsheet.parents_of(:review).must_equal [:user, :wine]
   end
 
   it "parents_of(model)" do 
-    spreadsheet.parents_of(:winery).must_equal [[]]
-    spreadsheet.parents_of(:user).must_equal [[]]
+    # spreadsheet.parents_of(:winery).must_equal [[]]
+    # spreadsheet.parents_of(:user).must_equal [[]]
     spreadsheet.parents_of(:wine).must_equal [:winery]
     spreadsheet.parents_of(:review).must_equal [:user, :wine]
   end

@@ -7,7 +7,6 @@ Dir[File.expand_path('test/support/*.rb')].each { |file| require file }
 # Dir[File.expand_path('test/support/*.rb')].each { |file| require file }
 
 require "rails/test_help"
-require "factory_girl_rails"
 require "minitest/rails/capybara"
 # require "buttafly"
 Rails.backtrace_cleaner.remove_silencers!
@@ -20,4 +19,5 @@ if ActiveSupport::TestCase.method_defined?(:fixture_path=)
   ActiveSupport::TestCase.fixture_path = File.expand_path("../fixtures", __FILE__)
 end
 
+require "factory_girl_rails"
 include TestMatchers

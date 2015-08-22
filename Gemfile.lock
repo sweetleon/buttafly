@@ -243,9 +243,7 @@ DEPENDENCIES
   buttafly!
   byebug
   database_cleaner
-  factory_girl
   factory_girl_rails
-  foundation-rails
   guard-livereload
   guard-minitest
   launchy
