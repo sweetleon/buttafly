@@ -9,6 +9,4 @@ module Buttafly
   require 'kaminari'
   require 'foundation-rails'
   require 'simple_form'
-  require 'byebug'
-  require 'binding_of_caller'
 end
