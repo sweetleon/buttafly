@@ -1,25 +1,15 @@
 require 'test_helper'
 
-describe "Buttafly::targetable" do 
+describe "Buttafly::Targetable" do 
 
   subject { Review }
 
   describe "class methods" do 
     
-    specify do
-      must_have_one(:mapping)
-    end
-    
     it "must return true for :targetable?" do 
       subject.targetable?.must_equal true
     end
 
-    it "#self.targetable_parent_models" do 
-      expected = [:wine, :user]
-      actual = subject.targetable_parent_models
-      assert_equal expected, (expected & actual)
-    end
-    
     it "#self.targetable_ignored_columns" do   
       assert_equal %w[updated_at created_at id], subject.targetable_ignored_columns
     end

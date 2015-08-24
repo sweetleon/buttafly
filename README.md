@@ -47,7 +47,7 @@ validates :reviewer, :wine, presence: true
 has_many :reviews, foreign_key: :reviewer_id
 ```
 
-Let us also say that you have entered into an arrangement with an infamous wine critic, in which she has agreed to let you publish some of her reviews. She isn't willing to recreate the reviews in your app by hand, but she has condescended to provide you a spreadsheet, the first few rows of which might look something like these:
+Let us also say you've entered into an arrangement with an infamous wine critic, in which she has agreed to let you publish some of her reviews. She isn't willing to recreate the reviews in your app by hand, but she has condescended to provide you a spreadsheet, the first few rows of which might look like these:
 
 | Winery name           | Wine name     | Vintage | Rating  | Review  |
 | --------------        |---------------|--------:|-------- |---------| 
@@ -55,7 +55,7 @@ Let us also say that you have entered into an arrangement with an infamous wine 
 | Charles Shah          | pinot noir    | 2008    | 83      | Nearly matured and corpulent Pinot Noir. Essenses of mint, sad dog-breath, perceptable fois gras. Drink now through 2015. |
 | Duckhorndog           | semillon      | 2003    | 99      | Overdressed nevertheless complex and stunning Semillon. Shows kalamata olive, hedonistic nectarine, bashful tomato. Drink now through Friday. |
 
-Great! Now to get those reviews into your database with the correct associations! If there aren't too many reviews, you can hand them off to an intern and ask her to navigate your applicaton to create the reviews, wineries, and wineries all by hand and with the correct associations. Alternatively you might commission a developer to write a script that could do the same thing. But what if this spreadsheet is only the first of many, from a diverse group of infamous wine critics, each of which has slightly different headers and columns? 
+Great. Now to get those reviews into your database with the correct associations! If there aren't too many reviews, you can hand them off to an intern and ask her to navigate your applicaton to create the reviews, wineries, and wineries all by hand and with the correct associations. Alternatively you might commission a developer to write a script that could do the same thing. But what if this spreadsheet is only the first of many, from a diverse group of infamous wine critics, each of which has slightly different headers and columns? 
 
 This is where Buttafly is designed to help out.
 

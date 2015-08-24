@@ -24,7 +24,6 @@ module Targetable
   end
 
   included do
-    has_one :mapping, as: :targetable
     
     TargetableModels.add self
     
@@ -34,18 +33,6 @@ module Targetable
 
     def self.targetable_columns
       column_names - targetable_ignored_columns
-    end
-
-    def self.targetable_parent_models
-      parent_models = []
-      self.reflect_on_all_associations(:belongs_to).each do |parent_model|
-        if parent_model.options[:class_name].nil?
-          parent_models << parent_model.name 
-        else
-          parent_models << parent_model.options[:class_name].constantize.model_name.i18n_key
-        end
-      end
-      parent_models
     end
 
     def self.targetable_foreign_keys

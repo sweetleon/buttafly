@@ -4,6 +4,7 @@ class CreateDummyChildren < ActiveRecord::Migration
       t.string :name
       t.integer :dummy_parent_id
       t.integer :dummy_tribe_id
+      t.integer :age
 
       t.timestamps
     end

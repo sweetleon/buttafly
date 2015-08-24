@@ -42,8 +42,13 @@
                             .right= col + " => "
                           .small-9.columns
                             = mapping_form_select(mapping, col, array, parent)
-                  %hr
 
 
-          .has-tip{"aria-haspopup" => "true", "data-tooltip" => "", title: event_description("write legend for #{mapping.targetable_model}")}
-            = submit_tag map_legend_button(mapping), class: "button tiny success"
+          .small-11.columns
+            .row.panel
+
+              .has-tip{"aria-haspopup" => "true", "data-tooltip" => "", title: event_description("write legend for this model")}
+                %span
+                  = submit_tag map_legend_button(mapping), class: "button expand success"
+
+  %br

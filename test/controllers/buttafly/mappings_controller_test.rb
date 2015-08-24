@@ -23,36 +23,19 @@ describe "Buttafly::MappingsController" do
 
   describe "must PATCH #update" do 
     
+    let(:legend) do
+      FactoryGirl.attributes_for(:mapping_with_legend)[:legend]
+    end
+    
     it "stores data" do 
 
-      legend_data = {
-        "legend_data" => {
-          "review"=> {
-            "rating"=>"rating",
-            "content"=>"review",
-            "user"=> {
-              "name"=>"wine"
-            },
-            "wine"=> {
-              "name"=>"wine",
-              "vintage"=>"vintage",
-              "winery"=> {
-                "name"=>"winery", 
-                "mission"=>"wine", 
-                "history"=>"wine"
-              }
-            }
-          }
-        }
-      }
-
-      patch :update, id: mapping, mapping: legend_data
+      patch :update, id: mapping, mapping: { "legend" => legend }
       assert_response 302
-      mapping.reload.legend_data.wont_equal nil
-      mapping.legend_data["review"]["rating"].must_equal "rating"
-      mapping.legend_data["review"]["content"].must_equal "review"
-      mapping.legend_data["review"]["wine"]["vintage"].must_equal "vintage"
-      mapping.legend_data["review"]["wine"]["winery"]["name"].must_equal "winery"
+      mapping.reload.legend.wont_equal nil
+      mapping.legend["review"]["rating"].must_equal "rating"
+      mapping.legend["review"]["content"].must_equal "review"
+      mapping.legend["review"]["wine"]["vintage"].must_equal "vintage"
+      mapping.legend["review"]["wine"]["winery"]["name"].must_equal "winery"
       mapping.originable.mapped?.must_equal true
     end
 

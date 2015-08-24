@@ -33,12 +33,32 @@ module Buttafly
     end
 
     def mapping_form_select(mapping, column, array=nil, target=nil )
+      choices = mapping.originable.list_headers
       if array.nil? 
         parent_params = nil
-      elsif array.size == 1
+      
+        if mapping.legend.empty? 
+          selected = choices.include?(column) ? column : ""
+        else
+          selected = mapping.legend[mapping.targetable_model.underscore][column]
+        end
+      elsif array.size == 1 
         parent_params = "[#{target}]"
+        if mapping.legend.empty? 
+          selected = choices.include?(column) ? column : ""
+        else
+        
+          # selected = "rating"
+          selected = mapping.legend[mapping.targetable_model.underscore][target][column]
+        end
       elsif array.split(target).first.size == 0
         parent_params = "[#{target}]"
+        if mapping.legend.empty? 
+          selected = choices.include?(column) ? column : ""
+        else
+        
+          selected = mapping.legend[mapping.targetable_model.underscore][target][column]
+        end
       else
         e = array.split(target).first.map!(&:to_s)
         parent_params = ""
@@ -46,12 +66,15 @@ module Buttafly
           parent_params << "[#{m}]"
         end
         parent_params << "[#{target.to_s}]" 
+        if mapping.legend.empty? 
+          selected = choices.include?(column) ? column : ""
+        else
+          selected = mapping.legend[mapping.targetable_model.underscore][array.first][array.last][column]
+        end
+
       end
-      choices = mapping.originable.list_headers
-      # options = options_from_collection_for_select(choices, "id", "name")
-      target = "mapping[legend_data][#{mapping.targetable_model.to_s.underscore}]"
+      target = "mapping[legend][#{mapping.targetable_model.to_s.underscore}]"
       parents = "#{parent_params}"
-      selected = choices.include?(column) ? column : ""
       column = "[#{column}]"
       select_tag("mapping")
       select_tag(target+parents+column, options_for_select(choices, selected ), include_blank: true)
@@ -65,17 +88,9 @@ module Buttafly
       aasm_state.to_s == "uploaded" ? "active" : "inactive"
     end
 
-    def available_events(file)
-      file.aasm.events.map(&:name) - mapping_events
-    end 
-
-    def mapping_events
-      [:target, :map]
-    end
-
     def map_legend_button(mapping)
       klass = mapping.targetable_model
-      mapping.legend_data.nil? ? "write #{klass} legend" : "(re)write #{klass} legend"
+      mapping.legend.empty? ? "write #{klass} legend" : "(re)write #{klass} legend"
     end
 
     def event_button_to(event, originable_id, options = {})

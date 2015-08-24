@@ -8,6 +8,7 @@ feature "archive content" do
   end
   
   scenario "success" do
+
     within("#content-scope-all") do 
 
       within("#show-file-#{@existing_content.id}") do
