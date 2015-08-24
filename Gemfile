@@ -12,3 +12,4 @@ gemspec
 
 # To use debugger
 gem 'foundation-rails'
+gem 'github-pages'
