@@ -4,6 +4,7 @@ PATH
     buttafly (0.0.1)
       aasm
       carrierwave
+      factory_girl_rails
       foundation-rails
       haml-rails
       jquery-rails
@@ -243,7 +244,6 @@ DEPENDENCIES
   buttafly!
   byebug
   database_cleaner
-  factory_girl_rails
   guard-livereload
   guard-minitest
   launchy
