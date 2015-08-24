@@ -8,14 +8,14 @@
 
 # Buttafly
 
-Buttafly is a [Rails engine](http://guides.rubyonrails.org/engines.html) which, once bolted onto your [Ruby on Rails](http://rubyonrails.org/) application, lets you import real data from spreadsheets into your [postgres](http://www.postgresql.org/) database, complete with the correct associations to parent records. 
+Buttafly is a [Rails engine](http://guides.rubyonrails.org/engines.html) which, once bolted onto your [Ruby on Rails](http://rubyonrails.org/) application, allows the creation of [postgres](http://www.postgresql.org/) database records, complete with the correct associations to parent records, from plain old spreadsheets. 
 
 ## Example
 
-Let us say that your app tracks information on wineries and that: 
+Let's say that your Rails app tracks wine reviews and that: 
 
-1. Each __winery__ *has many* __wines__ that have been produced under its imprimatur, in a number of different years or "vintages."
-2. Each __wine__ axiomatically *belongs to* a __winery__, and also *has many* __reviews__ written about it.
+1. Each __winery__ *has many* __wines__ produced under its imprimatur in a number of vintages.
+2. Each __wine__ axiomatically *belongs to* a __winery__ and also *has many* __reviews__ written about it.
 3. Each wine __review__ *belongs to* both the __wine__ of which it is a subject, and to the __reviewer__ who reviewed it. 
 
 Your model associatons might look something like this:
@@ -74,6 +74,7 @@ Then from the command line:
 
 ```console
 bundle install
+rake railties:install:migrations
 rake db:migrate
 ```
 Try it in development first by navigating to [localhost:3000/buttafly](localhost:3000/buttafly).
