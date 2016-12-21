@@ -1,5 +1,8 @@
-%ul.button-group
-  %li
-    = event_button_to("remove file", file.id, method: :delete, action: :destroy)
-  - file.originable_events.each do |event|
-    %li= event_button_to(event, file.id)
+.container
+  .row
+    - file.originable_events.each do |event|
+      .col-sm-2
+        = event_button_to(event, file.id)
+    / - file.disabled_originable_events.each do |event|
+    /   .col-sm-2
+    /     = button_to event, {}, class: "btn btn-secondary disabled", html_options: "disabled"

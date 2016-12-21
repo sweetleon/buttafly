@@ -18,15 +18,15 @@ module Originable
     include AASM
 
     mount_uploader :flat_file, Buttafly::FlatFileUploader
-    
+
     belongs_to :user
-    
+
     has_many :mappings, as: :originable
 
     validates_presence_of   :flat_file
     validates_uniqueness_of :name, scope: :flat_file, allow_blank: true
 
-    aasm do 
+    aasm do
 
       state :uploaded, initial: true
       state :targeted
@@ -34,30 +34,34 @@ module Originable
       state :transmogrified
       state :archived
 
-      event :target do 
-        transitions from: [:uploaded, :targeted], 
+      event :target do
+        transitions from: [:uploaded, :targeted, :mapped],
                       to: :targeted
       end
 
-      event :map do       
-        transitions from: :targeted, 
+      event :map do
+        transitions from: :uploaded,
                       to: :mapped
       end
 
-      event :transmogrify do 
-        transitions from: :mapped, 
+      event :transmogrify do
+        transitions from: :mapped,
                       to: :transmogrified
       end
 
-      event :archive do 
-        transitions from: [:uploaded, :targeted, :mapped, :transmogrified], 
-                      to: :archived
-      end
+      # event :archive do
+      #   transitions from: [:uploaded, :targeted, :mapped, :transmogrified],
+      #                 to: :archived
+      # end
     end
 
     def originable_events
-      events_array = aasm.events.map(&:name) - [:target, :map]
-      data.nil? ? (events_array << :import) : events_array << :wipe 
+      events_array = aasm.events.map(&:name)
+      data.nil? ? (events_array << :import) : events_array << :wipe
+    end
+
+    def disabled_originable_events
+      Buttafly::Spreadsheet.aasm.events.map(&:name) - Buttafly::Spreadsheet.first.aasm.events.map(&:name)
     end
 
     def originable_headers
@@ -68,26 +72,26 @@ module Originable
     def derived_name
       if name.present?
         name
-      else 
+      else
         File.basename(flat_file.to_s)
-      end 
+      end
     end
 
     def targetable_models
       Rails.application.eager_load!
-      models = ActiveRecord::Base.descendants.select do |c| 
+      models = ActiveRecord::Base.descendants.select do |c|
         c.included_modules.include?(Targetable)
       end
       model_names = models.map(&:name)
       model_names
     end
-    
-    def targetable_parents(klass=nil) 
+
+    def targetable_parents(klass=nil)
       parent_models = []
       # klass ||= targetable_
       klass.to_s.classify.constantize.reflect_on_all_associations(:belongs_to).each do |parent_model|
         if parent_model.options[:class_name].nil?
-          parent_models << parent_model.name 
+          parent_models << parent_model.name
         else
           parent_models << parent_model.options[:class_name].constantize.model_name.i18n_key
         end
@@ -100,7 +104,7 @@ module Originable
       dependency_hash = TsortableHash[]
       targetable_models.each do |m|
         dependency_hash[m.underscore.to_sym] = parents_of(m)
-      end 
+      end
       dependency_hash
     end
 
@@ -108,7 +112,7 @@ module Originable
       parent_models = []
       klass.to_s.classify.constantize.reflect_on_all_associations(:belongs_to).each do |parent_model|
         if parent_model.options[:class_name].nil?
-          parent_models << parent_model.name 
+          parent_models << parent_model.name
         else
           parent_models << parent_model.options[:class_name].constantize.model_name.i18n_key
         end
@@ -122,7 +126,7 @@ module Originable
       ancestorsHash.each do |k,v|
         if v.empty?
           return
-        else 
+        else
           ancestorsHash[k] = parents_of(k)
         end
       end
@@ -191,7 +195,7 @@ module Originable
       #     #     fk = p.to_s.foreign_key
       #     #   end
       #     # end
-              
+
 
 
       #     tm.find_or_create_by(params_hash)
@@ -217,13 +221,21 @@ module Originable
       data.present?
     end
 
-    # def convert_data_to_json!
-    #   csv = CSV.open(self.flat_file.path, headers:true).readlines
-    #   json_array = Array.new
-    #   csv.entries.map do |entry|
-    #     json_array << entry.to_hash
-    #   end
-    #   self.update(data: json_array)
-    # end
+    def import!
+      convert_data_to_json!
+    end
+
+    def wipe!
+      update(data: nil)
+    end
+
+    def convert_data_to_json!
+      csv = CSV.open(self.flat_file.path, headers:true).readlines
+      json_array = Array.new
+      csv.entries.map do |entry|
+        json_array << entry.to_hash
+      end
+      self.update(data: json_array)
+    end
   end
 end

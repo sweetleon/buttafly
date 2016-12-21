@@ -1,35 +1,34 @@
-%dl.accordion{"data-accordion" => ""}
-  %dd.accordion-navigation
-    
+%p
+  %a{"aria-controls" => "show-file-#{file.id}", "aria-expanded" => "false", "data-toggle" => "collapse", :href => "#show-file-#{file.id}"}
+    .row
+      .col-sm-2
+        %dl
+          %dt file
+          %dd= File.basename(file.flat_file.to_s)
+      .col-sm-2
+        %dl
+          %dt name
+          %dd
+            = file.name.present? ? file.name : "no name"
+      .col-sm-2
+        %dl
+          %dt status
+          %dd
+            .label{ class: "state-#{file.aasm_state}" }= file.aasm_state.humanize.downcase
 
-    %a{href: "#show-file-#{file.id}" } 
-      .row  
-        .small-2.columns 
-          %dl
-            %dt file
-            %dd= File.basename(file.flat_file.to_s)
-        .small-2.columns 
-          %dl
-            %dt name
-            %dd
-              = file.name.present? ? file.name : "no name"
-        .small-2.columns 
-          %dl
-            %dt status
-            %dd
-              .label{ class: "state-#{file.aasm_state}" }= file.aasm_state.humanize.downcase
-        
-    .content{ "id" => "show-file-#{file.id}", class: active_element?(index) }
-      .row
-        .panel.callout
-          .row
-            = render partial: "content_actions", locals: { file: file }
+.collapse.in{ id: "show-file-#{file.id}", class: active_element?(index) }
+  .card.card-block
+    / # = render partial: 'target_modal', locals: { file: file }
 
-      .small-12.columns
-        = render partial: "mapping",  locals: { file: file }  
-    
-      
 
-    
+
+    = render partial: "content_actions", locals: { file: file }
+  .card.card-block
+    = render partial: "mapping",  locals: { file: file }
+
+
+
+
+
 
 

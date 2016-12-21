@@ -7,6 +7,9 @@ module Buttafly
   require 'carrierwave'
   require 'jquery-rails'
   require 'kaminari'
-  require 'foundation-rails'
   require 'simple_form'
+  require 'buttafly'
+  require 'bootstrap'
+  require 'rails-assets-tether'
+
 end

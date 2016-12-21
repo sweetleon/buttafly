@@ -1,36 +1,29 @@
-= render 'form'
+.navbar.navbar-dark.bg-inverse
+  .navbar-brand Buttafly
 
-.row
+= flash_messages
+.jumbotron= render 'form'
+
+%ul.nav.nav-tabs{:role => "tablist"}
+
+  %li.nav-item{:role => "presentation"}
+    %a.nav-link.active{"data-toggle" => "tab", :href => "#content-scope-all", :role => "tab"}
+      = @contents.count
+      total files
   - states = Buttafly.originable.aasm.states.map(&:name)
-  %ul.tabs{ "data-tab" => "" }
-    
-    %li.tab-title.active 
-      %a{:href => "#content-scope-all" }
-        .label
-          = @contents.count
-          files 
-    - states.each do |aasm_state|
-      %li.tab-title 
-        %a{:href => "#content-scope-#{aasm_state}"}
-          / .label.info
-          .label
-            = eval("Buttafly.originable.#{aasm_state}").count
-            = aasm_state 
+  - states.each do |aasm_state|
 
-  .tabs-content
-    .content.active#content-scope-all 
-      - @contents.each_with_index do |c, index|
-        = render 'content', file: c, index: index
-    
-    - states.each_with_index do |aasm_state|
-      .content{ "id" => "content-scope-#{aasm_state}" }
+    %li.nav-item{:role => "presentation"}
+      %a.nav-link{"data-toggle" => "tab", :href => "#content-scope-#{aasm_state}", :role => "tab"}
+        = eval("Buttafly.originable.#{aasm_state}").count
+        = aasm_state
+.tab-content
+  .tab-pane.active{:role => "tabpanel", id: "content-scope-all"}
+    - @contents.each_with_index do |c, index|
+      = render 'content', file: c, index: index
 
-        - eval("@contents.#{aasm_state}").each_with_index do |f, index|
-          = render 'content', file: f, index: index
+  - states.each_with_index do |aasm_state|
+    .tab-pane{ role: "tabpanel", "id" => "content-scope-#{aasm_state}" }
+      - eval("@contents.#{aasm_state}").each_with_index do |f, index|
 
-
-      
-
-
-
-
+        = render 'content', file: f, index: index

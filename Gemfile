@@ -11,5 +11,5 @@ gemspec
 # your gem to rubygems.org.
 
 # To use debugger
-gem 'github-pages'
-gem "foundation-rails"
+# gem 'github-pages'
+gem 'bootstrap'

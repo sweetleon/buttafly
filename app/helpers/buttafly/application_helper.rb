@@ -1,6 +1,31 @@
 module Buttafly
   module ApplicationHelper
 
+
+    BOOTSTRAP_FLASH_MSG = {
+        success: 'alert-success',
+        error: 'alert-error',
+        alert: 'alert-block',
+        notice: 'alert-info'
+      }
+
+    def bootstrap_class_for(flash_type)
+      BOOTSTRAP_FLASH_MSG.fetch(flash_type.to_sym, flash_type.to_s)
+    end
+
+    def flash_messages(opts = {})
+      flash.each do |msg_type, message|
+        concat(content_tag(:div, message, class: "alert #{bootstrap_class_for(msg_type)} alert-dismissible", role: 'alert') do
+          concat(content_tag(:button, class: 'close', data: { dismiss: 'alert' }) do
+            concat content_tag(:span, '&times;'.html_safe, 'aria-hidden' => true)
+            concat content_tag(:span, 'Close', class: 'sr-only')
+          end)
+          concat message
+        end)
+      end
+      nil
+    end
+
     def nav_link_to(text, path)
       class_name = current_page?(path) ? 'active' : ''
 
@@ -16,12 +41,12 @@ module Buttafly
     def model_tree(array)
 
       array.split(",").join("::")
-    end 
+    end
 
     def mapping_form_builder(parentArray, targetableHash)
       parentArray ||= []
       targetableHash.each do |key, value|
-        parentArray << [key] if value.empty? 
+        parentArray << [key] if value.empty?
         value.each do |k1,v|
           parentArray << [key, k1] if v.empty?
           v.each do |k2,v|
@@ -34,29 +59,29 @@ module Buttafly
 
     def mapping_form_select(mapping, column, array=nil, target=nil )
       choices = mapping.originable.list_headers
-      if array.nil? 
+      if array.nil?
         parent_params = nil
-      
-        if mapping.legend.empty? 
+
+        if mapping.legend.empty?
           selected = choices.include?(column) ? column : ""
         else
           selected = mapping.legend[mapping.targetable_model.underscore][column]
         end
-      elsif array.size == 1 
+      elsif array.size == 1
         parent_params = "[#{target}]"
-        if mapping.legend.empty? 
+        if mapping.legend.empty?
           selected = choices.include?(column) ? column : ""
         else
-        
+
           # selected = "rating"
           selected = mapping.legend[mapping.targetable_model.underscore][target][column]
         end
       elsif array.split(target).first.size == 0
         parent_params = "[#{target}]"
-        if mapping.legend.empty? 
+        if mapping.legend.empty?
           selected = choices.include?(column) ? column : ""
         else
-        
+
           selected = mapping.legend[mapping.targetable_model.underscore][target][column]
         end
       else
@@ -65,8 +90,8 @@ module Buttafly
         e.each do |m|
           parent_params << "[#{m}]"
         end
-        parent_params << "[#{target.to_s}]" 
-        if mapping.legend.empty? 
+        parent_params << "[#{target.to_s}]"
+        if mapping.legend.empty?
           selected = choices.include?(column) ? column : ""
         else
           selected = mapping.legend[mapping.targetable_model.underscore][array.first][array.last][column]
@@ -97,17 +122,17 @@ module Buttafly
       options[:action]      ||= event
       options[:method]      ||= "patch"
       options[:orientation] ||= "tip-top"
-      content_tag(:span, button_to( 
-        event, { 
-          action: options[:action], id: originable_id 
-        }, 
-        method: options[:method], 
-        class: "button tiny #{event_color(event.to_s)}" 
-      ), 
+      content_tag(:span, button_to(
+        event, {
+          action: options[:action], id: originable_id
+        },
+        method: options[:method],
+        class: "btn btn-#{button_style(event.to_s)}", role: "button"
+      ),
       class: "has-tip #{ options[:orientation] }",
         :'data-tooltiip aria-haspopup' => true, "data-tooltip" => "",
         :title => event_description(event.to_s)
-    )  
+    )
     end
 
     def state_color(state)
@@ -118,16 +143,20 @@ module Buttafly
       end
     end
 
-    def event_color(event)
+    def button_style(event)
 
       case event
-      
+
       when "remove file"
-        "alert"
+        "danger"
       when "archive"
+        "secondary"
       when "import"
+        "success"
       when "transmogrify"
         "warning"
+      when "target"
+        "success"
 
       end
     end
@@ -135,19 +164,19 @@ module Buttafly
     def event_description(event)
 
       case event
-      
+
       when "import"
         "Save a json representation of the csv data in the spreadsheet model."
       when "target"
         "Select the root model, and we will figure out which models it belongs to."
       when "archive"
         "Archive spreadsheet."
-      when "write legend" 
+      when "write legend"
         "After selecting the model and attribute you wish to map each of the headers at to, save the legend."
       when "transmogrify"
         "Generate active_record objects from file."
       when "remove file"
-        "Removes the file from the server. Does NOT remove transmogrified objects." 
+        "Removes the file from the server. Does NOT remove transmogrified objects."
       end
     end
 
@@ -166,14 +195,14 @@ module Buttafly
     end
 
     def status_description(status)
-      
+
       case status
-      
+
       when "uploaded"
         "This file is present on the server and a record has been created, but nothing else has been done."
       when "imported"
         "This file has been imported into the database and its contents converted to json."
-      when "processed" 
+      when "processed"
         "This file's purchase data has successfully generated transactions."
       end
     end

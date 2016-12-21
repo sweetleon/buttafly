@@ -5,9 +5,9 @@
 
     %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
     %title= content_for?(:title) ? yield(:title) : "Buttafly"
-    = stylesheet_link_tag "application"
+    = stylesheet_link_tag "buttafly/application"
     = csrf_meta_tags
   %body
-    = render 'messages'
-    = yield
+    .container
+      = yield
     = javascript_include_tag "buttafly/application"

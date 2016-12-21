@@ -1,4 +1,4 @@
-require 'factory_girl_rails'
+# require 'factory_girl_rails'
 
-include FactoryGirl::Syntax::Methods
+# include FactoryGirl::Syntax::Methods
 

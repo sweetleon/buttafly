@@ -6,9 +6,9 @@
         - models = mapping.targetable_order
         .row
           .small-1.columns
-            .label 
+            .label
               = mapping.id
-        
+
           .small-11.columns
             .row.panel
               .small-4.columns
@@ -24,7 +24,7 @@
             - mapping_form_builder(nil, models).each do |array|
               .row
                 %br
-                belongs to: 
+                belongs to:
                 .label
                   = model_tree(array)
                 .row
@@ -41,7 +41,7 @@
                           .small-3.columns
                             .right= col + " => "
                           .small-9.columns
-                            = mapping_form_select(mapping, col, array, parent)
+                            / = mapping_form_select(mapping, col, array, parent)
 
 
           .small-11.columns

@@ -4,7 +4,7 @@
       %legend Step 1: Upload a Spreadsheet
       = simple_form_for :originable, url: { controller: "contents"}, :html => {:multipart => true} do |f|
         = @originable.errors.messages.first
-        = f.input :name, placeholder: "Optional -- if not supplied, we'll try to use the existing spreadsheet name"
-        = f.label :flat_file
+        = f.input :name, placeholder: "Optional -- if not supplied, we'll try to use the existing spreadsheet name", required: false
+        / = f.label :flat_file
         = f.file_field :flat_file
-        = f.submit "Upload spreadsheet", class: "button"
+        = f.submit "Upload spreadsheet", class: "btn btn-success"

@@ -1,4 +1,11 @@
-.small-8.columns
-  = render partial: "actions", locals: { file: file }
-.small-4.columns
-  = render partial: "new_target", locals: { file: file }
+.col-sm-10
+  / # = render partial: 'target_modal', locals: { file: file }
+
+  .row
+    = render partial: "actions", locals: { file: file }
+  .row
+    = render partial: "new_target", locals: { file: file }
+.col-sm-1
+  = event_button_to("remove file", file.id, method: :delete, action: :destroy)
+  / = button_to("Remove File", { controller: :contents, action: 'destroy', id: file.id}, :method => :delete, class: "btn btn-danger", role: "button")
+

@@ -4,7 +4,7 @@ module Buttafly
   class ContentsController < ApplicationController
 
     before_action :set_originable, only: [
-        :edit, :show, :archive, :destroy, :transmogrify]
+        :edit, :show, :archive, :destroy, :transmogrify, :import, :wipe]
 
     def new
       @originable ||= Buttafly::Spreadsheet.new
@@ -26,19 +26,34 @@ module Buttafly
       end
     end
 
+    def target
+    end
+
+    def map
+    end
+
+    def wipe
+      if @originable.wipe!
+        redirect_to contents_path, notice: "#{@originable.name} successfully wiped."
+      else
+        redirect_to contents_path, alert: "Could not wipe #{@originable.name}."
+      end
+    end
+
     def import
       if @originable.import!
-        redirect_to :back, notice: "#{@originable.name} successfully imported." 
+        redirect_to contents_path, notice: "#{@originable.name} successfully imported."
       else
-        redirect_to :back, alert: "Could not import #{@originable.name}." 
+        redirect_to :back, alert: "Could not import #{@originable.name}."
       end
     end
 
     def archive
       if @originable.archive!
-        redirect_to :back, notice: "#{@originable.name} successfully archived."
+
+        redirect_to :contents, notice: "#{@originable.name} successfully archived."
       else
-        redirect_to :back, notice: "#{@originable.name} could not be archived."
+        redirect_to :contents, notice: "#{@originable.name} could not be archived."
       end
     end
 
@@ -49,6 +64,7 @@ module Buttafly
         redirect_to :back, notice: "#{@originable.name} could not be archived."
       end
     end
+
     def destroy
       if @originable.destroy
         redirect_to contents_path, notice: "content successfully destroyed"

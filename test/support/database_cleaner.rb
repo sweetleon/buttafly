@@ -1,13 +1,13 @@
-require 'database_cleaner'
+# require 'database_cleaner'
 
-DatabaseCleaner.strategy = :deletion
+# DatabaseCleaner.strategy = :deletion
 
-class MiniTest::Spec
-  before :each do
-    DatabaseCleaner.start
-  end
+# class MiniTest::Spec
+#   # before :each do
+#   #   DatabaseCleaner.start
+#   # end
 
-  after :each do
-    DatabaseCleaner.clean
-  end
-end
+#   # after :each do
+#   #   DatabaseCleaner.clean
+#   # end
+# end

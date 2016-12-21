@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   resources :dummy_parents
   resources :dummy_grandparents
   resources :dummy_tribes
+
 end

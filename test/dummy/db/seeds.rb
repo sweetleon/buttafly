@@ -14,15 +14,15 @@ children = [
 
 parents = [
   "Guy Pacurarar",
-  "Sarah Schoeneman", 
-  "Doug Schoeneman", 
+  "Sarah Schoeneman",
+  "Doug Schoeneman",
   "Archana Shekhar"
 ]
 
 grandparents = [
   "Heather Schoeneman",
   "Kurt Schoeneman",
-  "Vicki Pacurar", 
+  "Vicki Pacurar",
   "KC Shekhar",
   "Usha Shekhar"
 ]
@@ -32,7 +32,7 @@ tribes.each do |tribe_name|
 end
 
 grandparents.each do |grandparent_name|
-  grandparent = DummyGrandparent.create( 
+  grandparent = DummyGrandparent.create(
     dummy_tribe_id: DummyTribe.pluck(:id).sample,
     name: grandparent_name
   )
@@ -61,10 +61,10 @@ User.create(
 
 sample_sheets = Dir[File.expand_path('test/samples/*')]
 
-sample_sheets.each_with_index do |sheet, n| 
+sample_sheets.each_with_index do |sheet, n|
   flat_file = File.open(sheet)
   Buttafly::Spreadsheet.create!(
-    user_id: User.pluck(:id).sample,
+    # user_id: User.pluck(:id).sample,
     name: "cool_file_name-#{n}",
     flat_file: flat_file
   )

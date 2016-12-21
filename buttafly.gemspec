@@ -17,21 +17,26 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
 
-  s.add_dependency "rails", "~> 4.2"
+  s.add_dependency "rails", "~> 5.0.0", ">= 5.0.0.1"
+
   s.add_dependency "haml-rails"
   s.add_dependency "pg"
   s.add_dependency "aasm"
   s.add_dependency "carrierwave"
+  s.add_dependency "bootstrap", "~> 4.0.0.alpha4"
+  s.add_dependency "rails-assets-tether", ">= 1.1.0"
+
+
   s.add_dependency "jquery-rails"
-  s.add_dependency "foundation-rails"
   s.add_dependency "roo"
   s.add_dependency "sass"
   s.add_dependency "kaminari"
   s.add_dependency "simple_form"
   s.add_dependency "factory_girl_rails"
-  
+
   # development & testing
   s.add_development_dependency "minitest-rails-capybara"
+  s.add_development_dependency "minitest-given"
   s.add_development_dependency "launchy"
   s.add_development_dependency "guard-minitest"
   s.add_development_dependency "database_cleaner"
