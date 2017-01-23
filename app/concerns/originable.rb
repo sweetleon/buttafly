@@ -19,8 +19,6 @@ module Originable
 
     mount_uploader :flat_file, Buttafly::FlatFileUploader
 
-    belongs_to :user
-
     has_many :mappings, as: :originable
 
     validates_presence_of   :flat_file
@@ -117,27 +115,18 @@ module Originable
     def ancestors_of(klass, ancestorsHash=nil)
       ancestorsHash ||= {}
       ancestorsHash[klass] = parents_of(klass)
-      ancestorsHash.each do |k,v|
-        if v.empty?
+      ancestorsHash.each do |key, value|
+
+        if value.empty?
           return
         else
-          ancestorsHash[k] = parents_of(k)
+          ancestorsHash[key] = parents_of(key)
         end
       end
-      ancestorsHash
+      ancestorsHash.values.first
     end
 
-
-    # def targetable_order(parent=nil)
-    #   ancestors = Hash.new
-    #   targetable_parents(parent).each do |p|
-    #     ancestors[p] = targetable_parents(p).empty? ? {} : targetable_order(p)
-    #   end
-    #   ancestors
-    # end
-
     def legend
-
       mappings.last.legend
     end
 
@@ -147,16 +136,84 @@ module Originable
       csv.each { |row| create_record_from_row(row) }
     end
 
+# def create_record_from_row(row)
+#       legend.each do |key, value|
+#         value.each do |x, y|
+#           value[x] = row[y]
+#         end
+#         klass = key.classify.constantize
+#         byebug
+#         klass.where(value).first_or_create
+#       end
+#     end
+
     def create_record_from_row(row)
       legend.each do |key, value|
-        value.each do |x, y|
-          value[x] = row[y]
-        end
-        klass = key.classify.constantize
-        byebug
-        klass.where(value).first_or_create
+        create_from_hash(key, value, row)
       end
     end
+
+    def create_from_hash(parent, hash, row)
+      hash.each do |key, value|
+        if value.is_a? Hash
+          create_from_hash(key, value, row)
+        else
+          attrs = {}
+          attrs[key] = value
+
+        end
+        klass = parent.classify.constantize
+        # klass.where(value).first_or_create
+
+
+
+          # klass = key.classify.constantize
+          # klass.where(value).first_or_create
+        # end
+      end
+    end
+
+    def self.create_ancestor(attrHash)
+      klass = attrHash.keys.first.classify.constantize
+      klass.first_or_create(attrHash.values.first)
+    end
+
+    def set_transition_timestamp(given_status, time=Time.now)
+      timestamp_field = "#{given_status}_at".to_sym
+      self[timestamp_field] = time
+    end
+
+    def list_headers
+      data = CSV.read(self.flat_file.path)
+      data.first
+    end
+
+    def may_import?
+      data.nil?
+    end
+
+    def may_wipe?
+      data.present?
+    end
+
+    def import!
+      convert_data_to_json!
+    end
+
+    def wipe!
+      update(data: nil)
+    end
+
+    def convert_data_to_json!
+      csv = CSV.open(self.flat_file.path, headers:true).readlines
+      json_array = Array.new
+      csv.entries.map do |entry|
+        json_array << entry.to_hash
+      end
+      self.update(data: json_array)
+    end
+
+
     #     params_hash = {}
     #       tm.targetable_columns.each do |col|
     #         params_hash[col] = row[legend.key("#{tm.to_s.downcase}::#{col}")]
@@ -203,40 +260,13 @@ module Originable
       #   end
       # end
     # end
+    # def targetable_order(parent=nil)
+    #   ancestors = Hash.new
+    #   targetable_parents(parent).each do |p|
+    #     ancestors[p] = targetable_parents(p).empty? ? {} : targetable_order(p)
+    #   end
+    #   ancestors
+    # end
 
-    def set_transition_timestamp(given_status, time=Time.now)
-      timestamp_field = "#{given_status}_at".to_sym
-      self[timestamp_field] = time
-    end
-
-    def list_headers
-      data = CSV.read(self.flat_file.path)
-      data.first
-    end
-
-    def may_import?
-      data.nil?
-    end
-
-    def may_wipe?
-      data.present?
-    end
-
-    def import!
-      convert_data_to_json!
-    end
-
-    def wipe!
-      update(data: nil)
-    end
-
-    def convert_data_to_json!
-      csv = CSV.open(self.flat_file.path, headers:true).readlines
-      json_array = Array.new
-      csv.entries.map do |entry|
-        json_array << entry.to_hash
-      end
-      self.update(data: json_array)
-    end
   end
 end

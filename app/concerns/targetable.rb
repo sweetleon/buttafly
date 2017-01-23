@@ -39,6 +39,14 @@ module Targetable
       parents = self.reflect_on_all_associations(:belongs_to).map(&:name)
     end
 
+    def self.targetable_foreign_key_columns
+      result = []
+      self.targetable_foreign_keys.each do |key|
+        result << "#{key}_id"
+      end
+      result
+    end
+
     def self.targetable_attrs
       attrs = targetable_columns
       parents = self.reflect_on_all_associations(:belongs_to).map(&:name)

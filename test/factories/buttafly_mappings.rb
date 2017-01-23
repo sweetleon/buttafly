@@ -1,9 +1,6 @@
-# Read about factories at https://github.com/thoughtbot/factory_girl
-
 FactoryGirl.define do
   factory :mapping, :class => 'Buttafly::Mapping' do
 
-    targetable_model "Review"
     association :originable
 
     factory :mapping_without_legend do
@@ -35,7 +32,6 @@ FactoryGirl.define do
       }
 
       factory :mapping_without_parents do
-        # targetable_model "Winery"
         legend { {
           "winery"=> {
             "name"=>"winery name"
@@ -58,7 +54,6 @@ FactoryGirl.define do
       end
 
       factory :mapping_with_parents do
-        targetable_model "Review"
       end
     end
   end

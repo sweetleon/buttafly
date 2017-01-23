@@ -4,11 +4,11 @@ feature "archive content" do
 
   before do
     @existing_content = FactoryGirl.create(:originable)
-    visit '/buttafly/contents'
   end
 
   scenario "success" do
 skip
+    visit '/buttafly/contents'
     within("#content-scope-uploaded") do
 
       within("#show-file-#{@existing_content.id}") do
