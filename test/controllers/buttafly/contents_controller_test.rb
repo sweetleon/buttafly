@@ -51,7 +51,7 @@ module Buttafly
   #   end
 
     it "should get index" do
-
+skip
       get contents_url
       assert_response :success
       # assert_not_nil assigns :contents

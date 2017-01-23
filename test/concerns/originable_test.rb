@@ -2,6 +2,8 @@ require 'test_helper'
 
   describe "Buttafly::Originable" do
 
+
+
   subject { Buttafly::Spreadsheet }
 
   let(:spreadsheet) { FactoryGirl.create(:originable) }
@@ -50,8 +52,9 @@ require 'test_helper'
   end
 
   it "#originable_headers must return correct headers" do
-    headers = spreadsheet.originable_headers
-    headers.must_equal %w[wine winery vintage review rating]
+    actual = spreadsheet.originable_headers
+    expected = ["wine name", "winery name", "wine vintage", "reviewer notes", "reviewer rating"]
+    (actual & expected).must_equal expected
   end
 
   it "tsorted_order" do
@@ -73,17 +76,25 @@ require 'test_helper'
   end
 
   it "parents_of(model)" do
-    # spreadsheet.parents_of(:winery).must_equal [[]]
-    # spreadsheet.parents_of(:user).must_equal [[]]
+    spreadsheet.parents_of(:winery).must_equal []
+    spreadsheet.parents_of(:user).must_equal []
     spreadsheet.parents_of(:wine).must_equal [:winery]
     spreadsheet.parents_of(:review).must_equal [:user, :wine]
   end
 
   it "tsorted_order" do
-    skip
+
     actual = spreadsheet.tsorted_order
-    byebug
-    actual.must_equal []
+    actual.class.must_equal TsortableHash
+    actual.keys.must_equal [:dummy_child, :dummy_grandparent, :dummy_parent, :dummy_tribe, :review, :user, :wine, :winery]
+    actual[:dummy_child].must_equal [:dummy_parent, :dummy_tribe]
+    actual[:dummy_grandparent].must_equal [:dummy_tribe]
+    actual[:dummy_parent].must_equal [:dummy_grandparent, :dummy_tribe]
+    actual[:dummy_tribe].must_equal []
+    actual[:review].must_equal [:user, :wine]
+    actual[:wine].must_equal [:winery]
+    actual[:winery].must_equal []
+    actual[:user].must_equal []
   end
 
   describe "states" do
@@ -97,26 +108,10 @@ require 'test_helper'
     describe "permissions for" do
 
       it ":uploaded" do
-        skip
 
         file = build_stubbed(:uploaded_file)
-        file.may_target?.must_equal true
-        file.may_map?.must_equal false
-        file.may_transmogrify?.must_equal false
-      end
-
-      it ":targeted" do
-        skip
-
-        file = create(:targeted_file)
         file.may_map?.must_equal true
         file.may_transmogrify?.must_equal false
-      end
-
-      it ":targeted" do
-
-        file = create(:mapped_file)
-        file.may_transmogrify?.must_equal true
       end
     end
 
@@ -128,16 +123,25 @@ require 'test_helper'
 
         describe ":create_records" do
 
+          before do
+            Winery.delete_all
+          end
+
           it "without parents" do
-    skip        file.mappings.create(FactoryGirl.attributes_for(
+
+            attrs = FactoryGirl.attributes_for(:mapping_without_parents)
+
+            file.mappings.create(FactoryGirl.attributes_for(
               :mapping_without_parents))
             file.create_records!
-            Winery.count.must_equal 5
+            assert Winery.count.must_equal 5
+            assert Winery.find_by(name: "Ernest & Hulio Gallows")
           end
 
           it "with one parent" do
-skip
             file.mappings.create(FactoryGirl.attributes_for(:mapping_with_parent))
+
+
             file.create_records!
             # Winery.count.must_equal 5
             Wine.count.must_equal 5

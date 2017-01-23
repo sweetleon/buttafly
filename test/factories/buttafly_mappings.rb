@@ -18,18 +18,16 @@ FactoryGirl.define do
       legend { {
 
           "review"=> {
-            "rating"=>"rating",
-            "content"=>"review",
-            "user"=> {
-              "name"=>"wine"
+            "rating"=>"reviewer rating",
+            "content"=>"reviewer notes",
+            "reviewer"=> {
+              "name"=>"reviewer name"
             },
             "wine"=> {
-              "name"=>"wine",
-              "vintage"=>"vintage",
+              "name"=>"wine name",
+              "vintage"=>"wine vintage",
               "winery"=> {
-                "name"=>"winery", 
-                "mission"=>"wine", 
-                "history"=>"wine"
+                "name"=>"winery name"
               }
             }
           }
@@ -37,19 +35,26 @@ FactoryGirl.define do
       }
 
       factory :mapping_without_parents do
-        targetable_model "Winery"
+        # targetable_model "Winery"
         legend { {
           "winery"=> {
-            "name"=>"winery", 
-            "mission"=>"wine", 
-            "history"=>"wine"
+            "name"=>"winery name"
           }
         }
       }
       end
-      
+
       factory :mapping_with_parent do
-        targetable_model "Wine"
+        legend { {
+          "wine"=> {
+            "name"=>"wine name",
+            "vintage"=>"wine vintage",
+            "winery"=> {
+              "name"=>"winery name"
+            }
+          }
+        }
+      }
       end
 
       factory :mapping_with_parents do

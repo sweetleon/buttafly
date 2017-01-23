@@ -29,15 +29,9 @@ module Originable
     aasm do
 
       state :uploaded, initial: true
-      state :targeted
       state :mapped
       state :transmogrified
       state :archived
-
-      event :target do
-        transitions from: [:uploaded, :targeted, :mapped],
-                      to: :targeted
-      end
 
       event :map do
         transitions from: :uploaded,
@@ -49,10 +43,10 @@ module Originable
                       to: :transmogrified
       end
 
-      # event :archive do
-      #   transitions from: [:uploaded, :targeted, :mapped, :transmogrified],
-      #                 to: :archived
-      # end
+      event :archive do
+        transitions from: [:uploaded, :mapped, :transmogrified],
+                      to: :archived
+      end
     end
 
     def originable_events
@@ -142,20 +136,27 @@ module Originable
     #   ancestors
     # end
 
+    def legend
+
+      mappings.last.legend
+    end
+
     def create_records!
 
-      mappings.each do |mapping|
-        create_records_from_mapping!(mapping)
-      end
-    end
-
-    def create_records_from_mapping!(mapping)
       csv = CSV.open(self.flat_file.path, headers:true).readlines
-      csv.each do |row|
-        # byebug
-      end
+      csv.each { |row| create_record_from_row(row) }
     end
 
+    def create_record_from_row(row)
+      legend.each do |key, value|
+        value.each do |x, y|
+          value[x] = row[y]
+        end
+        klass = key.classify.constantize
+        byebug
+        klass.where(value).first_or_create
+      end
+    end
     #     params_hash = {}
     #       tm.targetable_columns.each do |col|
     #         params_hash[col] = row[legend.key("#{tm.to_s.downcase}::#{col}")]

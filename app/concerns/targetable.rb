@@ -9,9 +9,9 @@ module Targetable
   end
 
   module TargetableModels
-    
+
     extend self
-    
+
     @included_in ||= []
 
     def add(klass)
@@ -24,10 +24,10 @@ module Targetable
   end
 
   included do
-    
+
     TargetableModels.add self
-    
-    def self.targetable_ignored_columns 
+
+    def self.targetable_ignored_columns
       ["updated_at", "created_at", "id"]
     end
 
@@ -47,6 +47,6 @@ module Targetable
         attrs.delete(fk)
       end
       attrs
-    end  
+    end
   end
 end

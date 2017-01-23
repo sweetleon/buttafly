@@ -8,12 +8,12 @@ ActiveRecord::Migrator.migrations_paths = [File.expand_path("../../test/dummy/db
 ActiveRecord::Migrator.migrations_paths << File.expand_path('../../db/migrate', __FILE__)
 require "rails/test_help"
 require "minitest/rails/capybara"
+require "minitest/rails"
 require "minitest/given"
 require "byebug"
 require "factory_girl_rails"
 require 'database_cleaner'
 require "buttafly"
-
 
 
 # Filter out Minitest backtrace while allowing backtrace from other libraries
@@ -34,24 +34,6 @@ include TestMatchers
 include FactoryGirl::Syntax::Methods
 # include Warden::Test::Helpers
 
-DatabaseCleaner.strategy = :deletion
+DatabaseCleaner.strategy = :transaction
 
-# class Minitest::Spec
-#   before :each do
-#     DatabaseCleaner.start
-#   end
-
-#   # after { Warden.test_reset! }
-#   after :each do
-#     DatabaseCleaner.clean
-#     Warden.test_reset!
-#   end
-# end
-
-# # with the minitest-around gem, this may be used instead:
-# class Minitest::Spec
-#   around do |tests|
-#     DatabaseCleaner.cleaning(&tests)
-#   end
-# end
 

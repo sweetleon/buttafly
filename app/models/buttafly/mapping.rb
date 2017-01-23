@@ -3,8 +3,8 @@ module Buttafly
     # require 'tsortable'
     serialize :legend, Hash
 
-    belongs_to :originable, 
-      polymorphic: true, 
+    belongs_to :originable,
+      polymorphic: true,
       class_name: "Buttafly::Spreadsheet",
       touch: true
 
@@ -21,12 +21,12 @@ module Buttafly
       ancestors
     end
 
-    def targetable_parents(klass=nil) 
+    def targetable_parents(klass=nil)
       parent_models = []
       klass ||= targetable_model
       klass.to_s.classify.constantize.reflect_on_all_associations(:belongs_to).each do |parent_model|
         if parent_model.options[:class_name].nil?
-          parent_models << parent_model.name 
+          parent_models << parent_model.name
         else
           parent_models << parent_model.options[:class_name].constantize.model_name.i18n_key
         end
@@ -37,8 +37,8 @@ module Buttafly
   private
 
     def set_originable_state
-      self.originable.target! if self.originable.uploaded?
-      self.originable.map! if !self.legend.empty? && self.originable.targeted? 
+      # self.originable.target! if self.originable.uploaded?
+      self.originable.map! if !self.legend.empty? #&& self.originable.targeted?
     end
   end
 end

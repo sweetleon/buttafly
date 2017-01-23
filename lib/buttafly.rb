@@ -11,5 +11,6 @@ module Buttafly
   require 'buttafly'
   require 'bootstrap'
   require 'rails-assets-tether'
+  require 'minitest-rails'
 
 end
