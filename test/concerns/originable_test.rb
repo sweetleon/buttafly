@@ -119,55 +119,50 @@ require 'test_helper'
           before :each do
             Winery.delete_all
             Wine.delete_all
-          end
-
-          it "converts parent hash to parent_id: :id" do
-skip
-            ancestors_hash = {
-              "wine"=> {
-                "name"=>"red table wine",
-                "vintage"=>"wine vintage",
-                "winery"=> {
-                  "name"=>"winery name"
-                  }
-                }
-              }
-
-            actual = Buttafly::Spreadsheet.create_ancestors(ancestors_hash)
-            assert_equal actual.class, Winery
+            Review.delete_all
+            User.delete_all
           end
 
           it "without parents" do
 
             attrs = FactoryGirl.attributes_for(:mapping_without_parents)
 
-            file.mappings.create(FactoryGirl.attributes_for(
-              :mapping_without_parents))
+            file.mappings.create(attrs)
             file.create_records!
-            assert Winery.count.must_equal 5
+            assert Winery.count.must_equal 1
             assert Winery.find_by(name: "Ernest & Hulio Gallows")
           end
 
           it "with one parent" do
-            skip
-            file.mappings.create(FactoryGirl.attributes_for(:mapping_with_parent))
 
+            attrs = FactoryGirl.attributes_for(:mapping_with_parent)
 
+            file.mappings.create(attrs)
             file.create_records!
-            # Winery.count.must_equal 5
+            Winery.count.must_equal 1
             Wine.count.must_equal 1
           end
-        end
 
-        describe "must create" do
+          it "with more than one parents" do
 
-          it "target objects" do
-            skip
-            file.transmogrify!
+            attrs = FactoryGirl.attributes_for(:mapping_with_parents)
+
+            file.mappings.create(attrs)
+            file.create_records!
+            Winery.count.must_equal 1
+            Wine.count.must_equal 1
             Review.count.must_equal 1
-          end
+            User.count.must_equal 1
 
-          it "parent_objects" do
+            review = Review.last
+            wine = Wine.last
+            winery = Winery.last
+            reviewer = User.last
+
+            review.reviewer.must_equal reviewer
+            review.wine.must_equal wine
+            wine.winery.must_equal winery
+            review.wine.winery.name.must_equal "Ernest & Hulio Gallows"
           end
         end
       end

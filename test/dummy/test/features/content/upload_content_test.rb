@@ -6,7 +6,7 @@ feature "upload content" do
   end
 
   scenario "success" do
-    skip
+skip
     visit '/buttafly'
     within(".new-content-form") do
       fill_in 'Name', :with => 'getsome noirs'

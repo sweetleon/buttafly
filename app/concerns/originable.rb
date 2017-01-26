@@ -80,7 +80,6 @@ module Originable
 
     def targetable_parents(klass=nil)
       parent_models = []
-      # klass ||= targetable_
       klass.to_s.classify.constantize.reflect_on_all_associations(:belongs_to).each do |parent_model|
         if parent_model.options[:class_name].nil?
           parent_models << parent_model.name
@@ -92,7 +91,6 @@ module Originable
     end
 
     def tsorted_order
-
       dependency_hash = TsortableHash[]
       targetable_models.each do |m|
         dependency_hash[m.underscore.to_sym] = parents_of(m)
@@ -131,51 +129,28 @@ module Originable
     end
 
     def create_records!
-
       csv = CSV.open(self.flat_file.path, headers:true).readlines
-      csv.each { |row| create_record_from_row(row) }
+      csv.each { |row| create_records_from_row(row) }
     end
 
-# def create_record_from_row(row)
-#       legend.each do |key, value|
-#         value.each do |x, y|
-#           value[x] = row[y]
-#         end
-#         klass = key.classify.constantize
-#         byebug
-#         klass.where(value).first_or_create
-#       end
-#     end
-
-    def create_record_from_row(row)
+    def create_records_from_row(row)
       legend.each do |key, value|
-        create_from_hash(key, value, row)
+        create_record(key, value, row, {})
       end
     end
 
-    def create_from_hash(parent, hash, row)
+    def create_record(model, hash, row, parent_attrs)
+      attrs ||= {}
       hash.each do |key, value|
         if value.is_a? Hash
-          create_from_hash(key, value, row)
+          parent = klassify(model).reflect_on_association(key).class_name
+          x = create_record(parent, value, row, attrs)
+          attrs["#{key}_id"] = x.id
         else
-          attrs = {}
-          attrs[key] = value
-
+          attrs[key] = row[value]
         end
-        klass = parent.classify.constantize
-        # klass.where(value).first_or_create
-
-
-
-          # klass = key.classify.constantize
-          # klass.where(value).first_or_create
-        # end
       end
-    end
-
-    def self.create_ancestor(attrHash)
-      klass = attrHash.keys.first.classify.constantize
-      klass.first_or_create(attrHash.values.first)
+      klassify(model).where(attrs).first_or_create
     end
 
     def set_transition_timestamp(given_status, time=Time.now)
@@ -212,61 +187,11 @@ module Originable
       end
       self.update(data: json_array)
     end
-
-
-    #     params_hash = {}
-    #       tm.targetable_columns.each do |col|
-    #         params_hash[col] = row[legend.key("#{tm.to_s.downcase}::#{col}")]
-    #       end
-    #       # if tm.targetable_parent_models.size == 1
-
-    #       # unless tm.targetable_parent_models.empty?
-    #       #   tm.targetable_parent_models.each do |parent|
-    #       #     fk = p.to_s.foreign_key
-    #       #   end
-    #     end
-    #   end
-
-    #   mapping.legend.each_pair do |k,v|
-
-    #     if v.is_a?(Hash)
-
-    #     else
-
-    #     end
-    #   end
-    # end
-
-      # self.mappings.each do |mapping|
-      #   tm = mapping.targetable_model.classify.constantize
-      #   legend = mapping.legend_data.to_h
-      #   csv = CSV.open(self.flat_file.path, headers:true).readlines
-      #   csv.each do |csv_row|
-      #     params_hash = {}
-      #     tm.targetable_columns.each do |col|
-      #       params_hash[col] = csv_row[legend.key("#{tm.to_s.downcase}::#{col}")]
-      #     end
-      #     # if tm.targetable_parent_models.size == 1
-
-      #     # unless tm.targetable_parent_models.empty?
-      #     #   tm.targetable_parent_models.each do |parent|
-      #     #     fk = p.to_s.foreign_key
-      #     #   end
-      #     # end
-
-
-
-      #     tm.find_or_create_by(params_hash)
-      #   end
-      # end
-    # end
-    # def targetable_order(parent=nil)
-    #   ancestors = Hash.new
-    #   targetable_parents(parent).each do |p|
-    #     ancestors[p] = targetable_parents(p).empty? ? {} : targetable_order(p)
-    #   end
-    #   ancestors
-    # end
-
   end
+
+  private
+
+    def klassify(string)
+      string.classify.constantize
+    end
 end

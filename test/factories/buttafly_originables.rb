@@ -5,7 +5,7 @@ FactoryGirl.define do
     aasm_state "uploaded"
     flat_file do
       Rack::Test::UploadedFile.new(File.join(
-        Rails.root, 'test', 'samples', 'reviews.csv'))
+        Rails.root, 'test', 'samples', 'review_test_spreadsheet.csv'))
     end
 
     factory :uploaded_file do

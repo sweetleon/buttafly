@@ -41,16 +41,13 @@ FactoryGirl.define do
       end
 
       factory :mapping_with_parent do
+
         legend { {
-          "wine"=> {
-            "name"=>"wine name",
-            "vintage"=>"wine vintage",
-            "winery"=> {
-              "name"=>"winery name"
-            }
-          }
-        }
-      }
+             "wine"=> {
+              "name"=>"wine name",
+              "vintage"=>"wine vintage",
+              "winery"=> {
+                "name"=>"winery name" } } } }
       end
 
       factory :mapping_with_parents do
