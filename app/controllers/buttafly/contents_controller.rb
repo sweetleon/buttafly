@@ -79,6 +79,7 @@ module Buttafly
       else
         files = Buttafly.originable.all.order(created_at: :desc)
       end
+
       @originable = Buttafly.originable.new
       @contents = files.order(:created_at).page(params[:page]).per(5)
       @targetable_models = @originable.targetable_models

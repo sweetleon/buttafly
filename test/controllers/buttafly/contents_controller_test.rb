@@ -19,12 +19,14 @@ module Buttafly
 
     let(:originable) { FactoryGirl.create(:uploaded_file) }
 
-    # it "get #show must assign @originable" do
+    it "get #show must succeed" do
 
-    #   get :show, id: originable.id
-    #   assert_response :success
-    #   assert_not_nil assigns(:originable)
-    # end
+      get contents_url, params: { id: originable.id }
+      #       Given(:make_request) { post products_url, params: { product: attrs } }
+
+      assert_response :success
+      # assert_not_nil assigns(:originable)
+    end
 
   #   it "get #edit" do
 

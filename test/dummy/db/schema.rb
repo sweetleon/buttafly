@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -23,9 +22,8 @@ ActiveRecord::Schema.define(version: 20150527060117) do
     t.text     "legend"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["originable_id", "originable_type"], name: "index_buttafly_mappings_on_originable_id_and_originable_type", using: :btree
   end
-
-  add_index "buttafly_mappings", ["originable_id", "originable_type"], name: "index_buttafly_mappings_on_originable_id_and_originable_type", using: :btree
 
   create_table "buttafly_spreadsheets", force: :cascade do |t|
     t.json     "data"
@@ -39,13 +37,12 @@ ActiveRecord::Schema.define(version: 20150527060117) do
     t.integer  "mtime"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["aasm_state"], name: "index_buttafly_spreadsheets_on_aasm_state", using: :btree
+    t.index ["imported_at"], name: "index_buttafly_spreadsheets_on_imported_at", using: :btree
+    t.index ["name"], name: "index_buttafly_spreadsheets_on_name", using: :btree
+    t.index ["processed_at"], name: "index_buttafly_spreadsheets_on_processed_at", using: :btree
+    t.index ["user_id"], name: "index_buttafly_spreadsheets_on_user_id", using: :btree
   end
-
-  add_index "buttafly_spreadsheets", ["aasm_state"], name: "index_buttafly_spreadsheets_on_aasm_state", using: :btree
-  add_index "buttafly_spreadsheets", ["imported_at"], name: "index_buttafly_spreadsheets_on_imported_at", using: :btree
-  add_index "buttafly_spreadsheets", ["name"], name: "index_buttafly_spreadsheets_on_name", using: :btree
-  add_index "buttafly_spreadsheets", ["processed_at"], name: "index_buttafly_spreadsheets_on_processed_at", using: :btree
-  add_index "buttafly_spreadsheets", ["user_id"], name: "index_buttafly_spreadsheets_on_user_id", using: :btree
 
   create_table "dummy_children", force: :cascade do |t|
     t.string   "name"

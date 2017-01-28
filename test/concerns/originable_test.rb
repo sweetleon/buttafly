@@ -129,7 +129,7 @@ require 'test_helper'
 
             file.mappings.create(attrs)
             file.create_records!
-            assert Winery.count.must_equal 1
+            assert Winery.count.must_equal 5
             assert Winery.find_by(name: "Ernest & Hulio Gallows")
           end
 
@@ -139,8 +139,8 @@ require 'test_helper'
 
             file.mappings.create(attrs)
             file.create_records!
-            Winery.count.must_equal 1
-            Wine.count.must_equal 1
+            Winery.count.must_equal 5
+            Wine.count.must_equal 5
           end
 
           it "with more than one parents" do
@@ -149,20 +149,20 @@ require 'test_helper'
 
             file.mappings.create(attrs)
             file.create_records!
-            Winery.count.must_equal 1
-            Wine.count.must_equal 1
-            Review.count.must_equal 1
-            User.count.must_equal 1
+            Winery.count.must_equal 5
+            Wine.count.must_equal 5
+            Review.count.must_equal 5
+            User.count.must_equal 3
 
-            review = Review.last
-            wine = Wine.last
-            winery = Winery.last
-            reviewer = User.last
+            review = Review.where(content: "Big and strong nevertheless soggy charbono. Shows bug spray, middle-aged raisin, scant pepper. Drink now through never.").first
+            wine = review.wine
+            winery = review.wine.winery
+            reviewer = review.reviewer
 
-            review.reviewer.must_equal reviewer
-            review.wine.must_equal wine
-            wine.winery.must_equal winery
-            review.wine.winery.name.must_equal "Ernest & Hulio Gallows"
+            review.reviewer.name.must_equal "stephen tanzer"
+            review.wine.name.must_equal "Pinot Noir Solera"
+            wine.winery.name.must_equal "Sunnybrook Estate"
+            review.wine.winery.name.must_equal "Sunnybrook Estate"
           end
         end
       end
