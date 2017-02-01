@@ -1,7 +1,7 @@
 FactoryGirl.define do
 
   factory :originable, class: 'Buttafly::Spreadsheet' do
-    name
+    sequence(:name) { |n| "person#{n}_name" }
     aasm_state "uploaded"
     flat_file do
       Rack::Test::UploadedFile.new(File.join(
@@ -20,4 +20,6 @@ FactoryGirl.define do
       end
     end
   end
+
+
 end

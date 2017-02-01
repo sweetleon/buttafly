@@ -7,5 +7,5 @@
     = render partial: "new_target", locals: { file: file }
 .col-sm-1
   = event_button_to("remove file", file.id, method: :delete, action: :destroy)
-  / = button_to("Remove File", { controller: :contents, action: 'destroy', id: file.id}, :method => :delete, class: "btn btn-danger", role: "button")
+  = button_to("Remove File", { controller: :contents, action: 'destroy', id: file.id}, :method => :delete, class: "btn btn-danger", role: "button")
 

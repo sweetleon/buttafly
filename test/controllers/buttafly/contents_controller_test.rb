@@ -6,64 +6,38 @@ module Buttafly
 
     include Engine.routes.url_helpers
 
-    # before do
-    #   # @request.env['HTTP_REFERER'] = "/referring/url"
-
-    #   @routes = Engine.routes
-    # end
-    # before do
-    #   # @request.env['HTTP_REFERER'] = "/referring/url"
-
-    #   @routes = Engine.routes
-    # end
-
     let(:originable) { FactoryGirl.create(:uploaded_file) }
 
-    it "get #show must succeed" do
+    describe "post #create saves a spreadsheet" do
 
-      get contents_url, params: { id: originable.id }
-      #       Given(:make_request) { post products_url, params: { product: attrs } }
+      Given(:attrs) { attributes_for(:originable) }
+      Given(:make_request) { post contents_url, params: { originable: attrs } }
 
-      assert_response :success
-      # assert_not_nil assigns(:originable)
+      Then do
+        assert_difference "Buttafly::Spreadsheet.count" do
+          make_request
+        end
+      end
     end
 
-  #   it "get #edit" do
+    describe "must GET :destroy" do
 
-  #     get :edit, id: originable.id
-  #     assert_response :success
-  #     assert_not_nil assigns(:originable)
-  #   end
+      Given(:originable) { create(:originable) }
+      Given { delete content_path(originable) }
 
-  #   it "post #create" do
-
-  #     post :create, originable: {
-  #       name: "slick name",
-  #       flat_file: "slickname.csv"
-  #     }
-  #     assert_response 302
-  #   end
-
-  #   it "post #create saves a spreadsheet" do
-
-  #     attrs = attributes_for(:originable)
-  #     assert_difference "Buttafly::Spreadsheet.counbuttaflyt" do
-  #       post :create, originable: attrs
-  #     end
-  #   end
-
-    it "should get index" do
-skip
-      get contents_url
-      assert_response :success
-      # assert_not_nil assigns :contents
+      Then { assert_response :redirect }
+      And { assert Buttafly.originable.where(id: originable.id).empty? }
     end
 
-  #   it "must GET :destroy" do
+    describe "must PATCH :map" do
 
-  #     delete :destroy, id: originable.id
-  #     assert_response 302
-  #   end
+      Given(:originable) { create(:originable) }
+      Given { patch map_content_path(originable), params: { blah: "blah" } }
+
+      Then { assert_response :redirect }
+      # And { assert Buttafly.originable.where(id: originable.id).empty? }
+
+    end
 
   #   it "patch #archive" do
 

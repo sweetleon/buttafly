@@ -20,10 +20,11 @@ module Buttafly
 
       @mapping = Buttafly::Mapping.find(params[:id])
       if @mapping.update(legend: mapping_params[:legend])
-        redirect_to contents_path, notice: "mapping updated"
+        @mapping.originable.map!
+        @redirect_to contents_path, notice: "mapping updated"
       else
         redirect_to :back, alert: "mapping did not update"
-      end  
+      end
     end
 
     def destroy
@@ -36,11 +37,13 @@ module Buttafly
     end
 
     def create
-      @mapping = Buttafly::Mapping.new(mapping_params)    
+
+      @mapping = Buttafly::Mapping.new(mapping_params)
       if @mapping.update(originable_type: Buttafly.originable.to_s)
-        redirect_to :back, notice: "mapping created"
+        @mapping.originable.target!
+        redirect_back(fallback_location: contents_url, notice: "mapping created")
       else
-        redirect_to :back, notice: "not good"
+        redirect_back(fallback_location: contents_url, notice: "did not create mapping")
       end
     end
 

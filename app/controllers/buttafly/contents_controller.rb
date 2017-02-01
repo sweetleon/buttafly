@@ -4,20 +4,9 @@ module Buttafly
   class ContentsController < ApplicationController
 
     before_action :set_originable, only: [
-        :edit, :show, :archive, :destroy, :transmogrify, :import, :wipe]
-
-    def new
-      @originable ||= Buttafly::Spreadsheet.new
-    end
-
-    def show
-    end
-
-    def edit
-    end
+        :edit, :show, :map, :archive, :destroy, :transmogrify, :import, :wipe]
 
     def create
-
       @originable = Buttafly::Spreadsheet.new(originable_params)
       if @originable.save
         redirect_to contents_path, notice: "#{@originable.name} has been uploaded."
@@ -30,6 +19,7 @@ module Buttafly
     end
 
     def map
+      # byebug
     end
 
     def wipe
@@ -89,6 +79,7 @@ module Buttafly
     private
 
     def set_originable
+
       @originable = Buttafly.originable.find(params[:id])
     end
 

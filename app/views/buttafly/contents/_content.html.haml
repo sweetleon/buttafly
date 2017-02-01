@@ -18,7 +18,7 @@
 
 .collapse.in{ id: "show-file-#{file.id}", class: active_element?(index) }
   .card.card-block
-    / # = render partial: 'target_modal', locals: { file: file }
+    = render partial: 'target_modal', locals: { file: file }
 
 
 
