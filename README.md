@@ -95,4 +95,4 @@ bundle exec rails s
 ```
 ## License
 
-[MIT-LICENSE](http://en.wikip edia.org/wiki/MIT_License)
+[MIT-LICENSE](http://en.wikipedia.org/wiki/MIT_License)
