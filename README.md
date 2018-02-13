@@ -8,7 +8,7 @@
 
 # Buttafly
 
-Buttafly is a [Rails engine](http://guides.rubyonrails.org/engines.html) which, once bolted onto your [Ruby on Rails](http://rubyonrails.org/) application, allows the creation of [postgres](http://www.postgresql.org/) database records, complete with the correct associations to parent records, from plain old spreadsheets. 
+Buttafly is a [Rails engine](http://guides.rubyonrails.org/engines.html) which, once bolted onto your [Ruby on Rails](http://rubyonrails.org/) application, allows the creation of database records for models complete with the correct associations to parent records, from plain old spreadsheets. 
 
 ## Example
 
